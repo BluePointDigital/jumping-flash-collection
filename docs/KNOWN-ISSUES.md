@@ -1,6 +1,6 @@
 # Known issues and open qualification
 
-1. JF2 has owner-reported graphical glitches and slowdowns on an LCD 64 GB Steam Deck using Proton Experimental. Menu voiceover is very choppy and generally smooths out after a little gameplay. Windows feels better overall to the owner. A Proton-version cause is unconfirmed; no controlled comparison has been completed.
+1. JF2 has owner-reported graphical glitches and slowdowns on an LCD 64 GB Steam Deck. Stable Proton feels slightly better than Experimental and is now the owner's default, but performance remains imperfect. Earlier Experimental menu voiceover was very choppy and generally smoothed out after a little gameplay; resolution on Stable is unconfirmed. Windows feels better overall. No matched benchmark or exact version numbers were supplied.
 2. Smooth 60 FPS across all titles is a target, not a release claim. JF2 presentation cadence and interpolation need further work.
 3. Intermittent JF2 audio starvation/hitches remain unresolved. A healthy short sample is not proof of a fix.
 4. Campaigns/endings and all transition paths have not been qualified. Unvisited paths may expose missing native bindings or incorrect behavior.

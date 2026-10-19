@@ -1,5 +1,7 @@
 # Build status: source preview
 
+**Looking for player instructions?** See [Setup](SETUP.md) for Windows and the private alpha, or [Steam Deck setup](STEAM-DECK.md). This page is for developers; compiling the front end alone does not provide the games.
+
 This snapshot preserves collection integration sources, adapters, metadata and development tools. It does not yet reproduce the full private October 18 alpha from a clean checkout. Do not treat the private source-replay builds as proof of a public, self-contained configure/generate/build workflow.
 
 ## Collection front end

@@ -10,7 +10,7 @@
   <img alt="Public package: source preview" src="https://img.shields.io/badge/public%20package-source%20preview-64748B?style=flat-square">
 </p>
 <p align="center">
-  <a href="#the-collection">The games</a> · <a href="#where-it-stands">Status</a> ·
+  <a href="docs/SETUP.md">Setup</a> · <a href="#the-collection">The games</a> · <a href="#where-it-stands">Status</a> ·
   <a href="docs/PERFORMANCE.md">Benchmarks</a> · <a href="docs/STEAM-DECK.md">Steam Deck</a> ·
   <a href="RELEASE_NOTES.md">Alpha notes</a> · <a href="https://github.com/BluePointDigital/jumping-flash-collection/issues/new/choose">Report an issue</a>
 </p>
@@ -63,14 +63,14 @@ Explore Hanauma and read its requests, menus, and character dialogue in English 
 | Windows alpha | All three games passed short packaged Load/gameplay/movement/native-exit checks |
 | Static execution | Zero interpreter or runtime-compiler attempts on those observed routes; whole campaigns remain unproven |
 | Normal saves | Bounded save/reload routes tested; Robbit School B was later cleared and its two-request progress restored in a fresh process |
-| Steam Deck | Owner reports JF2 playable on an original LCD 64 GB Deck with Proton Experimental; graphical glitches, slowdowns, and choppy menu voiceover remain |
+| Steam Deck | JF2 owner-tested on LCD 64 GB; Stable Proton feels slightly better than Experimental and is now the owner's default; performance is still imperfect |
 | Smooth 60 FPS | Target remains open; internal counters are not physical display FPS |
 | Complete campaigns and endings | Not yet qualified |
 | Native Linux / Android | Future work; not released or qualified |
 
-On an original LCD 64 GB Steam Deck using **Proton Experimental**, the owner reports JF2 running and playable, with graphical glitches and slowdowns. Menu voiceover is very choppy, then generally smooths out after a little gameplay. Windows feels better overall in the owner's comparison. These are subjective observations; no matched frame-time measurements or controlled comparison between Proton versions has been completed. Proton version may be a factor, but the cause has not been established.
+The latest owner report on an original LCD 64 GB Steam Deck is that **Stable Proton performs slightly better than Experimental**, though still imperfectly. Stable is now the owner's default and the starting point in the [Deck setup guide](docs/STEAM-DECK.md). Earlier Experimental testing had graphical glitches, slowdowns, and very choppy menu voiceover that generally smoothed out after a little gameplay. Those individual issues are not confirmed fixed on Stable. Windows feels better overall to the owner.
 
-This is **early hardware feedback**, not a verified compatibility rating. The exact Proton Experimental build, rendering/power settings, measured FPS, sleep/resume, and full controller coverage remain unreported.
+This is **early hardware feedback**, not a verified compatibility rating or a matched benchmark. Exact Stable/Experimental versions, rendering/power settings, measured FPS, sleep/resume, and full controller coverage remain unreported or unqualified.
 
 ## A look at performance
 
@@ -88,10 +88,20 @@ Short Windows alpha samples used 720-line internal rendering, 4:3, and the packa
 
 ## Trying it / building it
 
+**[Start here: Windows and Steam Deck setup →](docs/SETUP.md)**
+
+| What you have | Next step |
+|---|---|
+| Public source ZIP / clone | [Build status and missing pipeline work](docs/BUILDING.md). This package is not playable. |
+| Separately supplied private playable alpha | [Windows steps](docs/SETUP.md#3-windows) or [Steam Deck steps](docs/STEAM-DECK.md). Extract the complete folder and run/add `JumpingFlashCollection.exe`. |
+
+For Deck, use the **numbered Stable Proton release**, a **Gamepad** layout, and **`--deck`** in Launch Options as the documented starting configuration. The [Deck guide](docs/STEAM-DECK.md) shows the exact Target/Start In fields and return/save controls.
+
 This public snapshot is for source review and development. **There is no public playable binary attached to this source preview.** The private owner-test ZIP is intentionally excluded because it contains imported proprietary material and translated game/BIOS code.
 
 You will need your own supported game images and matching BIOS files for local game preparation. No ROM or BIOS downloads are provided. The source tree preserves the integration work, but the complete source-generation/build chain still depends on private development inputs; the remaining work is documented rather than presented as a one-click installer.
 
+- [Step-by-step setup and troubleshooting](docs/SETUP.md)
 - [Build prerequisites and current limitations](docs/BUILDING.md)
 - [Supported revisions and inputs](docs/INPUTS.md)
 - [Steam Deck owner-test guidance](docs/STEAM-DECK.md)

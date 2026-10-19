@@ -69,10 +69,12 @@
     "graphical_glitches": true,
     "slowdowns": true,
     "measured_fps": null,
-    "proton_version": "Proton Experimental (exact build not supplied)",
+    "proton_version": "Stable Proton (exact numbered version not supplied); previously Experimental",
     "source": "Direct owner report in project conversation, October 18, 2026",
-    "menu_voiceover": "very choppy; generally smooths out after a little gameplay",
+    "menu_voiceover": "Earlier Experimental report: very choppy; generally smooths out after a little gameplay. Individual resolution on Stable not confirmed.",
     "windows_comparison": "Windows feels better overall to the owner",
-    "cause": "Unconfirmed; no controlled comparison between Proton versions"
+    "cause": "Unconfirmed; no matched measurements or exact version numbers supplied",
+    "current_default": "Stable Proton, selected by owner",
+    "stable_comparison": "Slightly better overall than Experimental; still imperfect; subjective owner report"
   }
 }

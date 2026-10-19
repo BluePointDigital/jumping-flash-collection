@@ -27,7 +27,7 @@ The individual observed reductions varied considerably between the two orders. T
 
 ## Steam Deck feedback
 
-On an original LCD 64 GB Steam Deck using **Proton Experimental**, the owner reports JF2 running and playable, with graphical glitches and slowdowns. Menu voiceover is very choppy, then generally smooths out after a little gameplay. Windows feels better overall in the owner's comparison. These are subjective observations; no matched frame-time measurements or controlled comparison between Proton versions has been completed. Proton version may be a factor, but the cause has not been established. No measured Deck FPS or percentile frame times were supplied. Do not reuse the Windows figures as Deck benchmarks.
+On an original LCD 64 GB Steam Deck, the owner reports JF2 **feels slightly better with Stable Proton than Experimental**, while still imperfect. Stable is now the owner's default and the [setup guide](STEAM-DECK.md) starting point. The earlier Experimental run had graphical glitches, slowdowns, and very choppy menu voiceover that generally smoothed out during gameplay. The Stable follow-up does not establish that those issues are fixed. Windows feels better overall to the owner. Exact Proton versions and matched scene/settings measurements were not supplied. No measured Deck FPS or percentile frame times are available; do not reuse Windows figures as Deck benchmarks or present the subjective improvement as a measured speedup.
 
 ## Next acceptance work
 

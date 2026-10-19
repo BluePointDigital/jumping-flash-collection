@@ -891,13 +891,13 @@
     },
     {
       "path": "docs/benchmarks/alpha-20261018.json",
-      "bytes": 3355,
-      "sha256": "124d17ea27cb9c5d7929243cf13e3d5e5bbcb80a6f79c567ebedd3c8498c0497"
+      "bytes": 3642,
+      "sha256": "5187dbcf62ea45a37d9ad728405c72473b5a7d1f440bfb267640882ad7b273e8"
     },
     {
       "path": "docs/BUILDING.md",
-      "bytes": 2888,
-      "sha256": "7fdceb89c28fbb77ba12b7cef7bc74cf23e0c7273f582f7a77674ce8268e227c"
+      "bytes": 3108,
+      "sha256": "dad18e3e7e6cb3c6f8549525aae590e21d41bc0969e4b74919fce11622cf407d"
     },
     {
       "path": "docs/DISTRIBUTION.md",
@@ -911,8 +911,8 @@
     },
     {
       "path": "docs/KNOWN-ISSUES.md",
-      "bytes": 1547,
-      "sha256": "d7fa97aedeeb79eb52621f6b33948ecf07a6c179caa42179a2f45050e97ebddb"
+      "bytes": 1666,
+      "sha256": "e723ed8a54b1e79d9dd16f94a4ea83f1b586776fd11aaf4eda287c47a33bff71"
     },
     {
       "path": "docs/media/collection-launcher.jpg",
@@ -956,13 +956,18 @@
     },
     {
       "path": "docs/PERFORMANCE.md",
-      "bytes": 3223,
-      "sha256": "88739a1583283808eebe4566cf39f6116b88a6a3769e21a664c3585d18f9d83b"
+      "bytes": 3345,
+      "sha256": "24ead1443cdff1e334420a1ee63973ab8a8b8634104e0f1c3a754249ceb43b96"
+    },
+    {
+      "path": "docs/SETUP.md",
+      "bytes": 5799,
+      "sha256": "c741bc828655fa2be65c3a61322d2a7445b947861b977a6496b92561623f8b36"
     },
     {
       "path": "docs/STEAM-DECK.md",
-      "bytes": 1710,
-      "sha256": "ddedb7fed905b422dca8a094cc83b59a44e49267e15f816c14c05913856eb36a"
+      "bytes": 6540,
+      "sha256": "9798971bd7d1a8bc4baf92072720ae68dafc0ba11ebf892ad6f3aeed3bd6e209"
     },
     {
       "path": "jumping-flash-1/tools/aot.py",
@@ -1066,13 +1071,13 @@
     },
     {
       "path": "README.md",
-      "bytes": 10211,
-      "sha256": "217d46ecb31ad73fb3f7d1bc2008342a1a98b20049c2b7c218b693d262c7b524"
+      "bytes": 11043,
+      "sha256": "2695550aa40338e86f8d1fa79d36395c7acfa1f3f9920383a3d5a128631488dc"
     },
     {
       "path": "RELEASE_NOTES.md",
-      "bytes": 4193,
-      "sha256": "f1766ece2476484abc6d7e8fe99dc2730466fa274b9daff7c9e3695a9eb97fbe"
+      "bytes": 4313,
+      "sha256": "1b62c86c3113fd25cad5268d4fe4539580793a21499f9ca460874606b8827df8"
     },
     {
       "path": "robbit-mon-dieu/tools/build.ps1",
