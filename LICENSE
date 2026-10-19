@@ -1,0 +1,5 @@
+This source snapshot contains separately licensed work. There is no single license grant covering the original games, all upstream framework code, and every asset.
+
+The original project MIT notice is preserved in LICENSES/Original-Project-MIT.txt and applies only to work covered by that notice. PSXRecomp-derived code and reproduced upstream spans retain the supplied PolyForm Noncommercial terms in LICENSES/PSXRecomp-PolyForm-Noncommercial.txt. recomp-ui retains its MIT terms. See THIRD_PARTY.md for scope and notices.
+
+No rights to original game code, BIOS, game assets, characters, trademarks, documentation screenshots or translation patches are granted by this file. See ASSET-NOTICE.md.

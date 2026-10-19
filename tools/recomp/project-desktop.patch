@@ -1,0 +1,42 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 470f39c..ace6922 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -16,8 +16,7 @@ project(JumpingFlash2Recomp LANGUAGES C CXX)
+ # The wizard (WIZARD_CMAKE_BLOCK / ENABLE_SETUP_WIZARD) is the first-run disc
+ # picker; releases are compiled from the committed generated/ C, so it never
+ # needs to generate or rebuild anything on a player's machine.
+-set(PSX_RECOMP_UI OFF CACHE BOOL
+-    "No recomp-ui submodule in this scaffold" FORCE)
++set(PSX_RECOMP_UI ON CACHE BOOL "Desktop launcher" FORCE)
+ # Full netplay UI -- enable after adding recomp-ui + testing:
+ # if(EXISTS "${PSXRECOMP_ROOT}/lib/recomp-net/CMakeLists.txt")
+ #     set(PSX_NETPLAY ON CACHE BOOL "..." FORCE)
+@@ -66,3 +65,6 @@ foreach(_PSX_RUNTIME_CONFIG game.toml game_options.toml)
+             VERBATIM)
+     endif()
+ endforeach()
++
++target_include_directories(psx-runtime PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/desktop")
++target_compile_definitions(psx-runtime PRIVATE JF2_DESKTOP=1)
+diff --git a/game.toml b/game.toml
+index a6bde4d..3b8ad08 100644
+--- a/game.toml
++++ b/game.toml
+@@ -38,6 +38,8 @@ strict = true
+ window_title = "JumpingFlash2 Recompiled"
+ memcard_dir = "saves"
+ overlay_cache = true
++bios_hle = true
++bios_hle_keep_intro = false
+ 
+ [video]
+ renderer = "opengl"
+@@ -48,6 +50,7 @@ default_mode = "digital"
+ 
+ # Online mount gate: digests + track count + optional TOC fingerprint
+ # (see docs/NETPLAY.md).
++multitap_analog = true
+ [netplay]
+ require_cue = true
+ required_tracks = 1

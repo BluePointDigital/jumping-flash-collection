@@ -1,0 +1,2991 @@
+{
+  "schema": 1,
+  "game": "jf1",
+  "disc_sha256": "24e8f7ff830ac9565d16bc41f8e42a885b21295beb06b47b4187dbd26a9eea55",
+  "policy": "ABI export nominations with complete guards matched to one verified disc image; ordinary callable/interior classification remains mandatory; no runtime DLL dependency",
+  "derivation": {
+    "artifact_report_sha256": "105f91074f9f153c0c7cb6907e0f22643af0603d2cdbc0caf938ce57c96939de",
+    "review_sha256": "2a16e5793d59af646b2d7617e2231009e37b6c8227ae0f2cd0f223f026167cb8",
+    "matched_sources": {
+      "000BD000_38DF0051.dll": [
+        "JM1/MAIN.PEX",
+        "JM1B/MAIN.PEX"
+      ],
+      "000BD000_437CB212.dll": [
+        "JM1/MAIN.PEX"
+      ],
+      "000D0000_34F0A88B.dll": [
+        "JM1/MAIN.PEX"
+      ],
+      "000D0000_42FF68FD.dll": [
+        "JM1/MAIN.PEX",
+        "JM1B/MAIN.PEX"
+      ],
+      "000D0000_55EF40D4.dll": [
+        "JM1/MAIN.PEX"
+      ],
+      "000D0000_7E5419AF.dll": [
+        "JM1/MAIN.PEX",
+        "JM1B/MAIN.PEX"
+      ],
+      "000D0000_EA241B99.dll": [
+        "JM1/MAIN.PEX"
+      ],
+      "000D6000_E387E6DA.dll": [
+        "JM1/MAIN.PEX"
+      ],
+      "000E0000_24584111.dll": [
+        "JM1/MAIN.PEX"
+      ],
+      "000E0000_2A0E82D6.dll": [
+        "JM1/MAIN.PEX"
+      ],
+      "000E0000_4F70C472.dll": [
+        "JM1/MAIN.PEX"
+      ],
+      "000E0000_5ED9F0DB.dll": [
+        "JM1/MAIN.PEX"
+      ],
+      "000E0000_7B1722F5.dll": [
+        "JM1/MAIN.PEX",
+        "JM1B/MAIN.PEX"
+      ],
+      "000E0000_95B6A3B9.dll": [
+        "JM1/MAIN.PEX",
+        "JM1B/MAIN.PEX"
+      ],
+      "000E0000_9D484FBD.dll": [
+        "JM1/MAIN.PEX"
+      ],
+      "000E0000_B03B9187.dll": [
+        "SELECT.PEX"
+      ],
+      "000E0000_B41E9BFB.dll": [
+        "JM1/MAIN.PEX"
+      ],
+      "000E1000_50466553.dll": [
+        "JM1/MAIN.PEX"
+      ],
+      "000E3000_5728DDCA.dll": [
+        "SELECT.PEX"
+      ],
+      "000E3000_D431C504.dll": [
+        "SELECT.PEX"
+      ],
+      "000E5000_44BE352C.dll": [
+        "JM1/MAIN.PEX"
+      ],
+      "000E5000_660BCAF3.dll": [
+        "JM1/MAIN.PEX"
+      ],
+      "000E5000_A548423F.dll": [
+        "JM1/MAIN.PEX"
+      ],
+      "000E5000_A9608E91.dll": [
+        "JM1/MAIN.PEX",
+        "JM1B/MAIN.PEX"
+      ],
+      "000E7000_CA625719.dll": [
+        "SELECT.PEX"
+      ],
+      "000F1000_00F2CC9E.dll": [
+        "JM1/MAIN.PEX",
+        "JM1B/MAIN.PEX"
+      ],
+      "000F4000_5E58F911.dll": [
+        "JM1/MAIN.PEX",
+        "JM1B/MAIN.PEX"
+      ],
+      "000F4000_7AE293C9.dll": [
+        "JM1/MAIN.PEX",
+        "JM1B/MAIN.PEX"
+      ],
+      "000F4000_C80946D7.dll": [
+        "JM1/MAIN.PEX",
+        "JM1B/MAIN.PEX"
+      ],
+      "000F4000_F569159A.dll": [
+        "JM1/MAIN.PEX",
+        "JM1B/MAIN.PEX"
+      ],
+      "000F5000_71B06401.dll": [
+        "JM1/MAIN.PEX",
+        "JM1B/MAIN.PEX"
+      ],
+      "000F6000_DC7A219C.dll": [
+        "JM1/MAIN.PEX",
+        "JM1B/MAIN.PEX"
+      ],
+      "000F7000_4553D975.dll": [
+        "JM1/MAIN.PEX"
+      ],
+      "000F9000_BA3F7A1B.dll": [
+        "JM1/MAIN.PEX"
+      ],
+      "seg-kseg1/000E3000_E6C92133.dll": [
+        "JM1/MAIN.PEX"
+      ]
+    },
+    "rejected_sources": [
+      "000F4000_06467FE4.dll",
+      "000F6000_A72159AF.dll"
+    ]
+  },
+  "images": {
+    "JM1/MAIN.PEX": {
+      "body_sha256": "de7a03cf84d1e7662c89e2597bda2c53557604747615827637a85751eecc3a23",
+      "nominations": [
+        {
+          "entry": "0x800bd92c",
+          "code_crc32": "0xcb679e91",
+          "ranges": [
+            [
+              "0x800bd92c",
+              188
+            ]
+          ]
+        },
+        {
+          "entry": "0x800bd9e8",
+          "code_crc32": "0x546e07c4",
+          "ranges": [
+            [
+              "0x800bd9e8",
+              156
+            ]
+          ]
+        },
+        {
+          "entry": "0x800bda84",
+          "code_crc32": "0x62acf830",
+          "ranges": [
+            [
+              "0x800bda84",
+              132
+            ]
+          ]
+        },
+        {
+          "entry": "0x800bdb08",
+          "code_crc32": "0x60c1afac",
+          "ranges": [
+            [
+              "0x800bdb08",
+              124
+            ]
+          ]
+        },
+        {
+          "entry": "0x800bdb84",
+          "code_crc32": "0x1b9f1c6a",
+          "ranges": [
+            [
+              "0x800bdb84",
+              388
+            ]
+          ]
+        },
+        {
+          "entry": "0x800bdd08",
+          "code_crc32": "0x4567f3bf",
+          "ranges": [
+            [
+              "0x800bdd08",
+              60
+            ]
+          ]
+        },
+        {
+          "entry": "0x800bdd44",
+          "code_crc32": "0x2044ca8f",
+          "ranges": [
+            [
+              "0x800bdd44",
+              132
+            ]
+          ]
+        },
+        {
+          "entry": "0x800d04b0",
+          "code_crc32": "0x767655bc",
+          "ranges": [
+            [
+              "0x800d04b0",
+              24
+            ]
+          ]
+        },
+        {
+          "entry": "0x800d04c8",
+          "code_crc32": "0xf6d4494c",
+          "ranges": [
+            [
+              "0x800d04c8",
+              32
+            ]
+          ]
+        },
+        {
+          "entry": "0x800d053c",
+          "code_crc32": "0x67df8ab8",
+          "ranges": [
+            [
+              "0x800d053c",
+              80
+            ]
+          ]
+        },
+        {
+          "entry": "0x800d156c",
+          "code_crc32": "0xa009c864",
+          "ranges": [
+            [
+              "0x800d156c",
+              556
+            ]
+          ]
+        },
+        {
+          "entry": "0x800d19d0",
+          "code_crc32": "0xaf9e5813",
+          "ranges": [
+            [
+              "0x800d19d0",
+              152
+            ]
+          ]
+        },
+        {
+          "entry": "0x800d1f90",
+          "code_crc32": "0xfab1e0cb",
+          "ranges": [
+            [
+              "0x800d1f90",
+              236
+            ]
+          ]
+        },
+        {
+          "entry": "0x800d207c",
+          "code_crc32": "0x9d44e3a5",
+          "ranges": [
+            [
+              "0x800d207c",
+              264
+            ]
+          ]
+        },
+        {
+          "entry": "0x800d22b4",
+          "code_crc32": "0xe6c62686",
+          "ranges": [
+            [
+              "0x800d22b4",
+              232
+            ]
+          ]
+        },
+        {
+          "entry": "0x800d239c",
+          "code_crc32": "0xe69a17eb",
+          "ranges": [
+            [
+              "0x800d239c",
+              292
+            ]
+          ]
+        },
+        {
+          "entry": "0x800d24c0",
+          "code_crc32": "0x3b61eb04",
+          "ranges": [
+            [
+              "0x800d24c0",
+              344
+            ]
+          ]
+        },
+        {
+          "entry": "0x800d6450",
+          "code_crc32": "0x73236ded",
+          "ranges": [
+            [
+              "0x800d6450",
+              536
+            ]
+          ]
+        },
+        {
+          "entry": "0x800d6944",
+          "code_crc32": "0x7f042589",
+          "ranges": [
+            [
+              "0x800d6944",
+              148
+            ]
+          ]
+        },
+        {
+          "entry": "0x800d6f14",
+          "code_crc32": "0x596f2ef0",
+          "ranges": [
+            [
+              "0x800d6f14",
+              656
+            ]
+          ]
+        },
+        {
+          "entry": "0x800d71a4",
+          "code_crc32": "0xd2e3c50a",
+          "ranges": [
+            [
+              "0x800d71a4",
+              364
+            ]
+          ]
+        },
+        {
+          "entry": "0x800d7310",
+          "code_crc32": "0xbd3f55bf",
+          "ranges": [
+            [
+              "0x800d7310",
+              148
+            ]
+          ]
+        },
+        {
+          "entry": "0x800d73a4",
+          "code_crc32": "0xc2067781",
+          "ranges": [
+            [
+              "0x800d73a4",
+              1568
+            ]
+          ]
+        },
+        {
+          "entry": "0x800d7ac0",
+          "code_crc32": "0xa81b4819",
+          "ranges": [
+            [
+              "0x800d7ac0",
+              124
+            ]
+          ]
+        },
+        {
+          "entry": "0x800d861c",
+          "code_crc32": "0x892fbd80",
+          "ranges": [
+            [
+              "0x800d861c",
+              200
+            ]
+          ]
+        },
+        {
+          "entry": "0x800da018",
+          "code_crc32": "0x74c6c207",
+          "ranges": [
+            [
+              "0x800da018",
+              36
+            ]
+          ]
+        },
+        {
+          "entry": "0x800da07c",
+          "code_crc32": "0x96d11ce5",
+          "ranges": [
+            [
+              "0x800da07c",
+              92
+            ]
+          ]
+        },
+        {
+          "entry": "0x800da4e8",
+          "code_crc32": "0x5a00762d",
+          "ranges": [
+            [
+              "0x800da4e8",
+              884
+            ]
+          ]
+        },
+        {
+          "entry": "0x800da910",
+          "code_crc32": "0x3e19879f",
+          "ranges": [
+            [
+              "0x800da910",
+              136
+            ]
+          ]
+        },
+        {
+          "entry": "0x800da998",
+          "code_crc32": "0x5de9990b",
+          "ranges": [
+            [
+              "0x800da998",
+              200
+            ]
+          ]
+        },
+        {
+          "entry": "0x800daafc",
+          "code_crc32": "0xa744eca1",
+          "ranges": [
+            [
+              "0x800daafc",
+              16
+            ]
+          ]
+        },
+        {
+          "entry": "0x800db348",
+          "code_crc32": "0x818fb21",
+          "ranges": [
+            [
+              "0x800db348",
+              76
+            ]
+          ]
+        },
+        {
+          "entry": "0x800db394",
+          "code_crc32": "0x940f9a84",
+          "ranges": [
+            [
+              "0x800db394",
+              108
+            ]
+          ]
+        },
+        {
+          "entry": "0x800db66c",
+          "code_crc32": "0xc853f933",
+          "ranges": [
+            [
+              "0x800db66c",
+              72
+            ]
+          ]
+        },
+        {
+          "entry": "0x800db994",
+          "code_crc32": "0x5686a0d4",
+          "ranges": [
+            [
+              "0x800db994",
+              16
+            ]
+          ]
+        },
+        {
+          "entry": "0x800dba18",
+          "code_crc32": "0x33f204f7",
+          "ranges": [
+            [
+              "0x800dba18",
+              460
+            ]
+          ]
+        },
+        {
+          "entry": "0x800dbbe4",
+          "code_crc32": "0x2ed73dde",
+          "ranges": [
+            [
+              "0x800dbbe4",
+              16
+            ]
+          ]
+        },
+        {
+          "entry": "0x800dbc24",
+          "code_crc32": "0x49d27459",
+          "ranges": [
+            [
+              "0x800dbc24",
+              16
+            ]
+          ]
+        },
+        {
+          "entry": "0x800dbc44",
+          "code_crc32": "0xd5f9a4d",
+          "ranges": [
+            [
+              "0x800dbc44",
+              16
+            ]
+          ]
+        },
+        {
+          "entry": "0x800dbc98",
+          "code_crc32": "0x79e79e00",
+          "ranges": [
+            [
+              "0x800dbc98",
+              116
+            ]
+          ]
+        },
+        {
+          "entry": "0x800dc00c",
+          "code_crc32": "0x93d1823e",
+          "ranges": [
+            [
+              "0x800dc00c",
+              192
+            ]
+          ]
+        },
+        {
+          "entry": "0x800dc0cc",
+          "code_crc32": "0xd10285d2",
+          "ranges": [
+            [
+              "0x800dc0cc",
+              1016
+            ]
+          ]
+        },
+        {
+          "entry": "0x800dc4c4",
+          "code_crc32": "0x4d7ead94",
+          "ranges": [
+            [
+              "0x800dc4c4",
+              1320
+            ]
+          ]
+        },
+        {
+          "entry": "0x800ddb58",
+          "code_crc32": "0x46364a2b",
+          "ranges": [
+            [
+              "0x800ddb58",
+              172
+            ]
+          ]
+        },
+        {
+          "entry": "0x800ddc6c",
+          "code_crc32": "0x134a7ef2",
+          "ranges": [
+            [
+              "0x800ddc6c",
+              376
+            ]
+          ]
+        },
+        {
+          "entry": "0x800ddde4",
+          "code_crc32": "0xddeed998",
+          "ranges": [
+            [
+              "0x800ddde4",
+              220
+            ]
+          ]
+        },
+        {
+          "entry": "0x800ddec0",
+          "code_crc32": "0xc0ef2530",
+          "ranges": [
+            [
+              "0x800ddec0",
+              68
+            ]
+          ]
+        },
+        {
+          "entry": "0x800ddf04",
+          "code_crc32": "0x4e18077a",
+          "ranges": [
+            [
+              "0x800ddf04",
+              832
+            ]
+          ]
+        },
+        {
+          "entry": "0x800de3cc",
+          "code_crc32": "0x9f07d626",
+          "ranges": [
+            [
+              "0x800de3cc",
+              376
+            ]
+          ]
+        },
+        {
+          "entry": "0x800de544",
+          "code_crc32": "0x998ac0a5",
+          "ranges": [
+            [
+              "0x800de544",
+              60
+            ]
+          ]
+        },
+        {
+          "entry": "0x800de580",
+          "code_crc32": "0xb249f087",
+          "ranges": [
+            [
+              "0x800de580",
+              208
+            ]
+          ]
+        },
+        {
+          "entry": "0x800de650",
+          "code_crc32": "0x3faa7839",
+          "ranges": [
+            [
+              "0x800de650",
+              92
+            ]
+          ]
+        },
+        {
+          "entry": "0x800de6ac",
+          "code_crc32": "0x2fc44bab",
+          "ranges": [
+            [
+              "0x800de6ac",
+              72
+            ]
+          ]
+        },
+        {
+          "entry": "0x800de6f4",
+          "code_crc32": "0x3702c5f0",
+          "ranges": [
+            [
+              "0x800de6f4",
+              52
+            ]
+          ]
+        },
+        {
+          "entry": "0x800de728",
+          "code_crc32": "0x9d15bf5d",
+          "ranges": [
+            [
+              "0x800de728",
+              24
+            ]
+          ]
+        },
+        {
+          "entry": "0x800de740",
+          "code_crc32": "0x5ebdf1fa",
+          "ranges": [
+            [
+              "0x800de740",
+              368
+            ]
+          ]
+        },
+        {
+          "entry": "0x800de920",
+          "code_crc32": "0x4188802f",
+          "ranges": [
+            [
+              "0x800de920",
+              16
+            ]
+          ]
+        },
+        {
+          "entry": "0x800dead4",
+          "code_crc32": "0xb2dafbc8",
+          "ranges": [
+            [
+              "0x800dead4",
+              152
+            ]
+          ]
+        },
+        {
+          "entry": "0x800ded4c",
+          "code_crc32": "0xf0e2a7e1",
+          "ranges": [
+            [
+              "0x800ded4c",
+              40
+            ]
+          ]
+        },
+        {
+          "entry": "0x800deeb4",
+          "code_crc32": "0x285cf647",
+          "ranges": [
+            [
+              "0x800deeb4",
+              20
+            ]
+          ]
+        },
+        {
+          "entry": "0x800df1c4",
+          "code_crc32": "0x65ed259e",
+          "ranges": [
+            [
+              "0x800df1c4",
+              16
+            ]
+          ]
+        },
+        {
+          "entry": "0x800df454",
+          "code_crc32": "0xc034fce5",
+          "ranges": [
+            [
+              "0x800df454",
+              32
+            ]
+          ]
+        },
+        {
+          "entry": "0x800df474",
+          "code_crc32": "0x8b1bef2",
+          "ranges": [
+            [
+              "0x800df474",
+              540
+            ]
+          ]
+        },
+        {
+          "entry": "0x800df690",
+          "code_crc32": "0x9e7207f0",
+          "ranges": [
+            [
+              "0x800df690",
+              108
+            ]
+          ]
+        },
+        {
+          "entry": "0x800df6fc",
+          "code_crc32": "0x7c113aa4",
+          "ranges": [
+            [
+              "0x800df6fc",
+              392
+            ]
+          ]
+        },
+        {
+          "entry": "0x800df884",
+          "code_crc32": "0x18dfd06d",
+          "ranges": [
+            [
+              "0x800df884",
+              1012
+            ]
+          ]
+        },
+        {
+          "entry": "0x800dfc78",
+          "code_crc32": "0x9c2bdcf",
+          "ranges": [
+            [
+              "0x800dfc78",
+              416
+            ]
+          ]
+        },
+        {
+          "entry": "0x800dfe18",
+          "code_crc32": "0x9cb516e3",
+          "ranges": [
+            [
+              "0x800dfe18",
+              808
+            ]
+          ]
+        },
+        {
+          "entry": "0x800e02f8",
+          "code_crc32": "0x3a069e0d",
+          "ranges": [
+            [
+              "0x800e02f8",
+              892
+            ]
+          ]
+        },
+        {
+          "entry": "0x800e0964",
+          "code_crc32": "0xcae56797",
+          "ranges": [
+            [
+              "0x800e0964",
+              144
+            ]
+          ]
+        },
+        {
+          "entry": "0x800e09f4",
+          "code_crc32": "0x24d1491f",
+          "ranges": [
+            [
+              "0x800e09f4",
+              60
+            ]
+          ]
+        },
+        {
+          "entry": "0x800e0a40",
+          "code_crc32": "0xbe336a97",
+          "ranges": [
+            [
+              "0x800e0a40",
+              16
+            ]
+          ]
+        },
+        {
+          "entry": "0x800e0a50",
+          "code_crc32": "0x9d0d9619",
+          "ranges": [
+            [
+              "0x800e0a50",
+              40
+            ]
+          ]
+        },
+        {
+          "entry": "0x800e0a78",
+          "code_crc32": "0x93dc4924",
+          "ranges": [
+            [
+              "0x800e0a78",
+              40
+            ]
+          ]
+        },
+        {
+          "entry": "0x800e0aa0",
+          "code_crc32": "0x68dcb315",
+          "ranges": [
+            [
+              "0x800e0aa0",
+              28
+            ]
+          ]
+        },
+        {
+          "entry": "0x800e0abc",
+          "code_crc32": "0x33ca3a3d",
+          "ranges": [
+            [
+              "0x800e0abc",
+              60
+            ]
+          ]
+        },
+        {
+          "entry": "0x800e0b54",
+          "code_crc32": "0x17cfee85",
+          "ranges": [
+            [
+              "0x800e0b54",
+              132
+            ]
+          ]
+        },
+        {
+          "entry": "0x800e0d44",
+          "code_crc32": "0xe89bc479",
+          "ranges": [
+            [
+              "0x800e0d44",
+              16
+            ]
+          ]
+        },
+        {
+          "entry": "0x800e0d54",
+          "code_crc32": "0xd0ca66a8",
+          "ranges": [
+            [
+              "0x800e0d54",
+              20
+            ]
+          ]
+        },
+        {
+          "entry": "0x800e0d68",
+          "code_crc32": "0xea07e66c",
+          "ranges": [
+            [
+              "0x800e0d68",
+              52
+            ]
+          ]
+        },
+        {
+          "entry": "0x800e0d9c",
+          "code_crc32": "0xf6a6697f",
+          "ranges": [
+            [
+              "0x800e0d9c",
+              16
+            ]
+          ]
+        },
+        {
+          "entry": "0x800e0dac",
+          "code_crc32": "0xb3cd17e",
+          "ranges": [
+            [
+              "0x800e0dac",
+              136
+            ]
+          ]
+        },
+        {
+          "entry": "0x800e0f2c",
+          "code_crc32": "0x836b21db",
+          "ranges": [
+            [
+              "0x800e0f2c",
+              32
+            ]
+          ]
+        },
+        {
+          "entry": "0x800e0f4c",
+          "code_crc32": "0x2aad1f6b",
+          "ranges": [
+            [
+              "0x800e0f4c",
+              56
+            ]
+          ]
+        },
+        {
+          "entry": "0x800e0f94",
+          "code_crc32": "0x67b4f965",
+          "ranges": [
+            [
+              "0x800e0f94",
+              40
+            ]
+          ]
+        },
+        {
+          "entry": "0x800e100c",
+          "code_crc32": "0xd90ab423",
+          "ranges": [
+            [
+              "0x800e100c",
+              236
+            ]
+          ]
+        },
+        {
+          "entry": "0x800e1144",
+          "code_crc32": "0xa8eb059a",
+          "ranges": [
+            [
+              "0x800e1144",
+              32
+            ]
+          ]
+        },
+        {
+          "entry": "0x800e1164",
+          "code_crc32": "0x31c2dcfe",
+          "ranges": [
+            [
+              "0x800e1164",
+              44
+            ]
+          ]
+        },
+        {
+          "entry": "0x800e1190",
+          "code_crc32": "0x84444665",
+          "ranges": [
+            [
+              "0x800e1190",
+              16
+            ]
+          ]
+        },
+        {
+          "entry": "0x800e11a0",
+          "code_crc32": "0x1084ae72",
+          "ranges": [
+            [
+              "0x800e11a0",
+              1276
+            ]
+          ]
+        },
+        {
+          "entry": "0x800e1288",
+          "code_crc32": "0x1ef8a513",
+          "ranges": [
+            [
+              "0x800e1288",
+              1044
+            ]
+          ]
+        },
+        {
+          "entry": "0x800e16ac",
+          "code_crc32": "0xd8d757cc",
+          "ranges": [
+            [
+              "0x800e16ac",
+              16
+            ]
+          ]
+        },
+        {
+          "entry": "0x800e16bc",
+          "code_crc32": "0xf0aa1f81",
+          "ranges": [
+            [
+              "0x800e16bc",
+              16
+            ]
+          ]
+        },
+        {
+          "entry": "0x800e16cc",
+          "code_crc32": "0xfabe8483",
+          "ranges": [
+            [
+              "0x800e16cc",
+              16
+            ]
+          ]
+        },
+        {
+          "entry": "0x800e1710",
+          "code_crc32": "0x98e3df59",
+          "ranges": [
+            [
+              "0x800e1710",
+              40
+            ]
+          ]
+        },
+        {
+          "entry": "0x800e1738",
+          "code_crc32": "0xcf380464",
+          "ranges": [
+            [
+              "0x800e1738",
+              152
+            ]
+          ]
+        },
+        {
+          "entry": "0x800e17d0",
+          "code_crc32": "0x3171038",
+          "ranges": [
+            [
+              "0x800e17d0",
+              104
+            ]
+          ]
+        },
+        {
+          "entry": "0x800e1894",
+          "code_crc32": "0xe15f4046",
+          "ranges": [
+            [
+              "0x800e1894",
+              16
+            ]
+          ]
+        },
+        {
+          "entry": "0x800e18a4",
+          "code_crc32": "0xa2b4e82a",
+          "ranges": [
+            [
+              "0x800e18a4",
+              112
+            ]
+          ]
+        },
+        {
+          "entry": "0x800e1914",
+          "code_crc32": "0x75128017",
+          "ranges": [
+            [
+              "0x800e1914",
+              800
+            ]
+          ]
+        },
+        {
+          "entry": "0x800e1c68",
+          "code_crc32": "0xa222f29",
+          "ranges": [
+            [
+              "0x800e1c68",
+              292
+            ]
+          ]
+        },
+        {
+          "entry": "0x800e1ca0",
+          "code_crc32": "0x2d1ccef3",
+          "ranges": [
+            [
+              "0x800e1ca0",
+              236
+            ]
+          ]
+        },
+        {
+          "entry": "0x800e1e28",
+          "code_crc32": "0x6259676",
+          "ranges": [
+            [
+              "0x800e1e28",
+              632
+            ]
+          ]
+        },
+        {
+          "entry": "0x800e20c4",
+          "code_crc32": "0x95f08411",
+          "ranges": [
+            [
+              "0x800e20c4",
+              36
+            ]
+          ]
+        },
+        {
+          "entry": "0x800e20e8",
+          "code_crc32": "0xd68f7859",
+          "ranges": [
+            [
+              "0x800e20e8",
+              60
+            ]
+          ]
+        },
+        {
+          "entry": "0x800e2124",
+          "code_crc32": "0xdeb86231",
+          "ranges": [
+            [
+              "0x800e2124",
+              96
+            ]
+          ]
+        },
+        {
+          "entry": "0x800e2184",
+          "code_crc32": "0x7df63db6",
+          "ranges": [
+            [
+              "0x800e2184",
+              108
+            ]
+          ]
+        },
+        {
+          "entry": "0x800e21f0",
+          "code_crc32": "0xad9921f9",
+          "ranges": [
+            [
+              "0x800e21f0",
+              1324
+            ]
+          ]
+        },
+        {
+          "entry": "0x800e2438",
+          "code_crc32": "0xad3a4251",
+          "ranges": [
+            [
+              "0x800e2438",
+              24
+            ]
+          ]
+        },
+        {
+          "entry": "0x800e3168",
+          "code_crc32": "0xc613a98c",
+          "ranges": [
+            [
+              "0x800e3168",
+              1024
+            ]
+          ]
+        },
+        {
+          "entry": "0x800e38a8",
+          "code_crc32": "0xd3b322b8",
+          "ranges": [
+            [
+              "0x800e38a8",
+              432
+            ]
+          ]
+        },
+        {
+          "entry": "0x800e3c68",
+          "code_crc32": "0xd7db7c4a",
+          "ranges": [
+            [
+              "0x800e3c68",
+              48
+            ]
+          ]
+        },
+        {
+          "entry": "0x800e3df8",
+          "code_crc32": "0x107afa40",
+          "ranges": [
+            [
+              "0x800e3df8",
+              16
+            ]
+          ]
+        },
+        {
+          "entry": "0x800e3e08",
+          "code_crc32": "0xa5406fa2",
+          "ranges": [
+            [
+              "0x800e3e08",
+              76
+            ]
+          ]
+        },
+        {
+          "entry": "0x800e3e54",
+          "code_crc32": "0x60c84c5a",
+          "ranges": [
+            [
+              "0x800e3e54",
+              16
+            ]
+          ]
+        },
+        {
+          "entry": "0x800e3e64",
+          "code_crc32": "0x42a19f15",
+          "ranges": [
+            [
+              "0x800e3e64",
+              16
+            ]
+          ]
+        },
+        {
+          "entry": "0x800e561c",
+          "code_crc32": "0xb8b2f168",
+          "ranges": [
+            [
+              "0x800e561c",
+              32
+            ]
+          ]
+        },
+        {
+          "entry": "0x800e568c",
+          "code_crc32": "0x3b3a8a72",
+          "ranges": [
+            [
+              "0x800e568c",
+              396
+            ]
+          ]
+        },
+        {
+          "entry": "0x800e5818",
+          "code_crc32": "0xff91b9c4",
+          "ranges": [
+            [
+              "0x800e5818",
+              184
+            ]
+          ]
+        },
+        {
+          "entry": "0x800e5b88",
+          "code_crc32": "0x83516f3a",
+          "ranges": [
+            [
+              "0x800e5b88",
+              32
+            ]
+          ]
+        },
+        {
+          "entry": "0x800e5ba8",
+          "code_crc32": "0xc9bcd556",
+          "ranges": [
+            [
+              "0x800e5ba8",
+              280
+            ]
+          ]
+        },
+        {
+          "entry": "0x800e5d30",
+          "code_crc32": "0x10fee890",
+          "ranges": [
+            [
+              "0x800e5d30",
+              96
+            ]
+          ]
+        },
+        {
+          "entry": "0x800e5fe8",
+          "code_crc32": "0x54372c25",
+          "ranges": [
+            [
+              "0x800e5fe8",
+              776
+            ]
+          ]
+        },
+        {
+          "entry": "0x800e710c",
+          "code_crc32": "0x54d7e9f",
+          "ranges": [
+            [
+              "0x800e710c",
+              24
+            ]
+          ]
+        },
+        {
+          "entry": "0x800e7130",
+          "code_crc32": "0x5856bab2",
+          "ranges": [
+            [
+              "0x800e7130",
+              12
+            ]
+          ]
+        },
+        {
+          "entry": "0x800e713c",
+          "code_crc32": "0xcaff10eb",
+          "ranges": [
+            [
+              "0x800e713c",
+              12
+            ]
+          ]
+        },
+        {
+          "entry": "0x800e78b0",
+          "code_crc32": "0xe723a58e",
+          "ranges": [
+            [
+              "0x800e78b0",
+              8
+            ]
+          ]
+        },
+        {
+          "entry": "0x800e8738",
+          "code_crc32": "0x4d7b056d",
+          "ranges": [
+            [
+              "0x800e8738",
+              128
+            ]
+          ]
+        },
+        {
+          "entry": "0x800e87b8",
+          "code_crc32": "0x8f2e95e7",
+          "ranges": [
+            [
+              "0x800e87b8",
+              88
+            ]
+          ]
+        },
+        {
+          "entry": "0x800e8810",
+          "code_crc32": "0x6bfec893",
+          "ranges": [
+            [
+              "0x800e8810",
+              20
+            ]
+          ]
+        },
+        {
+          "entry": "0x800e8868",
+          "code_crc32": "0xd18cf38c",
+          "ranges": [
+            [
+              "0x800e8868",
+              72
+            ]
+          ]
+        },
+        {
+          "entry": "0x800e88b0",
+          "code_crc32": "0xb8508f05",
+          "ranges": [
+            [
+              "0x800e88b0",
+              20
+            ]
+          ]
+        },
+        {
+          "entry": "0x800e88c4",
+          "code_crc32": "0x812cfb2f",
+          "ranges": [
+            [
+              "0x800e88c4",
+              16
+            ]
+          ]
+        },
+        {
+          "entry": "0x800e88d4",
+          "code_crc32": "0x26749826",
+          "ranges": [
+            [
+              "0x800e88d4",
+              16
+            ]
+          ]
+        },
+        {
+          "entry": "0x800e88e4",
+          "code_crc32": "0x255af570",
+          "ranges": [
+            [
+              "0x800e88e4",
+              16
+            ]
+          ]
+        },
+        {
+          "entry": "0x800e88f4",
+          "code_crc32": "0x7af13661",
+          "ranges": [
+            [
+              "0x800e88f4",
+              108
+            ]
+          ]
+        },
+        {
+          "entry": "0x800e8934",
+          "code_crc32": "0x7af13661",
+          "ranges": [
+            [
+              "0x800e88f4",
+              108
+            ]
+          ]
+        },
+        {
+          "entry": "0x800ea7f8",
+          "code_crc32": "0x5533238c",
+          "ranges": [
+            [
+              "0x800ea7f8",
+              16
+            ]
+          ]
+        },
+        {
+          "entry": "0x800ea854",
+          "code_crc32": "0xf1e2143b",
+          "ranges": [
+            [
+              "0x800ea854",
+              20
+            ]
+          ]
+        },
+        {
+          "entry": "0x800ea868",
+          "code_crc32": "0x1065c1a",
+          "ranges": [
+            [
+              "0x800ea868",
+              92
+            ]
+          ]
+        },
+        {
+          "entry": "0x800ea8ec",
+          "code_crc32": "0xe613e9f6",
+          "ranges": [
+            [
+              "0x800ea8ec",
+              848
+            ]
+          ]
+        },
+        {
+          "entry": "0x800eac3c",
+          "code_crc32": "0xc4c4e18d",
+          "ranges": [
+            [
+              "0x800eac3c",
+              420
+            ]
+          ]
+        },
+        {
+          "entry": "0x800eb450",
+          "code_crc32": "0xcd805841",
+          "ranges": [
+            [
+              "0x800eb450",
+              396
+            ]
+          ]
+        },
+        {
+          "entry": "0x800ec0e4",
+          "code_crc32": "0x59139a4d",
+          "ranges": [
+            [
+              "0x800ec0e4",
+              248
+            ]
+          ]
+        },
+        {
+          "entry": "0x800ec408",
+          "code_crc32": "0xc0f12a2f",
+          "ranges": [
+            [
+              "0x800ec408",
+              72
+            ]
+          ]
+        },
+        {
+          "entry": "0x800ec450",
+          "code_crc32": "0x925aff6",
+          "ranges": [
+            [
+              "0x800ec450",
+              64
+            ]
+          ]
+        },
+        {
+          "entry": "0x800ec4f4",
+          "code_crc32": "0x45ade856",
+          "ranges": [
+            [
+              "0x800ec4f4",
+              212
+            ]
+          ]
+        },
+        {
+          "entry": "0x800ecd88",
+          "code_crc32": "0x7e0d1123",
+          "ranges": [
+            [
+              "0x800ecd88",
+              72
+            ]
+          ]
+        },
+        {
+          "entry": "0x800ece00",
+          "code_crc32": "0xe723a58e",
+          "ranges": [
+            [
+              "0x800ece00",
+              8
+            ]
+          ]
+        },
+        {
+          "entry": "0x800ed024",
+          "code_crc32": "0xe723a58e",
+          "ranges": [
+            [
+              "0x800ed024",
+              8
+            ]
+          ]
+        },
+        {
+          "entry": "0x800ed41c",
+          "code_crc32": "0xf52ad7a5",
+          "ranges": [
+            [
+              "0x800ed41c",
+              40
+            ]
+          ]
+        },
+        {
+          "entry": "0x800ed67c",
+          "code_crc32": "0xb6fb0b46",
+          "ranges": [
+            [
+              "0x800ed67c",
+              16
+            ]
+          ]
+        },
+        {
+          "entry": "0x800eda14",
+          "code_crc32": "0xd30e9871",
+          "ranges": [
+            [
+              "0x800eda14",
+              832
+            ]
+          ]
+        },
+        {
+          "entry": "0x800eddec",
+          "code_crc32": "0x901c7b84",
+          "ranges": [
+            [
+              "0x800eddec",
+              508
+            ]
+          ]
+        },
+        {
+          "entry": "0x800ee01c",
+          "code_crc32": "0xf77551ec",
+          "ranges": [
+            [
+              "0x800ee01c",
+              80
+            ]
+          ]
+        },
+        {
+          "entry": "0x800ee26c",
+          "code_crc32": "0x56896f43",
+          "ranges": [
+            [
+              "0x800ee26c",
+              552
+            ]
+          ]
+        },
+        {
+          "entry": "0x800ee780",
+          "code_crc32": "0xb7f6fb3c",
+          "ranges": [
+            [
+              "0x800ee780",
+              212
+            ]
+          ]
+        },
+        {
+          "entry": "0x800eef50",
+          "code_crc32": "0xa127cbe2",
+          "ranges": [
+            [
+              "0x800eef50",
+              180
+            ]
+          ]
+        },
+        {
+          "entry": "0x800ef51c",
+          "code_crc32": "0x450d6e4c",
+          "ranges": [
+            [
+              "0x800ef51c",
+              772
+            ]
+          ]
+        },
+        {
+          "entry": "0x800ef820",
+          "code_crc32": "0xd4c6f9c7",
+          "ranges": [
+            [
+              "0x800ef820",
+              392
+            ]
+          ]
+        },
+        {
+          "entry": "0x800ef9a8",
+          "code_crc32": "0xc3ef0363",
+          "ranges": [
+            [
+              "0x800ef9a8",
+              620
+            ]
+          ]
+        },
+        {
+          "entry": "0x800efec4",
+          "code_crc32": "0xb5b141c7",
+          "ranges": [
+            [
+              "0x800efec4",
+              432
+            ]
+          ]
+        },
+        {
+          "entry": "0x800f0074",
+          "code_crc32": "0x5638d145",
+          "ranges": [
+            [
+              "0x800f0074",
+              92
+            ]
+          ]
+        },
+        {
+          "entry": "0x800f1aac",
+          "code_crc32": "0x8f4c32ac",
+          "ranges": [
+            [
+              "0x800f1aac",
+              16
+            ]
+          ]
+        },
+        {
+          "entry": "0x800f1bc0",
+          "code_crc32": "0x1aa68aae",
+          "ranges": [
+            [
+              "0x800f1bc0",
+              188
+            ]
+          ]
+        },
+        {
+          "entry": "0x800f1c7c",
+          "code_crc32": "0xe265c1bb",
+          "ranges": [
+            [
+              "0x800f1c7c",
+              444
+            ]
+          ]
+        },
+        {
+          "entry": "0x800f1ffc",
+          "code_crc32": "0x9e2f4d0e",
+          "ranges": [
+            [
+              "0x800f1ffc",
+              104
+            ]
+          ]
+        },
+        {
+          "entry": "0x800f2050",
+          "code_crc32": "0x9e2f4d0e",
+          "ranges": [
+            [
+              "0x800f1ffc",
+              104
+            ]
+          ]
+        },
+        {
+          "entry": "0x800f20b0",
+          "code_crc32": "0x654f1eee",
+          "ranges": [
+            [
+              "0x800f20b0",
+              164
+            ]
+          ]
+        },
+        {
+          "entry": "0x800f2154",
+          "code_crc32": "0x295cdd98",
+          "ranges": [
+            [
+              "0x800f2154",
+              844
+            ]
+          ]
+        },
+        {
+          "entry": "0x800f2760",
+          "code_crc32": "0x5b368062",
+          "ranges": [
+            [
+              "0x800f2760",
+              104
+            ]
+          ]
+        },
+        {
+          "entry": "0x800f27b4",
+          "code_crc32": "0x5b368062",
+          "ranges": [
+            [
+              "0x800f2760",
+              104
+            ]
+          ]
+        },
+        {
+          "entry": "0x800f2820",
+          "code_crc32": "0xc4219b14",
+          "ranges": [
+            [
+              "0x800f2820",
+              128
+            ]
+          ]
+        },
+        {
+          "entry": "0x800f296c",
+          "code_crc32": "0xde804278",
+          "ranges": [
+            [
+              "0x800f296c",
+              96
+            ]
+          ]
+        },
+        {
+          "entry": "0x800f2c30",
+          "code_crc32": "0x62dd8deb",
+          "ranges": [
+            [
+              "0x800f2c30",
+              32
+            ]
+          ]
+        },
+        {
+          "entry": "0x800f2cac",
+          "code_crc32": "0x5ba423f5",
+          "ranges": [
+            [
+              "0x800f2cac",
+              16
+            ]
+          ]
+        },
+        {
+          "entry": "0x800f3198",
+          "code_crc32": "0xfde26021",
+          "ranges": [
+            [
+              "0x800f3198",
+              44
+            ]
+          ]
+        },
+        {
+          "entry": "0x800f3320",
+          "code_crc32": "0x81e1a049",
+          "ranges": [
+            [
+              "0x800f3320",
+              16
+            ]
+          ]
+        },
+        {
+          "entry": "0x800f3330",
+          "code_crc32": "0x93c4e0b3",
+          "ranges": [
+            [
+              "0x800f3330",
+              16
+            ]
+          ]
+        },
+        {
+          "entry": "0x800f3350",
+          "code_crc32": "0x39e4d1fa",
+          "ranges": [
+            [
+              "0x800f3350",
+              16
+            ]
+          ]
+        },
+        {
+          "entry": "0x800f3434",
+          "code_crc32": "0xd770b887",
+          "ranges": [
+            [
+              "0x800f3434",
+              32
+            ]
+          ]
+        },
+        {
+          "entry": "0x800f4a3c",
+          "code_crc32": "0x56ebf41c",
+          "ranges": [
+            [
+              "0x800f4a3c",
+              48
+            ]
+          ]
+        },
+        {
+          "entry": "0x800f4a4c",
+          "code_crc32": "0xff22cc8a",
+          "ranges": [
+            [
+              "0x800f4a4c",
+              32
+            ]
+          ]
+        },
+        {
+          "entry": "0x800f4a6c",
+          "code_crc32": "0xf9d9216b",
+          "ranges": [
+            [
+              "0x800f4a6c",
+              152
+            ]
+          ]
+        },
+        {
+          "entry": "0x800f4b04",
+          "code_crc32": "0x2bd37fb2",
+          "ranges": [
+            [
+              "0x800f4b04",
+              68
+            ]
+          ]
+        },
+        {
+          "entry": "0x800f4b48",
+          "code_crc32": "0x2791eb59",
+          "ranges": [
+            [
+              "0x800f4b48",
+              128
+            ]
+          ]
+        },
+        {
+          "entry": "0x800f4bc8",
+          "code_crc32": "0xec584a03",
+          "ranges": [
+            [
+              "0x800f4bc8",
+              2700
+            ]
+          ]
+        },
+        {
+          "entry": "0x800f5654",
+          "code_crc32": "0x4ec34a81",
+          "ranges": [
+            [
+              "0x800f5654",
+              56
+            ]
+          ]
+        },
+        {
+          "entry": "0x800f568c",
+          "code_crc32": "0x277cdb58",
+          "ranges": [
+            [
+              "0x800f568c",
+              1872
+            ]
+          ]
+        },
+        {
+          "entry": "0x800f5ddc",
+          "code_crc32": "0x22941abd",
+          "ranges": [
+            [
+              "0x800f5ddc",
+              40
+            ]
+          ]
+        },
+        {
+          "entry": "0x800f5e04",
+          "code_crc32": "0x2a6cc35f",
+          "ranges": [
+            [
+              "0x800f5e04",
+              56
+            ]
+          ]
+        },
+        {
+          "entry": "0x800f65b0",
+          "code_crc32": "0x2338ea8a",
+          "ranges": [
+            [
+              "0x800f65b0",
+              364
+            ]
+          ]
+        },
+        {
+          "entry": "0x800f671c",
+          "code_crc32": "0x17d2529a",
+          "ranges": [
+            [
+              "0x800f671c",
+              124
+            ]
+          ]
+        },
+        {
+          "entry": "0x800f67d0",
+          "code_crc32": "0xc1817ea6",
+          "ranges": [
+            [
+              "0x800f67d0",
+              56
+            ]
+          ]
+        },
+        {
+          "entry": "0x800f686c",
+          "code_crc32": "0x6948f61d",
+          "ranges": [
+            [
+              "0x800f686c",
+              12
+            ]
+          ]
+        },
+        {
+          "entry": "0x800f68a4",
+          "code_crc32": "0x6c01b0d5",
+          "ranges": [
+            [
+              "0x800f68a4",
+              12
+            ]
+          ]
+        },
+        {
+          "entry": "0x800f6970",
+          "code_crc32": "0xddb1d5dc",
+          "ranges": [
+            [
+              "0x800f6970",
+              48
+            ]
+          ]
+        },
+        {
+          "entry": "0x800f69a0",
+          "code_crc32": "0x3d5d671e",
+          "ranges": [
+            [
+              "0x800f69a0",
+              28
+            ]
+          ]
+        },
+        {
+          "entry": "0x800f6a98",
+          "code_crc32": "0x9e40feac",
+          "ranges": [
+            [
+              "0x800f6a98",
+              112
+            ]
+          ]
+        },
+        {
+          "entry": "0x800f7194",
+          "code_crc32": "0xc95b87e4",
+          "ranges": [
+            [
+              "0x800f7194",
+              16
+            ]
+          ]
+        },
+        {
+          "entry": "0x800f71a4",
+          "code_crc32": "0xfca349f5",
+          "ranges": [
+            [
+              "0x800f71a4",
+              16
+            ]
+          ]
+        },
+        {
+          "entry": "0x800f71b4",
+          "code_crc32": "0xec2ffbe2",
+          "ranges": [
+            [
+              "0x800f71b4",
+              8
+            ]
+          ]
+        },
+        {
+          "entry": "0x800f8d58",
+          "code_crc32": "0x20b18546",
+          "ranges": [
+            [
+              "0x800f8d58",
+              128
+            ]
+          ]
+        },
+        {
+          "entry": "0x800f8e10",
+          "code_crc32": "0x2029394f",
+          "ranges": [
+            [
+              "0x800f8e10",
+              40
+            ]
+          ]
+        },
+        {
+          "entry": "0x800f8e70",
+          "code_crc32": "0xe723a58e",
+          "ranges": [
+            [
+              "0x800f8e70",
+              8
+            ]
+          ]
+        },
+        {
+          "entry": "0x800f8ef4",
+          "code_crc32": "0x3770a107",
+          "ranges": [
+            [
+              "0x800f8ef4",
+              48
+            ]
+          ]
+        },
+        {
+          "entry": "0x800f9034",
+          "code_crc32": "0xe498efbd",
+          "ranges": [
+            [
+              "0x800f9034",
+              440
+            ]
+          ]
+        },
+        {
+          "entry": "0x800f90b0",
+          "code_crc32": "0xe498efbd",
+          "ranges": [
+            [
+              "0x800f9034",
+              440
+            ]
+          ]
+        },
+        {
+          "entry": "0x800f91ec",
+          "code_crc32": "0xf027a98b",
+          "ranges": [
+            [
+              "0x800f91ec",
+              152
+            ]
+          ]
+        },
+        {
+          "entry": "0x800f9270",
+          "code_crc32": "0xf027a98b",
+          "ranges": [
+            [
+              "0x800f91ec",
+              152
+            ]
+          ]
+        },
+        {
+          "entry": "0xa00e95d0",
+          "code_crc32": "0xb535a922",
+          "ranges": [
+            [
+              "0x800e95d0",
+              48
+            ]
+          ]
+        },
+        {
+          "entry": "0xa00e95f0",
+          "code_crc32": "0xb535a922",
+          "ranges": [
+            [
+              "0x800e95d0",
+              48
+            ]
+          ]
+        },
+        {
+          "entry": "0xa00e9600",
+          "code_crc32": "0x73305a98",
+          "ranges": [
+            [
+              "0x800e9600",
+              48
+            ]
+          ]
+        },
+        {
+          "entry": "0xa00e9620",
+          "code_crc32": "0x73305a98",
+          "ranges": [
+            [
+              "0x800e9600",
+              48
+            ]
+          ]
+        },
+        {
+          "entry": "0xa00e9758",
+          "code_crc32": "0x4b78f39f",
+          "ranges": [
+            [
+              "0x800e9758",
+              48
+            ]
+          ]
+        },
+        {
+          "entry": "0xa00f2abc",
+          "code_crc32": "0x9720e8a2",
+          "ranges": [
+            [
+              "0x800f2abc",
+              340
+            ]
+          ]
+        }
+      ]
+    },
+    "JM1B/MAIN.PEX": {
+      "body_sha256": "364a67f6aec8fbaacbc60818b5ea6266196fe14199372207a926564f1ab54c97",
+      "nominations": [
+        {
+          "entry": "0x800bdb84",
+          "code_crc32": "0x1b9f1c6a",
+          "ranges": [
+            [
+              "0x800bdb84",
+              388
+            ]
+          ]
+        },
+        {
+          "entry": "0x800bdd08",
+          "code_crc32": "0x4567f3bf",
+          "ranges": [
+            [
+              "0x800bdd08",
+              60
+            ]
+          ]
+        },
+        {
+          "entry": "0x800bdd44",
+          "code_crc32": "0x2044ca8f",
+          "ranges": [
+            [
+              "0x800bdd44",
+              132
+            ]
+          ]
+        },
+        {
+          "entry": "0x800d1f90",
+          "code_crc32": "0xfab1e0cb",
+          "ranges": [
+            [
+              "0x800d1f90",
+              236
+            ]
+          ]
+        },
+        {
+          "entry": "0x800d22b4",
+          "code_crc32": "0xe6c62686",
+          "ranges": [
+            [
+              "0x800d22b4",
+              232
+            ]
+          ]
+        },
+        {
+          "entry": "0x800e2438",
+          "code_crc32": "0xad3a4251",
+          "ranges": [
+            [
+              "0x800e2438",
+              24
+            ]
+          ]
+        },
+        {
+          "entry": "0x800e3df8",
+          "code_crc32": "0x107afa40",
+          "ranges": [
+            [
+              "0x800e3df8",
+              16
+            ]
+          ]
+        },
+        {
+          "entry": "0x800e561c",
+          "code_crc32": "0xb8b2f168",
+          "ranges": [
+            [
+              "0x800e561c",
+              32
+            ]
+          ]
+        },
+        {
+          "entry": "0x800f4a3c",
+          "code_crc32": "0x56ebf41c",
+          "ranges": [
+            [
+              "0x800f4a3c",
+              48
+            ]
+          ]
+        },
+        {
+          "entry": "0x800f4a4c",
+          "code_crc32": "0xff22cc8a",
+          "ranges": [
+            [
+              "0x800f4a4c",
+              32
+            ]
+          ]
+        },
+        {
+          "entry": "0x800f4a6c",
+          "code_crc32": "0xf9d9216b",
+          "ranges": [
+            [
+              "0x800f4a6c",
+              152
+            ]
+          ]
+        },
+        {
+          "entry": "0x800f4b04",
+          "code_crc32": "0x2bd37fb2",
+          "ranges": [
+            [
+              "0x800f4b04",
+              68
+            ]
+          ]
+        },
+        {
+          "entry": "0x800f4b48",
+          "code_crc32": "0x2791eb59",
+          "ranges": [
+            [
+              "0x800f4b48",
+              128
+            ]
+          ]
+        },
+        {
+          "entry": "0x800f4bc8",
+          "code_crc32": "0xec584a03",
+          "ranges": [
+            [
+              "0x800f4bc8",
+              2700
+            ]
+          ]
+        },
+        {
+          "entry": "0x800f5654",
+          "code_crc32": "0x4ec34a81",
+          "ranges": [
+            [
+              "0x800f5654",
+              56
+            ]
+          ]
+        },
+        {
+          "entry": "0x800f568c",
+          "code_crc32": "0x277cdb58",
+          "ranges": [
+            [
+              "0x800f568c",
+              1872
+            ]
+          ]
+        },
+        {
+          "entry": "0x800f5ddc",
+          "code_crc32": "0x22941abd",
+          "ranges": [
+            [
+              "0x800f5ddc",
+              40
+            ]
+          ]
+        },
+        {
+          "entry": "0x800f5e04",
+          "code_crc32": "0x2a6cc35f",
+          "ranges": [
+            [
+              "0x800f5e04",
+              56
+            ]
+          ]
+        },
+        {
+          "entry": "0x800f65b0",
+          "code_crc32": "0x2338ea8a",
+          "ranges": [
+            [
+              "0x800f65b0",
+              364
+            ]
+          ]
+        },
+        {
+          "entry": "0x800f671c",
+          "code_crc32": "0x17d2529a",
+          "ranges": [
+            [
+              "0x800f671c",
+              124
+            ]
+          ]
+        },
+        {
+          "entry": "0x800f67d0",
+          "code_crc32": "0xc1817ea6",
+          "ranges": [
+            [
+              "0x800f67d0",
+              56
+            ]
+          ]
+        },
+        {
+          "entry": "0x800f68a4",
+          "code_crc32": "0x6c01b0d5",
+          "ranges": [
+            [
+              "0x800f68a4",
+              12
+            ]
+          ]
+        },
+        {
+          "entry": "0x800f6970",
+          "code_crc32": "0xddb1d5dc",
+          "ranges": [
+            [
+              "0x800f6970",
+              48
+            ]
+          ]
+        },
+        {
+          "entry": "0x800f69a0",
+          "code_crc32": "0x3d5d671e",
+          "ranges": [
+            [
+              "0x800f69a0",
+              28
+            ]
+          ]
+        },
+        {
+          "entry": "0x800f6a98",
+          "code_crc32": "0x9e40feac",
+          "ranges": [
+            [
+              "0x800f6a98",
+              112
+            ]
+          ]
+        }
+      ]
+    },
+    "SELECT.PEX": {
+      "body_sha256": "9970dad3ca5e0b4fbaed35634b6efffc63d6acf055ffc77a6ca2b02a719b7b1e",
+      "nominations": [
+        {
+          "entry": "0x800e02f8",
+          "code_crc32": "0x6c990ca1",
+          "ranges": [
+            [
+              "0x800e02f8",
+              56
+            ]
+          ]
+        },
+        {
+          "entry": "0x800e0320",
+          "code_crc32": "0x6c990ca1",
+          "ranges": [
+            [
+              "0x800e02f8",
+              56
+            ]
+          ]
+        },
+        {
+          "entry": "0x800e06b8",
+          "code_crc32": "0x45540321",
+          "ranges": [
+            [
+              "0x800e06b8",
+              212
+            ]
+          ]
+        },
+        {
+          "entry": "0x800e088c",
+          "code_crc32": "0xd149e55",
+          "ranges": [
+            [
+              "0x800e088c",
+              104
+            ]
+          ]
+        },
+        {
+          "entry": "0x800e08e4",
+          "code_crc32": "0xd149e55",
+          "ranges": [
+            [
+              "0x800e088c",
+              104
+            ]
+          ]
+        },
+        {
+          "entry": "0x800e32b0",
+          "code_crc32": "0xfc707a41",
+          "ranges": [
+            [
+              "0x800e32b0",
+              40
+            ]
+          ]
+        },
+        {
+          "entry": "0x800e32d8",
+          "code_crc32": "0x84e61f7d",
+          "ranges": [
+            [
+              "0x800e32d8",
+              48
+            ]
+          ]
+        },
+        {
+          "entry": "0x800e3308",
+          "code_crc32": "0x49010560",
+          "ranges": [
+            [
+              "0x800e3308",
+              628
+            ]
+          ]
+        },
+        {
+          "entry": "0x800e357c",
+          "code_crc32": "0xb1398976",
+          "ranges": [
+            [
+              "0x800e357c",
+              812
+            ]
+          ]
+        },
+        {
+          "entry": "0x800e38a8",
+          "code_crc32": "0xbd6d3a27",
+          "ranges": [
+            [
+              "0x800e38a8",
+              436
+            ]
+          ]
+        },
+        {
+          "entry": "0x800e3a5c",
+          "code_crc32": "0xddae9be1",
+          "ranges": [
+            [
+              "0x800e3a5c",
+              196
+            ]
+          ]
+        },
+        {
+          "entry": "0x800e3b20",
+          "code_crc32": "0xb7b90a70",
+          "ranges": [
+            [
+              "0x800e3b20",
+              408
+            ]
+          ]
+        },
+        {
+          "entry": "0x800e3cb8",
+          "code_crc32": "0x10195758",
+          "ranges": [
+            [
+              "0x800e3cb8",
+              28
+            ]
+          ]
+        },
+        {
+          "entry": "0x800e3cd4",
+          "code_crc32": "0x5e865db",
+          "ranges": [
+            [
+              "0x800e3cd4",
+              76
+            ]
+          ]
+        },
+        {
+          "entry": "0x800e3d20",
+          "code_crc32": "0xc21ac1e2",
+          "ranges": [
+            [
+              "0x800e3d20",
+              80
+            ]
+          ]
+        },
+        {
+          "entry": "0x800e3d70",
+          "code_crc32": "0x43490822",
+          "ranges": [
+            [
+              "0x800e3d70",
+              288
+            ]
+          ]
+        },
+        {
+          "entry": "0x800e3df8",
+          "code_crc32": "0x43490822",
+          "ranges": [
+            [
+              "0x800e3d70",
+              288
+            ]
+          ]
+        },
+        {
+          "entry": "0x800e3e90",
+          "code_crc32": "0x34051f9e",
+          "ranges": [
+            [
+              "0x800e3e90",
+              64
+            ]
+          ]
+        },
+        {
+          "entry": "0x800e3ed0",
+          "code_crc32": "0xb873f11c",
+          "ranges": [
+            [
+              "0x800e3ed0",
+              404
+            ]
+          ]
+        },
+        {
+          "entry": "0x800e4064",
+          "code_crc32": "0xfdaa131d",
+          "ranges": [
+            [
+              "0x800e4064",
+              132
+            ]
+          ]
+        },
+        {
+          "entry": "0x800e40e8",
+          "code_crc32": "0xec32aa6",
+          "ranges": [
+            [
+              "0x800e40e8",
+              84
+            ]
+          ]
+        },
+        {
+          "entry": "0x800e413c",
+          "code_crc32": "0xbe065dc4",
+          "ranges": [
+            [
+              "0x800e413c",
+              784
+            ]
+          ]
+        },
+        {
+          "entry": "0x800e41f0",
+          "code_crc32": "0xef942808",
+          "ranges": [
+            [
+              "0x800e41f0",
+              604
+            ]
+          ]
+        },
+        {
+          "entry": "0x800e444c",
+          "code_crc32": "0xe40d62c1",
+          "ranges": [
+            [
+              "0x800e444c",
+              148
+            ]
+          ]
+        },
+        {
+          "entry": "0x800e44e0",
+          "code_crc32": "0x7a313668",
+          "ranges": [
+            [
+              "0x800e44e0",
+              212
+            ]
+          ]
+        },
+        {
+          "entry": "0x800e45b4",
+          "code_crc32": "0x1ac6d690",
+          "ranges": [
+            [
+              "0x800e45b4",
+              228
+            ]
+          ]
+        },
+        {
+          "entry": "0x800e4698",
+          "code_crc32": "0xad85876c",
+          "ranges": [
+            [
+              "0x800e4698",
+              320
+            ]
+          ]
+        },
+        {
+          "entry": "0x800e47d8",
+          "code_crc32": "0x324681c0",
+          "ranges": [
+            [
+              "0x800e47d8",
+              1268
+            ]
+          ]
+        },
+        {
+          "entry": "0x800e4ccc",
+          "code_crc32": "0x5a478a7d",
+          "ranges": [
+            [
+              "0x800e4ccc",
+              1420
+            ]
+          ]
+        },
+        {
+          "entry": "0x800e5258",
+          "code_crc32": "0xddd1191",
+          "ranges": [
+            [
+              "0x800e5258",
+              964
+            ]
+          ]
+        },
+        {
+          "entry": "0x800e5714",
+          "code_crc32": "0xfb45215f",
+          "ranges": [
+            [
+              "0x800e5714",
+              272
+            ]
+          ]
+        },
+        {
+          "entry": "0x800e5824",
+          "code_crc32": "0xfdaac4cf",
+          "ranges": [
+            [
+              "0x800e5824",
+              160
+            ]
+          ]
+        },
+        {
+          "entry": "0x800e58d4",
+          "code_crc32": "0x5505b581",
+          "ranges": [
+            [
+              "0x800e58d4",
+              656
+            ]
+          ]
+        },
+        {
+          "entry": "0x800e58ec",
+          "code_crc32": "0x5505b581",
+          "ranges": [
+            [
+              "0x800e58d4",
+              656
+            ]
+          ]
+        },
+        {
+          "entry": "0x800e5970",
+          "code_crc32": "0x5505b581",
+          "ranges": [
+            [
+              "0x800e58d4",
+              656
+            ]
+          ]
+        },
+        {
+          "entry": "0x800e5978",
+          "code_crc32": "0x5505b581",
+          "ranges": [
+            [
+              "0x800e58d4",
+              656
+            ]
+          ]
+        },
+        {
+          "entry": "0x800e66c8",
+          "code_crc32": "0x7231b905",
+          "ranges": [
+            [
+              "0x800e66c8",
+              540
+            ]
+          ]
+        },
+        {
+          "entry": "0x800e6898",
+          "code_crc32": "0x7231b905",
+          "ranges": [
+            [
+              "0x800e66c8",
+              540
+            ]
+          ]
+        },
+        {
+          "entry": "0x800e68e4",
+          "code_crc32": "0x304de4b7",
+          "ranges": [
+            [
+              "0x800e68e4",
+              68
+            ]
+          ]
+        },
+        {
+          "entry": "0x800e6aac",
+          "code_crc32": "0x533d6f7c",
+          "ranges": [
+            [
+              "0x800e6aac",
+              112
+            ]
+          ]
+        },
+        {
+          "entry": "0x800e70f4",
+          "code_crc32": "0xf5b957bc",
+          "ranges": [
+            [
+              "0x800e70f4",
+              612
+            ]
+          ]
+        },
+        {
+          "entry": "0x800e799c",
+          "code_crc32": "0xfdbb73b9",
+          "ranges": [
+            [
+              "0x800e799c",
+              264
+            ]
+          ]
+        },
+        {
+          "entry": "0x800e79bc",
+          "code_crc32": "0xfdbb73b9",
+          "ranges": [
+            [
+              "0x800e799c",
+              264
+            ]
+          ]
+        }
+      ]
+    }
+  }
+}

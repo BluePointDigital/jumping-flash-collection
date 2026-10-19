@@ -1,0 +1,60 @@
+# Autofilled by tools/new_project_layout/probe_disc.py from your legal dump.
+# Review before shipping. Runtime quirks / overlay seeds still need hand work.
+
+[game]
+name = "Jumping Flash!"
+id = "SCUS-94103"
+players = 1
+exe = "disc/SCUS_941.03"
+disc = "disc/original/Jumping Flash! (USA).cue"
+load_address = "0x80018000"
+entry_pc = "0x80023744"
+text_size = "0x00030000"
+stack_base = "0x801FFFF0"
+
+# Digests are for data Track 01 (first BINARY FILE / TRACK 01).
+[prepare_disc]
+out_dir = "disc"
+bin_name = "Jumping Flash! (USA).bin"
+cue_name = "Jumping Flash! (USA).cue"
+boot_exe = "SCUS_941.03"
+known_sizes = [641498592]
+known_md5 = [
+  "4e73eb6054568a3ef88843e3d8c7d80b",
+]
+known_sha1 = [
+  "5b5a81f6d06e79a971713fc572d61f202f69d980",
+]
+known_crc32 = [
+  "899fa3bf",
+]
+
+[recompiler]
+seeds = "seeds/ghidra_funcs.txt"
+out_dir = "generated"
+strict = true
+
+[runtime]
+window_title = "Jumping Flash! Recompiled"
+memcard_dir = "saves"
+overlay_cache = true
+bios_hle = true
+bios_hle_keep_intro = false
+
+[video]
+renderer = "opengl"
+aspect_ratio = "4:3"
+window_width = 1280
+internal_resolution = 720
+dynamic_resolution = false
+render_thread = true
+
+[controller]
+default_mode = "digital"
+
+# Online mount gate: digests + track count + optional TOC fingerprint
+# (see docs/NETPLAY.md).
+[netplay]
+require_cue = true
+required_tracks = 1
+required_disc_fp = "1f11eda51fdd1659b2799d919d1915a2612067edee48b02b36ad28b880eac5ce"

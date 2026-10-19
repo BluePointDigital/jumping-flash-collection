@@ -1,0 +1,8 @@
+{
+  "framework": "67a21b739598d8e6f372ddd5e252c8622971869c",
+  "recomp_ui": "7e884a227accea91ddb378671bd49aaeeea13371",
+  "bios_sha256": "9c0421858e217805f4abe18698afea8d5aa36ff0727eb8484944e00eb5e7eadb",
+  "original_disc_sha1": "355a7db069bd51b205cf9c4226a017dbd933c148",
+  "english_disc_sha256": "90981ce0353dfb8b335629504e3f2bb58acd82ddb1bc19db934cc7abdfbad282",
+  "translation_patch_sha256": "f8f52e95a99caf649155892ff13d091716fc7a7fb9f6ac919481087e80827d7f"
+}

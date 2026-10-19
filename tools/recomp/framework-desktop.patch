@@ -1,0 +1,1035 @@
+diff --git a/bios/SCPH5552.toml b/bios/SCPH5552.toml
+index a943496..aa501ab 100644
+--- a/bios/SCPH5552.toml
++++ b/bios/SCPH5552.toml
+@@ -141,13 +141,13 @@ resume    = "none"              # 0x8017EAA0 — a jr never returns here
+ # runtime HLE tier. Values are FACTS about this image, not tunables: the
+ # shell entry is where LoadRunShell (ROM 0xBFC06FF0) jumps after its copy;
+ # deliver_event_ret is the instruction after the kernel DeliverEvent loop's
+-# `jalr v0` (kernel RAM 0x1718), the $ra a delivered event callback returns
+-# through. deliver_event_ret lies in the verified-identical kernel (RAM 0x1720,
+-# ROM 0x11220). shell_entry_phys is shell RAM, whose contents differ, but the
++# `jalr v0` (kernel RAM 0x1C18), the $ra a delivered event callback returns
++# through. deliver_event_ret lies in the verified-identical kernel (RAM 0x1C20,
++# ROM 0x11720). shell_entry_phys is shell RAM, whose contents differ, but the
+ # address is LoadRunShell's jump target and LoadRunShell itself (ROM 0x06FF0)
+ # is in the identical region, so the target is the same. Omit a key on a
+ # BIOS that has no such anchor — the runtime then treats that HLE feature as
+ # structurally unavailable instead of firing on a wrong address.
+ [recompiler.runtime_exports]
+ shell_entry_phys  = "0x00030000"
+-deliver_event_ret = "0x80001720"
++deliver_event_ret = "0x00001C20"
+diff --git a/recompiler/src/code_generator.cpp b/recompiler/src/code_generator.cpp
+index 9e28094..941e3ba 100644
+--- a/recompiler/src/code_generator.cpp
++++ b/recompiler/src/code_generator.cpp
+@@ -1728,7 +1728,9 @@ std::string CodeGenerator::translate_instruction_core(uint32_t addr, uint32_t in
+             case 0x0C:                                          // syscall
+                 {
+                     uint32_t syscall_code = (instr >> 6) & 0xFFFFF;
+-                    code = fmt::format("psx_syscall(cpu, {});  /* syscall {} */", syscall_code, syscall_code);
++                    // The BIOS saves EPC from cpu->pc, which ordinary native blocks do not materialize.
++                    code = fmt::format("cpu->pc = 0x{:08X}u; if (psx_syscall(cpu, {})) return;  /* syscall {} */",
++                                       runtime_pc(addr), syscall_code, syscall_code);
+                 }
+                 break;
+             case 0x0D:                                          // break
+diff --git a/recompiler/src/config_loader.cpp b/recompiler/src/config_loader.cpp
+index 294e3a1..fa199ce 100644
+--- a/recompiler/src/config_loader.cpp
++++ b/recompiler/src/config_loader.cpp
+@@ -2790,6 +2790,26 @@ UserSettings load_user_settings(const fs::path& path) {
+     // Each field guarded independently so one bad value can't blank the rest.
+     auto try_get = [](auto&& fn) { try { fn(); } catch (const std::exception&) {} };
+ 
++    if (doc.contains("desktop")) {
++        s.jf2_has_settings=true;
++        const auto& d = toml::find(doc, "desktop");
++        if (d.contains("control_style")) try_get([&]{s.jf2_control_style = toml::find<std::string>(d,"control_style") == "classic" ? 0 : 1;});
++        if (d.contains("mouse_sensitivity")) try_get([&]{s.jf2_mouse_sensitivity = std::clamp((int)toml::find<int64_t>(d,"mouse_sensitivity"),10,300);});
++        if (d.contains("invert_y")) try_get([&]{s.jf2_invert_y = toml::find<bool>(d,"invert_y");});
++        if (d.contains("jump_camera")) try_get([&]{s.jf2_jump_camera = toml::find<bool>(d,"jump_camera");});
++        if (d.contains("fps")) try_get([&]{s.jf2_fps = toml::find<bool>(d,"fps");});
++        if (d.contains("integer_scaling")) try_get([&]{s.jf2_integer_scaling = toml::find<bool>(d,"integer_scaling");});
++        if (d.contains("audio_volume")) try_get([&]{s.jf2_audio_volume = std::clamp((int)toml::find<int64_t>(d,"audio_volume"),0,100);});
++        if (d.contains("muted")) try_get([&]{s.jf2_muted = toml::find<bool>(d,"muted");});
++        if (d.contains("boost")) try_get([&]{s.jf2_boost = toml::find<bool>(d,"boost");});
++        if (d.contains("boost_percent")) try_get([&]{s.jf2_boost_percent = (int)std::clamp<int64_t>(toml::find<int64_t>(d,"boost_percent"),125,200);});
++        if (d.contains("boost_classic_key")) try_get([&]{s.jf2_boost_classic_key = (int)std::clamp<int64_t>(toml::find<int64_t>(d,"boost_classic_key"),0,511);});
++        if (d.contains("boost_modern_key")) try_get([&]{s.jf2_boost_modern_key = (int)std::clamp<int64_t>(toml::find<int64_t>(d,"boost_modern_key"),0,511);});
++        if (d.contains("arrow_strafe")) try_get([&]{s.jf2_arrow_strafe = toml::find<bool>(d,"arrow_strafe");});
++        if (d.contains("messages")) try_get([&]{s.jf2_messages = toml::find<bool>(d,"messages");});
++        if (d.contains("native_menu")) try_get([&]{s.jf2_native_menu = toml::find<bool>(d,"native_menu");});
++        if (d.contains("post_aa")) try_get([&]{s.jf2_post_aa = (int)std::clamp<int64_t>(toml::find<int64_t>(d,"post_aa"),0,2);});
++    }
+     if (doc.contains("video")) {
+         const toml::value& v = toml::find(doc, "video");
+         if (v.contains("renderer")) try_get([&]{
+@@ -3196,7 +3216,17 @@ fs::path relative_to_folder(const fs::path& p, const fs::path& folder) {
+     return r;
+ }
+ 
+-bool save_user_settings(const fs::path& path, const UserSettings& s) {
++bool save_user_settings(const fs::path& path, const UserSettings& incoming) {
++    UserSettings s=incoming;
++    if(!s.jf2_has_settings) {
++        const auto previous=load_user_settings(path);
++        if(previous.jf2_has_settings) {
++            s.jf2_control_style=previous.jf2_control_style;s.jf2_mouse_sensitivity=previous.jf2_mouse_sensitivity;
++            s.jf2_invert_y=previous.jf2_invert_y;s.jf2_jump_camera=previous.jf2_jump_camera;s.jf2_fps=previous.jf2_fps;
++            s.jf2_integer_scaling=previous.jf2_integer_scaling;s.jf2_audio_volume=previous.jf2_audio_volume;s.jf2_muted=previous.jf2_muted;
++            s.jf2_boost=previous.jf2_boost;s.jf2_boost_percent=previous.jf2_boost_percent;s.jf2_boost_classic_key=previous.jf2_boost_classic_key;s.jf2_boost_modern_key=previous.jf2_boost_modern_key;s.jf2_arrow_strafe=previous.jf2_arrow_strafe;s.jf2_messages=previous.jf2_messages;s.jf2_native_menu=previous.jf2_native_menu;s.jf2_post_aa=previous.jf2_post_aa;
++        }
++    }
+     std::error_code ec;
+     if (!path.parent_path().empty())
+         fs::create_directories(path.parent_path(), ec);  // best-effort
+@@ -3204,6 +3234,22 @@ bool save_user_settings(const fs::path& path, const UserSettings& s) {
+     std::ofstream f(path, std::ios::trunc);
+     if (!f.is_open()) return false;
+ 
++    f << "[desktop]\ncontrol_style = \"" << (s.jf2_control_style ? "modern" : "classic")
++      << "\"\nmouse_sensitivity = " << s.jf2_mouse_sensitivity
++      << "\ninvert_y = " << (s.jf2_invert_y ? "true" : "false")
++      << "\njump_camera = " << (s.jf2_jump_camera ? "true" : "false")
++      << "\nfps = " << (s.jf2_fps ? "true" : "false")
++      << "\ninteger_scaling = " << (s.jf2_integer_scaling ? "true" : "false")
++      << "\naudio_volume = " << s.jf2_audio_volume
++      << "\nmuted = " << (s.jf2_muted ? "true" : "false")
++      << "\nboost = " << (s.jf2_boost ? "true" : "false")
++      << "\nboost_percent = " << s.jf2_boost_percent
++      << "\nboost_classic_key = " << s.jf2_boost_classic_key
++      << "\nboost_modern_key = " << s.jf2_boost_modern_key
++      << "\narrow_strafe = " << (s.jf2_arrow_strafe ? "true" : "false")
++      << "\nmessages = " << (s.jf2_messages ? "true" : "false")
++      << "\nnative_menu = " << (s.jf2_native_menu ? "true" : "false")
++      << "\npost_aa = " << s.jf2_post_aa << "\n\n";
+     // Windows paths use forward slashes so separators need no TOML escaping.
+     auto fwd = [](const fs::path& p) {
+         return host_path_forward_slashes(p);
+diff --git a/recompiler/src/config_loader.h b/recompiler/src/config_loader.h
+index 86d9810..23d5e72 100644
+--- a/recompiler/src/config_loader.h
++++ b/recompiler/src/config_loader.h
+@@ -1445,6 +1445,25 @@ inline uint32_t ws_cull_clip_edge_width(const GameConfig& c) {
+ // Unlike game.toml, paths here are stored verbatim (the user picked them); they
+ // are NOT resolved against a project root.
+ struct UserSettings {
++    bool jf2_has_settings = false;
++    int jf2_control_style = 1;
++    int jf2_mouse_sensitivity = 100;
++    bool jf2_invert_y = false;
++    bool jf2_jump_camera = false;
++    bool jf2_fps = false;
++    bool jf2_integer_scaling = false;
++    int jf2_audio_volume = 100;
++    bool jf2_muted = false;
++    bool jf2_boost = false;
++    int jf2_boost_percent = 125;
++    int jf2_boost_classic_key = 225;
++    int jf2_boost_modern_key = 225;
++    bool jf2_arrow_strafe = true;
++    bool jf2_messages = true;
++    bool jf2_native_menu = true;
++    int jf2_post_aa = 0;
++
++
+     // Set when the file existed but failed to parse as TOML: every field below
+     // is defaults and the caller must warn loudly — silently dropping a user's
+     // hand-edited settings looks like the settings "don't work", and a later
+diff --git a/runtime/include/frame_pacing.h b/runtime/include/frame_pacing.h
+index 44eb431..20bda99 100644
+--- a/runtime/include/frame_pacing.h
++++ b/runtime/include/frame_pacing.h
+@@ -27,6 +27,9 @@ extern "C" {
+ 
+ typedef struct FramePacer {
+     uint64_t next_deadline;   /* perf-counter ticks; 0 = not started */
++#ifdef JF2_DESKTOP
++    uint64_t recovery_debt;  /* only sub-frame scheduler jitter, repaid gradually */
++#endif
+ } FramePacer;
+ 
+ /* Pure decision function (unit-testable, no SDL).
+diff --git a/runtime/include/gpu_gl_renderer.h b/runtime/include/gpu_gl_renderer.h
+index 1d3187d..290538c 100644
+--- a/runtime/include/gpu_gl_renderer.h
++++ b/runtime/include/gpu_gl_renderer.h
+@@ -501,6 +501,9 @@ int gl_renderer_pres_get(uint64_t seq, GlPresEvent *out);
+  * sets/frame avg, [17]=wide FBO creations/frame avg. GPU phases are true
+  * GL_TIME_ELAPSED times (CPU-overhead independent). Returns the count. */
+ int gl_renderer_perf_aggregate(int wide_filter, double out[18]);
++/* Bounded chronological CPU frame times after a ring sequence; diagnostic only. */
++int gl_renderer_perf_samples(uint64_t after, uint64_t *sequence,
++                             uint64_t *frames, double *milliseconds, double *present_ms, int capacity);
+ 
+ /* Native-wide mirror ablation (perf attribution, debug cmd gl_ws_ablate):
+  * 0 = normal, 1 = skip the whole mirror pass (incl. wide_clear), 2 = full mirror
+diff --git a/runtime/include/host_osd.h b/runtime/include/host_osd.h
+index e4e6f30..d944498 100644
+--- a/runtime/include/host_osd.h
++++ b/runtime/include/host_osd.h
+@@ -17,6 +17,7 @@ extern "C" {
+  */
+ 
+ /* Top-left text toast. duration_ms <= 0 uses 2000. */
++void host_osd_set_text_visible(int visible);
+ void host_osd_push(const char *msg, int duration_ms);
+ 
+ /* Persistent top-left status text. Passing NULL/empty clears it. */
+diff --git a/runtime/src/autocompile.c b/runtime/src/autocompile.c
+index 2dad031..4b9abc3 100644
+--- a/runtime/src/autocompile.c
++++ b/runtime/src/autocompile.c
+@@ -1428,8 +1428,22 @@ void autocompile_poll_main(void) {
+      * rescan makes every successfully published artifact visible to additive
+      * cache queries and the lazy manifest index. This is intentionally once per
+      * compiler run, never once per DLL or interpreted instruction. */
++#if defined(JF2_DESKTOP) && defined(_WIN32)
++    /* A known, successful no-op cannot publish a new DLL. Walking thousands
++     * of unchanged cache pairs here causes a visible gameplay stall. Keep the
++     * conservative rescan for new shards, publications, and all error paths. */
++    const int unchanged = s_exit_code == 0 && s_shard_result_seen &&
++        s_shard_ok == 0 && s_shard_fail == 0 && s_publish_prepare_count == 0 &&
++        s_publish_drops_run == 0 && s_publish_load_fail_run == 0 &&
++        s_publish_parse_fail_run == 0;
++    if (!unchanged) {
++        overlay_loader_rescan();
++        s_rescans++;
++    }
++#else
+     overlay_loader_rescan();
+     s_rescans++;
++#endif
+     /* A run "failed" if the process exited non-zero OR it reported shard
+      * failures. compile_overlays.py exits 2 when any shard that should have
+      * built failed, so these usually agree; the parsed count is the detail. */
+diff --git a/runtime/src/debug_server.c b/runtime/src/debug_server.c
+index dad3298..6c5fcbe 100644
+--- a/runtime/src/debug_server.c
++++ b/runtime/src/debug_server.c
+@@ -315,12 +315,19 @@ static int s_pad_type_override = -1;
+ typedef struct {
+     uint32_t frames;
+     uint16_t buttons;
++#ifdef JF2_DESKTOP
++    uint8_t boost;
++#endif
+ } InputRouteStep;
+ static PSX_BSS InputRouteStep s_input_route[INPUT_ROUTE_MAX_STEPS];
+ static uint32_t s_input_route_count = 0;
+ static uint32_t s_input_route_index = 0;
+ static uint32_t s_input_route_remaining = 0;
+ static int      s_input_route_active = 0;
++#ifdef JF2_DESKTOP
++static int s_input_route_boost = 0;
++int debug_server_get_input_boost(void) { return s_input_route_boost; }
++#endif
+ 
+ /* ---- Frontend turbo override ---- */
+ static volatile int s_turbo_enabled = 0;
+@@ -8238,6 +8245,10 @@ static void handle_input_route_append(int id, const char *json)
+ {
+     int frames = json_get_int(json, "frames", -1);
+     int buttons = json_get_int(json, "buttons", -1);
++#ifdef JF2_DESKTOP
++    const int boost = json_get_int(json, "boost", 0);
++    if (boost < 0 || boost > 1) { send_err(id, "boost must be 0 or 1"); return; }
++#endif
+     if (s_input_route_active) {
+         send_err(id, "input route is active"); return;
+     }
+@@ -8253,6 +8264,9 @@ static void handle_input_route_append(int id, const char *json)
+     InputRouteStep *step = &s_input_route[s_input_route_count++];
+     step->frames = (uint32_t)frames;
+     step->buttons = (uint16_t)buttons;
++#ifdef JF2_DESKTOP
++    step->boost = (uint8_t)boost;
++#endif
+     send_fmt("{\"id\":%d,\"ok\":true,\"steps\":%u}\n",
+              id, (unsigned)s_input_route_count);
+ }
+@@ -8623,6 +8637,24 @@ static void handle_frame_perf(int id, const char *json)
+              n43[13], n43[15]);
+ }
+ 
++static void handle_frame_perf_samples(int id, const char *json)
++{
++    char after_text[32] = {0};
++    uint64_t after = json_get_str(json, "after", after_text, sizeof(after_text))
++        ? strtoull(after_text, NULL, 10) : 0;
++    uint64_t sequence[256], frames[256];
++    double milliseconds[256], present_ms[256];
++    int count = gl_renderer_perf_samples(after, sequence, frames, milliseconds, present_ms, 256);
++    char response[24576];
++    int used = snprintf(response, sizeof(response), "{\"id\":%d,\"ok\":true,\"samples\":[", id);
++    for (int i = 0; i < count; ++i)
++        used += snprintf(response + used, sizeof(response) - (size_t)used,
++            "%s[%llu,%llu,%.6f,%.6f]", i ? "," : "",
++            (unsigned long long)sequence[i], (unsigned long long)frames[i], milliseconds[i], present_ms[i]);
++    snprintf(response + used, sizeof(response) - (size_t)used, "]}");
++    send_fmt("%s", response);
++}
++
+ /* gl_ws_ablate mode=<0..3>: native-wide mirror ablation for perf attribution.
+  * 0 normal | 1 skip mirror passes (incl. wide_clear) | 2 mirror state churn, no
+  * draws | 3 mirror draws stay on the hr FBO (no per-pass FBO rebind; corrupts
+@@ -9844,14 +9876,18 @@ static uint16_t     *s_disp_ring_px = NULL;   /* one block for all entries */
+ 
+ static void disp_ring_capture(void)
+ {
+-    /* Full-VRAM GL readback is intentionally expensive and can perturb the
+-     * performance issue being measured. Keep the forensic ring default-on, but
+-     * allow a controlled acceptance run to disable continuous capture while
+-     * retaining the TCP server and one-shot screenshot command. */
++    /* Full-VRAM GL readback is expensive. JF2 opts in with PSX_DISPLAY_RING=1;
++     * other titles retain default-on forensics. TCP and one-shot screenshots
++     * remain available when continuous capture is disabled. */
+     static int enabled = -1;
+     if (enabled < 0) {
+         const char *e = getenv("PSX_DISPLAY_RING");
++#ifdef JF2_DESKTOP
++        /* Per-frame GL readbacks cost several milliseconds in World 1. */
++        enabled = (e && *e && *e != '0') ? 1 : 0;
++#else
+         enabled = (!e || !*e || *e != '0') ? 1 : 0;
++#endif
+     }
+     if (!enabled || s_capture_frozen) return;
+     if (!s_disp_ring_px) {
+@@ -15584,6 +15620,13 @@ static void handle_warm_cd_route(int id, const char *json)
+     send_fmt("{\"id\":%d,\"ok\":true,%s}\n", id, body);
+ }
+ 
++#ifdef JF2_DESKTOP
++extern int jf2_desktop_debug(char*,int);
++static void handle_jf2_desktop_status(int id,const char* json) {
++    (void)json;char state[1024];jf2_desktop_debug(state,sizeof(state));
++    send_fmt("{\"id\":%d,\"ok\":true,\"desktop\":%s}\n",id,state);
++}
++#endif
+ static const CmdEntry s_commands[] = {
+     { "phase_profile",     handle_phase_profile },
+     { "starv_ring",        handle_starv_ring },
+@@ -15594,6 +15637,9 @@ static const CmdEntry s_commands[] = {
+     { "idle_skip",         handle_idle_skip },
+     { "lockstep",          handle_lockstep },
+     { "lockstep_func",     handle_lockstep_func },
++#ifdef JF2_DESKTOP
++    { "jf2_desktop_status", handle_jf2_desktop_status },
++#endif
+     { "ping",              handle_ping },
+     { "xlate",             handle_xlate },
+     { "parity_dump",       handle_parity_dump },
+@@ -15664,6 +15710,7 @@ static const CmdEntry s_commands[] = {
+     { "gpu_timeline",      handle_gpu_timeline },
+     { "nclip_stats",       handle_nclip_stats },
+     { "frame_perf",        handle_frame_perf },
++    { "frame_perf_samples", handle_frame_perf_samples },
+     { "post_aa",           handle_post_aa },
+     { "gl_ws_ablate",      handle_gl_ws_ablate },
+     { "gl_interp",         handle_gl_interp },
+@@ -16817,8 +16864,14 @@ int debug_server_is_connected(void)
+ 
+ int debug_server_get_input_override(void)
+ {
++#ifdef JF2_DESKTOP
++    s_input_route_boost = 0;
++#endif
+     if (s_input_route_active && s_input_route_index < s_input_route_count) {
+         int current = (int)s_input_route[s_input_route_index].buttons;
++#ifdef JF2_DESKTOP
++        s_input_route_boost = s_input_route[s_input_route_index].boost;
++#endif
+         if (s_input_route_remaining > 0 && --s_input_route_remaining == 0) {
+             s_input_route_index++;
+             if (s_input_route_index < s_input_route_count) {
+diff --git a/runtime/src/dirty_ram_interp.c b/runtime/src/dirty_ram_interp.c
+index 434f22a..2eb5e58 100644
+--- a/runtime/src/dirty_ram_interp.c
++++ b/runtime/src/dirty_ram_interp.c
+@@ -2579,6 +2579,10 @@ int dirty_ram_dispatch(CPUState* cpu, uint32_t addr, uint32_t stop_addr) {
+      * and the handoff's baseline/scratch clears then corrupt the boot
+      * (observed: MoH SLUS-00974 garbage-jump/VBLANK-wedge, 2026-08-06). */
+     fntrace_maybe_mark_game_started(cpu, addr);
++#ifdef JF2_DESKTOP
++    extern void jf2_desktop_camera(CPUState*,uint32_t);
++    jf2_desktop_camera(cpu,addr);
++#endif
+     if (addr == 0x8001A954u)      site_note(&g_site_dd954);   /* loop head re-dispatch */
+     else if (addr == 0x80046264u) site_note(&g_site_dd264);   /* loop tail re-dispatch */
+     int prev = g_dirty_interp_active;
+diff --git a/runtime/src/fntrace.c b/runtime/src/fntrace.c
+index 6b08fcd..bd536db 100644
+--- a/runtime/src/fntrace.c
++++ b/runtime/src/fntrace.c
+@@ -131,6 +131,10 @@ DispTailEntry g_disp_tail[DISP_TAIL_CAP];
+ uint64_t      g_disp_tail_seq = 0;
+ 
+ void fntrace_record(CPUState* cpu, uint32_t target) {
++#ifdef JF2_DESKTOP
++    extern void jf2_desktop_camera(CPUState*,uint32_t);
++    jf2_desktop_camera(cpu,target);
++#endif
+     /* The BIOS has completed the PS-X EXE load by the time it dispatches the
+      * entry point. Apply the validated plan before the first guest instruction. */
+     mod_runtime_on_dispatch(target);
+diff --git a/runtime/src/frame_pacing.c b/runtime/src/frame_pacing.c
+index be30e5a..8ccaa57 100644
+--- a/runtime/src/frame_pacing.c
++++ b/runtime/src/frame_pacing.c
+@@ -23,6 +23,36 @@ uint32_t frame_pacing_sleep_ms(uint64_t now, uint64_t deadline,
+     return (uint32_t)(ms - 1);                 /* undershoot; spin covers rest */
+ }
+ 
++#ifdef JF2_DESKTOP
++static void frame_pacing_advance(FramePacer *p, uint64_t now, uint64_t period) {
++    if (now < p->next_deadline) return;
++    if (!p->next_deadline || now - p->next_deadline >= period) {
++        p->next_deadline = now + period;
++        p->recovery_debt = 0;
++        return;
++    }
++    const uint64_t late = now - p->next_deadline;
++    p->recovery_debt = p->recovery_debt > period - late
++        ? period : p->recovery_debt + late;
++    const uint64_t repayment = p->recovery_debt < period / 20u
++        ? p->recovery_debt : period / 20u;
++    p->recovery_debt -= repayment;
++    p->next_deadline = now + period - repayment;
++}
++#endif
++
++/* Shared runtime retains its existing catch-up policy. */
++uint64_t frame_pacing_late_deadline(uint64_t now, uint64_t deadline, uint64_t period) {
++#ifdef JF2_DESKTOP
++    FramePacer p = {deadline, 0};
++    frame_pacing_advance(&p, now, period);
++    return p.next_deadline;
++#else
++    (void)now;
++    return deadline + period;
++#endif
++}
++
+ #ifndef FRAME_PACING_PURE_ONLY
+ 
+ /* Bounded catch-up window, in periods. A transient stall (heavy frame, CD
+@@ -53,12 +83,17 @@ void frame_pacer_wait(FramePacer *p, double period_ms) {
+         /* First frame, or sustained slowness beyond the catch-up window:
+          * re-anchor (forgive the debt). */
+         p->next_deadline = now + period;
++#ifdef JF2_DESKTOP
++        p->recovery_debt = 0;
++#endif
+         return;
+     }
+     if (now >= p->next_deadline) {
+-        /* In debt from a recent stall: run this frame unpaced and advance
+-         * the deadline, repaying one period of debt per fast frame. */
+-        p->next_deadline += period;
++#ifdef JF2_DESKTOP
++        frame_pacing_advance(p, now, period);
++#else
++        p->next_deadline = frame_pacing_late_deadline(now, p->next_deadline, period);
++#endif
+         return;
+     }
+ 
+@@ -72,6 +107,11 @@ void frame_pacer_wait(FramePacer *p, double period_ms) {
+     while (SDL_GetPerformanceCounter() < p->next_deadline) {
+         /* final sub-ms spin */
+     }
++#ifdef JF2_DESKTOP
++    /* Retain small slips across frames; repay at most 1 ms at PAL 50 Hz. */
++    frame_pacing_advance(p, SDL_GetPerformanceCounter(), period);
++#else
+     p->next_deadline += period;
++#endif
+ }
+ #endif /* FRAME_PACING_PURE_ONLY */
+diff --git a/runtime/src/gpu_gl_renderer.c b/runtime/src/gpu_gl_renderer.c
+index 5201f60..96cf3df 100644
+--- a/runtime/src/gpu_gl_renderer.c
++++ b/runtime/src/gpu_gl_renderer.c
+@@ -5447,6 +5447,12 @@ static void letterbox_rect_aspect(int ww, int wh, int num, int den,
+                                   int *x, int *y, int *w, int *h) {
+     int dw = ww, dh = (ww * den) / num;
+     if (dh > wh) { dh = wh; dw = (wh * num) / den; }
++#ifdef JF2_DESKTOP
++    extern void jf2_desktop_integer_rect(int,int,int*,int*,int*,int*);
++    int jx=(ww-dw)/2,jy=(wh-dh)/2;
++    jf2_desktop_integer_rect(ww,wh,&jx,&jy,&dw,&dh);
++    *x=jx;*y=jy;*w=dw;*h=dh;return;
++#endif
+     *x = (ww - dw) / 2;
+     *y = (wh - dh) / 2;
+     *w = dw; *h = dh;
+@@ -7035,6 +7041,23 @@ uint64_t gl_renderer_perf_prim_split(double *out_tex_frac) {
+     return s_scene_prims;
+ }
+ 
++int gl_renderer_perf_samples(uint64_t after, uint64_t *sequence,
++                             uint64_t *frames, double *milliseconds, double *present_ms, int capacity) {
++    GL_RT_SYNC("perf_samples");
++    if (!s_pf_on || capacity <= 0 || !sequence || !frames || !milliseconds || !present_ms) return 0;
++    const uint64_t oldest = s_pf_ring_seq > GLPERF_RING ? s_pf_ring_seq - GLPERF_RING : 0;
++    int count = 0;
++    for (uint64_t index = oldest; index < s_pf_ring_seq && count < capacity; ++index) {
++        if (index + 1 <= after) continue;
++        const GlPerfSample *sample = &s_pf_ring[index % GLPERF_RING];
++        sequence[count] = index + 1;
++        frames[count] = sample->frame;
++        milliseconds[count] = sample->total_ms;
++        present_ms[count++] = sample->present_wall_ms;
++    }
++    return count;
++}
++
+ int gl_renderer_perf_aggregate(int wide_filter, double out[18]) {
+     GL_RT_SYNC("perf_aggregate");
+     for (int i = 0; i < 18; i++) out[i] = 0.0;
+@@ -8742,7 +8765,7 @@ static void pass_apply_promotion(void) {
+  * in top-left window coordinates (y down). Bitmap is ow×oh; viewport is
+  * dw×dh (may upscale for HiDPI / large windows). */
+ static void gl_draw_osd_image(const uint32_t *px, int ow, int oh,
+-                              int dw, int dh, int vx, int vy, int ww, int wh) {
++                              int dw, int dh, int vx, int vy, int ww, int wh, int blend) {
+     if (!px || ow <= 0 || oh <= 0 || dw <= 0 || dh <= 0 ||
+         !s_present_prog || ww <= 0 || wh <= 0)
+         return;
+@@ -8769,9 +8792,10 @@ static void gl_draw_osd_image(const uint32_t *px, int ow, int oh,
+     glDisable(GL_SCISSOR_TEST);
+     glDisable(GL_STENCIL_TEST);
+     glDisable(GL_DEPTH_TEST);
+-    /* host_osd bakes opaque panels (A=0xFF). Do not blend — PSX mode-2
+-     * REVERSE_SUBTRACT left armed across FMV present made toasts solid black. */
+-    glDisable(GL_BLEND);
++    /* Text is opaque; the in-game menu carries straight alpha. Reset the
++     * equation because guest reverse-subtract must not reach host overlays. */
++    if(blend) {glEnable(GL_BLEND);glBlendFunc(GL_SRC_ALPHA,GL_ONE_MINUS_SRC_ALPHA);}
++    else glDisable(GL_BLEND);
+     if (p_glBlendEquationSeparate)
+         p_glBlendEquationSeparate(PSXGL_FUNC_ADD, PSXGL_FUNC_ADD);
+     /* GL viewport origin is bottom-left. */
+@@ -8791,6 +8815,7 @@ static void gl_draw_osd_image(const uint32_t *px, int ow, int oh,
+         p_glBindVertexArray(0);
+     }
+     p_glUseProgram(0);
++    glDisable(GL_BLEND);
+ }
+ 
+ /* Composite host toast + volume bar into the default framebuffer, then swap. */
+@@ -9157,12 +9182,12 @@ static void gl_swap_with_osd(void) {
+             margin = 8 * ui;
+             if (ov_image(0, &px, &ow, &oh) && px)
+                 gl_draw_osd_image(px, ow, oh, ow * ui, oh * ui,
+-                                  margin, margin, ww, wh);
++                                  margin, margin, ww, wh,0);
+             if (ov_image(1, &px, &ow, &oh) && px) {
+                 const int dw = ow * ui, dh = oh * ui;
+                 int vx = (ww > dw + margin) ? (ww - dw - margin) : margin;
+                 int vy = (wh > dh) ? ((wh - dh) / 2) : margin;
+-                gl_draw_osd_image(px, ow, oh, dw, dh, vx, vy, ww, wh);
++                gl_draw_osd_image(px, ow, oh, dw, dh, vx, vy, ww, wh,0);
+             }
+             if (ov_image(2, &px, &ow, &oh) && px) {
+                 float slide = ov_rewind_slide();
+@@ -9171,12 +9196,24 @@ static void gl_swap_with_osd(void) {
+                 int vy;
+                 if (dh < 8) dh = oh;
+                 vy = wh - (int)((float)dh * slide + 0.5f);
+-                gl_draw_osd_image(px, ow, oh, dw, dh, 0, vy, ww, wh);
++                gl_draw_osd_image(px, ow, oh, dw, dh, 0, vy, ww, wh,0);
+             }
+             if (ov_image(3, &px, &ow, &oh) && px)
+-                gl_draw_osd_image(px, ow, oh, ww, wh, 0, 0, ww, wh);
++                gl_draw_osd_image(px, ow, oh, ww, wh, 0, 0, ww, wh,0);
+         }
+     }
++#if defined(JF2_DESKTOP)
++    extern void jf2_desktop_gl_draw(SDL_Window*);
++    extern int jf2_desktop_image(const uint32_t**,int*,int*);
++    const uint32_t *menu=NULL; int mw=0,mh=0,ww=0,wh=0;
++    if (jf2_desktop_image(&menu,&mw,&mh)) {
++        SDL_GL_GetDrawableSize(s_win,&ww,&wh);
++        int dw=ww,dh=ww*3/4;
++        if(dh>wh) {dh=wh;dw=wh*4/3;}
++        gl_draw_osd_image(menu,mw,mh,dw,dh,(ww-dw)/2,(wh-dh)/2,ww,wh,1);
++    }
++    jf2_desktop_gl_draw(s_win);
++#endif
+     if (!rth_replaying()) host_osd_present_done();   /* replay: done at record */
+     /* present_shot (GL backend): the default framebuffer now holds the composed
+      * frame — display quad fitted to the window, plus OSD — so this is the only
+diff --git a/runtime/src/host_osd.c b/runtime/src/host_osd.c
+index 62c387d..85ce172 100644
+--- a/runtime/src/host_osd.c
++++ b/runtime/src/host_osd.c
+@@ -326,6 +326,13 @@ static void sdl_logical_size(SDL_Renderer *renderer, int *lw, int *lh) {
+ }
+ #endif
+ 
++static int s_text_visible = 1;
++void host_osd_set_text_visible(int visible) {
++    s_text_visible = visible != 0;
++#if HOST_OSD_VISUAL
++    s_needs_clear = 1;
++#endif
++}
+ void host_osd_push(const char *msg, int duration_ms) {
+ #if !HOST_OSD_VISUAL
+     (void)msg;
+@@ -398,7 +405,7 @@ int host_osd_needs_present(void) {
+ #if !HOST_OSD_VISUAL
+     return 0;
+ #else
+-    if (msg_visible() || s_status_active || vol_visible()) return 1;
++    if ((s_text_visible && (msg_visible() || s_status_active)) || vol_visible()) return 1;
+     return s_needs_clear;
+ #endif
+ }
+@@ -410,8 +417,8 @@ int host_osd_image(const uint32_t **pixels, int *w, int *h) {
+     if (h) *h = 0;
+     return 0;
+ #else
+-    const int show_msg = msg_visible();
+-    if (!show_msg && !s_status_active) {
++    const int show_msg = s_text_visible && msg_visible();
++    if (!show_msg && (!s_text_visible || !s_status_active)) {
+         if (pixels) *pixels = NULL;
+         if (w) *w = 0;
+         if (h) *h = 0;
+@@ -457,7 +464,7 @@ void host_osd_present_done(void) {
+ #if !HOST_OSD_VISUAL
+     return;
+ #else
+-    if (!s_active && !s_status_active && !s_vol_active) s_needs_clear = 0;
++    if ((!s_text_visible || (!s_active && !s_status_active)) && !s_vol_active) s_needs_clear = 0;
+ #endif
+ }
+ 
+@@ -489,6 +496,16 @@ void host_osd_draw_sdl(struct SDL_Renderer *renderer) {
+         }
+     }
+     host_osd_present_done();
++#endif
++#if defined(JF2_DESKTOP)
++    {
++        extern int jf2_desktop_image(const uint32_t**,int*,int*);
++        const uint32_t *px=NULL; int w=0,h=0,lw=640,lh=480;
++        if(jf2_desktop_image(&px,&w,&h)) {
++            sdl_logical_size(renderer,&lw,&lh);
++            sdl_blit_argb(renderer,&s_sdl_ssm_tex,&s_sdl_ssm_tw,&s_sdl_ssm_th,px,w,h,0,0,lw,lh);
++        }
++    }
+ #endif
+     {
+         const uint32_t *px = NULL;
+diff --git a/runtime/src/main.cpp b/runtime/src/main.cpp
+index c94e99d..ed26b5f 100644
+--- a/runtime/src/main.cpp
++++ b/runtime/src/main.cpp
+@@ -572,6 +572,9 @@ static int      s_d24_cutover_blank = 0;
+ /* Savestate restore → audio pump: re-anchor last_cycles (declared early so
+  * psx_frontend_on_savestate_loaded can set it). */
+ static int      g_audio_cycle_resync = 0;
++#ifdef JF2_DESKTOP
++static int g_audio_bridge_resync = 0;
++#endif
+ 
+ static void smooth_60_reset(void) {
+     g_smooth_60_state.previous_source.clear();
+@@ -1040,7 +1043,11 @@ static void post_load_probe_on_vblank(int turbo_active, int present_reached) {
+ static void savestate_input_guard_arm(void);
+ extern "C" void psx_frontend_on_savestate_notify(int is_load, int slot, int ok) {
+     char buf[64];
++#ifdef JF2_DESKTOP
++    const int disp = slot; // Match the desktop's explicit slot numbers.
++#else
+     const int disp = slot + 1;
++#endif
+     if (!is_load && ok)
+         psx_savestate_menu_note_slots_changed();
+     if (is_load && ok)
+@@ -1083,6 +1090,9 @@ extern "C" void psx_frontend_on_savestate_loaded(void) {
+     s_fps_last_frame = 0;
+     /* Re-anchor guest-cycle→sample budgeting (pump clears queued PCM too). */
+     g_audio_cycle_resync = 1;
++#ifdef JF2_DESKTOP
++    g_audio_bridge_resync = 1;
++#endif
+     /* Depth24 FMV: drop ephemeral present hold/cutover so restored VRAM shows.
+      * Upload span came back with the GPU snap; treat MDEC as already active if
+      * depth24 is on so we don't full-black the first post-load presents. */
+@@ -3980,6 +3990,19 @@ static void sdl_audio_gain_ramp(int16_t* buf, int frames, float g0, float g1) {
+  * sdl_audio_fadein_left is declared with present_session_reset. */
+ static const int sdl_audio_fade_samples = 44100 * 40 / 1000;  /* 40 ms */
+ 
++#ifdef JF2_DESKTOP
++static void jf2_audio_refill(rab_bridge *bridge) {
++    // Discard pre-transition PCM and prime the existing buffer before playback.
++    bridge->in_count = 0;
++    bridge->out_pos = (double)(bridge->half - 1);
++    bridge->cur_step = bridge->cfg.source_rate / bridge->cfg.host_rate;
++    bridge->err_lp = bridge->corr = bridge->corr_i = bridge->gain = 0.0;
++    bridge->primed = 0;
++    bridge->last_out[0] = bridge->last_out[1] = 0.0f;
++    bridge->stats.last_fill_ms = bridge->stats.last_correction = 0.0;
++}
++#endif
++
+ static void sdl_audio_pump(bool discard_output = false) {
+     /* Guest-cycle SPU advance must not depend on host audio device/backpressure.
+      * Win↔Linux rollback forked on aux/spu when one peer skipped spu_render
+@@ -3990,6 +4013,17 @@ static void sdl_audio_pump(bool discard_output = false) {
+     static int had_audio = 0;
+     uint32_t queued = 0;   /* RENDER event b: bytes (legacy) / fill ms (bridge) */
+     int host_queue_ok = 0;
++#ifdef JF2_DESKTOP
++    if (g_audio_bridge_resync) {
++        if (sdl_audio_device && !legacy && s_drc_ready) {
++            psx_sdl_audio_lock(sdl_audio_device);
++            jf2_audio_refill(&s_drc);
++            psx_sdl_audio_unlock(sdl_audio_device);
++            g_audio_unmute_resync = 1;
++        }
++        g_audio_bridge_resync = 0;
++    }
++#endif
+ 
+     if (discard_output) {
+         /* Host-only sink: skip all queue/bridge interaction, but continue to
+@@ -5403,7 +5437,12 @@ static bool controller_source_pressed_h(SDL_GameController* h, const ControllerS
+  * Return=Start, RShift=Select) plus T/Y=L3/R3 stick clicks. */
+ static uint16_t pad_from_keyboard(int player) {
+     const Uint8* keys = SDL_GetKeyboardState(NULL);
++#if defined(JF2_DESKTOP)
++    extern uint16_t jf2_desktop_pad(const Uint8*, int);
++    return jf2_desktop_pad(keys, player);
++#else
+     return psx_keybinds_pad_word(keys, player);
++#endif
+ }
+ 
+ /* A left/right ANALOG-STICK axis source (LEFTX/LEFTY/RIGHTX/RIGHTY), as opposed
+@@ -5478,13 +5517,19 @@ static void axes_to_pad_pair(int16_t vx, int16_t vy, uint8_t* obx, uint8_t* oby,
+ 
+ /* Buttons for a player's selected device (0xFFFF = none pressed). `player` is
+  * 1..5 — selects which keybinds.ini section drives a keyboard port. */
++#ifdef JF2_DESKTOP
++static uint16_t jf2_desktop_device_pad(uint16_t,int);
++#endif
+ static uint16_t pad_buttons_for(const PlayerInput& p, int player, bool suppress_stick_axes) {
+-    if (p.kind == 1) return pad_from_keyboard(player);
+-    if (p.kind == 2)
+-        return controller_pad_buttons(controller_map_for(p), p.handle,
+-                                      suppress_stick_axes, p.deadzone,
+-                                      player == 1 ? g_p1_claimed_buttons : 0u);
+-    return 0xFFFF;
++    uint16_t raw=0xFFFF;
++    if(p.kind==1) raw=pad_from_keyboard(player);
++    else if(p.kind==2) raw=controller_pad_buttons(controller_map_for(p),p.handle,
++        suppress_stick_axes,p.deadzone,player==1?g_p1_claimed_buttons:0u);
++#ifdef JF2_DESKTOP
++    return jf2_desktop_device_pad(raw,player);
++#else
++    return raw;
++#endif
+ }
+ 
+ /* Analog stick bytes (lx,ly,rx,ry) for a player; centred if no live source.
+@@ -6973,7 +7018,13 @@ static void apply_input_override_port2(int override_word) {
+     sio_set_pad_state_slot(1, (uint16_t)override_word);
+ }
+ 
++#ifdef JF2_DESKTOP
++extern "C" void jf2_desktop_input_source(int);
++#endif
+ static void sample_pad_into_sio(int override) {
++#ifdef JF2_DESKTOP
++    jf2_desktop_input_source(override);
++#endif
+     /* Selfcheck fighter mash owns P1 when enabled (headless-safe). */
+     if (override < 0) {
+         uint16_t mash = 0xFFFFu;
+@@ -8047,9 +8098,17 @@ static void headless_present_image_ring_capture(void) {
+ static int debug_toggles_on(void);
+ static int debug_toggle_key(int key, char *out, int cap);
+ #endif
++#if defined(JF2_DESKTOP)
++static bool drain_host_events();
++#include "jf2_desktop.h"
++#endif
++
+ static bool drain_host_events() {
+     SDL_Event ev;
+     while (SDL_PollEvent(&ev)) {
++#if defined(JF2_DESKTOP)
++        if (jf2_desktop_event(ev)) continue;
++#endif
+         if (psx_local_mouse_event(ev)) continue;
+         if (ev.type == SDL_QUIT) {
+             if (psx_netplay_active()) {
+@@ -8847,7 +8906,7 @@ static NetplayVblankEpilogue sdl_vblank_present_body(void) {
+             /* After savestate load, always restage once even if we blanked
+              * earlier in the session — otherwise the window keeps a stale
+              * pre-load frame while vblanks (and FPS) keep advancing. */
+-            if (!s_disabled_frame_presented || s_force_present_after_load) {
++            if (!s_disabled_frame_presented || s_force_present_after_load || host_osd_needs_present() || jf2_desktop_open()) {
+                 s_disabled_frame_presented = true;
+                 s_force_present_after_load = false;
+                 if (g_gl_active) {
+@@ -9262,6 +9321,9 @@ static NetplayVblankEpilogue sdl_vblank_present_body(void) {
+      * bands flashed as a bright strip on some X11 SDL drivers. */
+     SDL_SetRenderDrawColor(sdl_renderer, 0, 0, 0, 255);
+     SDL_RenderClear(sdl_renderer);
++#ifdef JF2_DESKTOP
++    jf2_desktop_software_rect(dst,src_h);
++#endif
+     SDL_RenderCopy(sdl_renderer, sdl_texture, &src, &dst);
+     host_osd_draw_sdl(sdl_renderer);
+     /* Fulfil a staged present_shot here: after RenderCopy + OSD, before
+@@ -9488,7 +9550,14 @@ extern "C" int  gpu_texture_correction_enabled(void);
+ extern "C" int  gl_renderer_get_wide_fast(void);
+ static int debug_toggles_on(void) {
+     static int on = -1;
+-    if (on < 0) { const char *e = std::getenv("PSX_DEBUG_TOGGLES"); on = !(e && e[0] == '0'); }
++    if (on < 0) {
++        const char *e = std::getenv("PSX_DEBUG_TOGGLES");
++#ifdef JF2_DESKTOP
++        on=e && e[0] && e[0]!='0';
++#else
++        on=!(e && e[0]=='0');
++#endif
++    }
+     return on;
+ }
+ static int s_dbg_scale_target = 0;
+@@ -9956,6 +10025,9 @@ extern "C" int psx_dynres_status_json(char *out, int cap) {
+ 
+ static void sdl_vblank_present(void) {
+     sync_guest_cadence_to_video_standard();
++#if defined(JF2_DESKTOP)
++    jf2_desktop_tick();
++#endif
+     NetplayVblankEpilogue ep = sdl_vblank_present_body();
+     render_thread_vblank();
+     /* Selfcheck span-end rewind: after present-body C++ RAII, before any
+@@ -16486,6 +16558,9 @@ int main(int argc, char** argv) {
+     bool skip_launcher_setting = false;  /* [launcher] skip_launcher from settings.toml */
+     std::string settings_bios_storage;  /* must outlive resolve_bios_for_runtime */
+     std::string netplay_player_name;     /* [netplay] player_name from settings.toml */
++#if defined(JF2_DESKTOP)
++    jf2_desktop_init(exe_dir_from_argv(argv[0]));
++#endif
+     bool has_netplay_player_name = false;
+     bool user_settings_has_renderer = false;
+     {
+@@ -16987,6 +17062,10 @@ int main(int argc, char** argv) {
+                 " --out-dir " + cmd_quote((tk_xd / "cache").string()) +
+                 (g_psx_cps_mode ? " --cps" : "") +
+                 " --compiler " + compiler;
++#ifdef JF2_DESKTOP
++            /* New overlays compile alongside the game; leave cores for gameplay. */
++            c += " --jobs 2";
++#endif
+             if (std::string(compiler) == "gcc" && !tk_compiler.empty())
+                 c += " --gcc " + cmd_quote(tk_compiler);
+             if (std::string(compiler) == "tcc")
+@@ -17295,6 +17374,9 @@ int main(int argc, char** argv) {
+             ls.enable_audio   = 1;
+             ls.audio_freq     = seed.audio_freq;
+             ls.volume         = host_volume_get();
++#if defined(JF2_DESKTOP)
++            ls.volume=jf2_settings.jf2_audio_volume;
++#endif
+             {
+                 const int n = std::min(PSX_MAX_PLAYERS, RECOMP_LAUNCHER_MAX_PLAYERS);
+                 for (int i = 0; i < n; ++i) {
+@@ -17751,6 +17833,9 @@ int main(int argc, char** argv) {
+                 seed.turbo_loads = ls.turbo_loads != 0;
+                 seed.has_turbo_loads = turbo_loads_offered;
+                 host_volume_set(ls.volume);
++#ifdef JF2_DESKTOP
++                jf2_settings.jf2_audio_volume=ls.volume;host_volume_set(jf2_settings.jf2_muted?0:ls.volume);jf2_save();
++#endif
+                 /* Bundled-BIOS builds ignore any launcher-supplied path (the
+                  * picker is hidden, but a stale settings file could still
+                  * carry one) — resolve_bios_for_runtime would reject it and
+@@ -18475,6 +18560,10 @@ session_reboot:
+         g_present_thread_slots = std::atoi(e) > 0 ? std::atoi(e) : 3;
+     if (const char* e = std::getenv("PSX_FRAME_GEN"))
+         g_frame_generation = (*e && *e != '0') ? 1 : 0;
++#if defined(JF2_DESKTOP)
++    // The desktop menu owns the main-thread GL context; threaded presentation is unsupported here.
++    g_render_thread = g_present_thread = g_frame_generation = 0;
++#endif
+     /* PSX_FRAME_GEN_METHOD=redraw|reprojection overrides [video]
+      * frame_generation_method for one run. */
+     if (const char* e = std::getenv("PSX_FRAME_GEN_METHOD")) {
+@@ -18728,7 +18817,14 @@ session_reboot:
+         std::atexit(game_options_save_now);
+ #ifndef PSX_NO_DEBUG_TOOLS
+         debug_server_init(debug_port);
++#ifdef JF2_DESKTOP
++        /* SuspendThread/GetThreadContext at 1 kHz perturbs interactive timing.
++         * Keep TCP diagnostics, but make this intrusive profiler opt-in. */
++        if (const char *profile = std::getenv("PSX_HOST_SAMPLER"))
++            if (profile[0] && profile[0] != '0') host_sampler_start();
++#else
+         host_sampler_start();   /* this is the emulation thread */
++#endif
+ #else
+         (void)debug_port;
+ #endif
+@@ -18845,6 +18941,9 @@ session_reboot:
+         }
+     }
+     load_input_config(argv[0]);
++#if defined(JF2_DESKTOP)
++    jf2_desktop_reload_bindings();
++#endif
+     /* The launcher / settings.toml / game.toml deadzone (when set) is the
+      * user-facing authority; apply it over the input.ini value here, after
+      * load_input_config has read input.ini. */
+@@ -19463,6 +19562,9 @@ session_reboot:
+     /* Solo rollback resim self-check (PSX_RB_SELFCHECK=1, offline only). */
+     psx_selfcheck_init(&cpu, memory_get_bios_checksum(), game_entry_pc);
+ 
++#if defined(JF2_DESKTOP)
++    jf2_cpu = &cpu;
++#endif
+     /* Execute. */
+     std::fprintf(stdout, "psxrecomp runtime: executing from PC=0x%08X\n", cpu.pc);
+ 
+@@ -19778,6 +19880,9 @@ soft_return_lobby:
+         ls.enable_audio = 1;
+         ls.audio_freq = g_audio_freq;
+         ls.volume = host_volume_get();
++#if defined(JF2_DESKTOP)
++        ls.volume=jf2_settings.jf2_audio_volume;
++#endif
+         ls.window_width = g_video_win_w;
+         ls.renderer = g_video_renderer;
+         if (ls.renderer < 0 || ls.renderer > (vulkan_offered ? 2 : 1))
+@@ -20013,6 +20118,9 @@ soft_return_lobby:
+              * launcher returns, and so must this one. */
+             psx_keybinds_init(argv[0]);
+             host_volume_set(ls.volume);
++#ifdef JF2_DESKTOP
++                jf2_settings.jf2_audio_volume=ls.volume;host_volume_set(jf2_settings.jf2_muted?0:ls.volume);jf2_save();
++#endif
+             if (rui_out_disc[0]) {
+                 resolved_disc = normalize_disc_path_for_launch(rui_out_disc);
+                 disc_path_str = resolved_disc.string();
+diff --git a/runtime/src/overlay_loader.c b/runtime/src/overlay_loader.c
+index a831bf9..621bb9b 100644
+--- a/runtime/src/overlay_loader.c
++++ b/runtime/src/overlay_loader.c
+@@ -1337,6 +1337,7 @@ typedef struct {
+     uint32_t logical_crc;
+     uint32_t seg;          /* shard segment, from its directory (§5.7)       */
+     uint64_t mtime;
++    uint64_t path_hash;
+     int func_count;
+     int indexed_func_count;
+     uint8_t tier;
+@@ -1809,9 +1810,30 @@ static void rebuild_lazy_manifest_index(void) {
+     for (int i = 0; i < s_cand_n; i++) exact_entry_set(s_cand[i].addr);
+ }
+ 
++static uint64_t cache_path_hash(const char *path) {
++    uint64_t hash = UINT64_C(14695981039346656037);
++    for (const unsigned char *p = (const unsigned char *)path; *p; ++p) {
++        unsigned char c = *p;
++#ifdef _WIN32
++        c = (c == '\\') ? '/' : (unsigned char)tolower(c);
++#endif
++        hash = (hash ^ c) * UINT64_C(1099511628211);
++    }
++    return hash ? hash : 1;
++}
++
+ static int cache_idx_has_path(const char *path) {
+-    for (int i = 0; i < s_cache_idx_count; i++)
++#ifdef JF2_DESKTOP
++    const uint64_t hash = cache_path_hash(path);
++#endif
++    for (int i = 0; i < s_cache_idx_count; i++) {
++#ifdef JF2_DESKTOP
++        /* Keep exact collision checks; avoid repeatedly comparing long prefixes. */
++        if (!s_cache_idx[i].path_hash) s_cache_idx[i].path_hash = cache_path_hash(s_cache_idx[i].path);
++        if (s_cache_idx[i].path_hash != hash) continue;
++#endif
+         if (cache_path_equal(s_cache_idx[i].path, path)) return 1;
++    }
+     return 0;
+ }
+ 
+@@ -1879,6 +1901,7 @@ static int add_posix_cache_file(const PsxOverlayCacheFile *file, void *opaque) {
+     }
+     if (cache_idx_has_path(file->path)) return 0;
+     CacheEntry *e = &s_cache_idx[s_cache_idx_count++];
++    e->path_hash = 0;
+     e->region_start = file->region_start;
+     e->logical_crc = file->content_crc;
+     e->seg = seg;
+@@ -1925,6 +1948,7 @@ static void scan_one_cache_dir(const char *dir, int tier) {
+          * different artifact suffix is an additive repair and is retained. */
+         if (cache_idx_has_path(full)) continue;
+         CacheEntry *e = &s_cache_idx[s_cache_idx_count++];
++        e->path_hash = 0;
+         e->region_start = addr;
+         e->logical_crc = crc;
+         e->seg = cache_seg_from_path(full);
+@@ -2296,12 +2320,18 @@ int g_call_unit_depth = 0;
+  * nothing defers — the pre-fix behavior), letting us attribute a behavior change
+  * to this fix without a rebuild. */
+ int overlay_unit_defer_enabled(void) {
++#ifdef JF2_DESKTOP
++    // JF2's nested World 1 frame wait is completed by its VBlank callback.
++    // Deferring interrupts until that call returns deadlocks the loading fade.
++    return 0;
++#else
+     static int cached = -1;
+     if (cached < 0) {
+         const char *e = getenv("PSX_OVERLAY_UNIT_DEFER");
+         cached = (e && (e[0] == '0' || e[0] == 'n' || e[0] == 'N')) ? 0 : 1;
+     }
+     return cached;
++#endif
+ }
+ 
+ void overlay_loader_set_irq_suppress(int mode, uint32_t ratelimit) {
+diff --git a/runtime/src/psx_keybinds.c b/runtime/src/psx_keybinds.c
+index 7401957..7157846 100644
+--- a/runtime/src/psx_keybinds.c
++++ b/runtime/src/psx_keybinds.c
+@@ -372,7 +372,12 @@ void psx_keybinds_host_keys(const uint8_t *keys, uint8_t out[SDL_NUM_SCANCODES])
+ static int held_sc(const uint8_t *keys, SDL_Scancode sc, int slot) {
+     int down;
+     if (PSXKB_IS_MOUSE_SC(sc)) {
++#ifdef JF2_DESKTOP
++        extern uint32_t jf2_desktop_mouse_buttons(void);
++        Uint32 m = jf2_desktop_mouse_buttons();
++#else
+         Uint32 m = SDL_GetMouseState(NULL, NULL);
++#endif
+         down = (m & SDL_BUTTON((int)sc - PSXKB_MOUSE_SC_BASE)) != 0;
+     } else {
+         down = sc != SDL_SCANCODE_UNKNOWN && (int)sc >= 0 &&
+diff --git a/runtime/tests/test_runtime_perf_diag_guards.py b/runtime/tests/test_runtime_perf_diag_guards.py
+index f9254c6..388eb1a 100644
+--- a/runtime/tests/test_runtime_perf_diag_guards.py
++++ b/runtime/tests/test_runtime_perf_diag_guards.py
+@@ -47,7 +47,7 @@ def main():
+         "uint64_t perf_start = runtime_perf_section_begin();", capture, provider)
+     provider_end = main_cpp.index(
+         "&g_runtime_perf.provider_poll_ticks);", provider)
+-    pacer = main_cpp.index("frame_pacer_wait(&pacer, g_frame_period_ms);", provider)
++    pacer = main_cpp.index("frame_pacer_wait(&s_frame_pacer,", provider)
+     if not (begin < diag < capture < provider_begin < provider <
+             provider_end < pacer):
+         raise AssertionError("vblank telemetry boundaries are out of order")

@@ -1,0 +1,12 @@
+{
+  "schema": 1,
+  "historical_framework_base": {
+    "url": "https://github.com/RetroPortingToolKit/psxrecomp",
+    "commit": "67a21b739598d8e6f372ddd5e252c8622971869c"
+  },
+  "historical_ui_base": {
+    "url": "https://github.com/RetroPortingToolKit/recomp-ui",
+    "commit": "7e884a227accea91ddb378671bd49aaeeea13371"
+  },
+  "scope": "Historical source baselines only; additional patches and selected source-replay inputs are required to reproduce the private native alpha."
+}

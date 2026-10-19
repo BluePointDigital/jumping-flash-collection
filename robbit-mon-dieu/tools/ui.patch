@@ -1,0 +1,226 @@
+diff --git a/src/common/backends/imgui/launcher_imgui.cpp b/src/common/backends/imgui/launcher_imgui.cpp
+index d87bde3..f9fddd7 100644
+--- a/src/common/backends/imgui/launcher_imgui.cpp
++++ b/src/common/backends/imgui/launcher_imgui.cpp
+@@ -1,3 +1,12 @@
++
++#ifdef JF2_DESKTOP
++extern void jf2_launcher_controls();
++union SDL_Event;
++extern bool jf2_launcher_event(const SDL_Event&);
++extern int jf2_launcher_navigation();
++extern void jf2_launcher_audio(int*);
++extern void jf2_launcher_display();
++#endif
+ // launcher_imgui.cpp — Dear ImGui (MIT) backend for the next-gen launcher.
+ //
+ // Draws the shared LauncherModel with Dear ImGui + SDL3 + OpenGL3, at parity
+@@ -3485,7 +3494,18 @@ void panel_controller_draw(LauncherModel* m, const LauncherTheme* th) {
+ // (SAVES only when the game has SRAM, folded into the GAME card — see
+ // draw_save_row). A different system's profile simply contributes a
+ // different panel list.
++void panel_video_draw(LauncherModel*,const LauncherTheme*);
++void panel_audio_draw(LauncherModel*,const LauncherTheme*);
++void draw_controller(LauncherModel*,const LauncherTheme&);
+ void draw_dashboard(LauncherModel* m, const LauncherTheme& th, int logical_w) {
++#if defined(JF2_DESKTOP)
++    int page=::jf2_launcher_navigation();
++    if(page==1) {ImGui::TextWrapped("Window size and fullscreen apply at launch. Threaded rendering and frame generation are unavailable in this desktop build. Guest timing remains PAL 50 Hz.");panel_video_draw(m,&th);::jf2_launcher_display();return;}
++    if(page==2) {draw_controller(m,th);return;}
++    if(page==3) {panel_audio_draw(m,&th);::jf2_launcher_audio(&m->s.volume);return;}
++    if(page==4) {ImGui::TextWrapped("Desktop settings are remembered. Close the launcher to exit.");if(ImGui::Button("Exit launcher",ImVec2(220,44))) m->action=LNG_ACTION_QUIT;return;}
++    ::jf2_launcher_controls();
++#endif
+     const SystemProfile* prof = (const SystemProfile*)m->profile;
+     const LauncherPanel* game_p = find_composed(prof->panels_dashboard, "game", m);
+     const LauncherPanel* ctrl_p = find_composed(prof->panels_dashboard, "controller", m);
+@@ -6463,6 +6483,9 @@ void panel_controller_config_draw(LauncherModel* m, const LauncherTheme* th) {
+ // architecture's "Binds ... page reached from the Controller panel's
+ // Configure" note.
+ void draw_controller(LauncherModel* m, const LauncherTheme& th) {
++#if defined(JF2_DESKTOP)
++    ::jf2_launcher_controls();
++#endif
+     const SystemProfile* prof = (const SystemProfile*)m->profile;
+     const LauncherPanel* p = find_composed(prof->panels_controller, "controller_config", m);
+     if (p) p->draw(m, &th);
+@@ -14069,6 +14092,9 @@ bool is_modifier_scancode(SDL_Scancode sc) {
+  * any more" deserves an answer at the place the answer used to live. */
+ 
+ bool try_capture(LauncherModel* m, const SDL_Event& ev) {
++#ifdef JF2_DESKTOP
++    if(::jf2_launcher_event(ev)) return true;
++#endif
+     if (!m->capturing && !m->hk_capturing &&
+         !m->camera_capturing)
+         return false;
+@@ -14347,6 +14373,9 @@ bool try_capture(LauncherModel* m, const SDL_Event& ev) {
+     // advance a step, racing 24 buttons past on one keypress.
+     if (m->capturing && m->map_all_active && LNG_EVKEYREPEAT(ev)) return true;
+     if (m->capturing) {
++#ifdef JF2_DESKTOP
++        if (LNG_EVSCAN(ev)==SDL_SCANCODE_F1 || LNG_EVSCAN(ev)==SDL_SCANCODE_F5 || LNG_EVSCAN(ev)==SDL_SCANCODE_F9 || LNG_EVSCAN(ev)==SDL_SCANCODE_F12) return true;
++#endif
+         // A store that keeps alternates per input must honour capture_slot.
+         // N64's input.cfg is the one such store addressed by field rather than
+         // by scancode, so it is named here; every other alternate-slot store
+diff --git a/src/common/backends/imgui/runtime_ui_imgui.cpp b/src/common/backends/imgui/runtime_ui_imgui.cpp
+index 22e31f2..5ccfe97 100644
+--- a/src/common/backends/imgui/runtime_ui_imgui.cpp
++++ b/src/common/backends/imgui/runtime_ui_imgui.cpp
+@@ -92,9 +92,13 @@ void draw_items(RecompRuntimeUi *ui, const LauncherTheme &theme,
+         ImGui::PushID(static_cast<int>(index));
+         if (!enabled) ImGui::BeginDisabled();
+         const ImVec2 start = ImGui::GetCursorScreenPos();
+-        const float row_h = item->description && item->description[0]
++        float row_h = item->description && item->description[0]
+                                 ? theme.row_height + theme.spacing_sm
+                                 : theme.row_height;
++#ifdef JF2_DESKTOP
++        const float description_width=std::max(60.0f,ImGui::GetContentRegionAvail().x-2*theme.spacing_md);
++        if(item->description && item->description[0]) row_h=std::max(row_h,ImGui::GetTextLineHeight()+ImGui::CalcTextSize(item->description,nullptr,false,description_width).y+2*theme.spacing_sm+4);
++#endif
+         const float step_button_w =
+             touch_friendly ? std::max(76.0f, row_h * 0.90f) : 38.0f;
+         const float step_gap = touch_friendly ? 12.0f : 6.0f;
+@@ -142,10 +146,14 @@ void draw_items(RecompRuntimeUi *ui, const LauncherTheme &theme,
+                           value);
+         }
+         if (item->description && item->description[0]) {
++#ifdef JF2_DESKTOP
++            draw->AddText(nullptr,0,ImVec2(start.x+theme.spacing_md,start.y+theme.spacing_sm+ImGui::GetTextLineHeight()+2),u32(theme.text_muted),item->description,nullptr,description_width);
++#else
+             draw->AddText(ImVec2(start.x + theme.spacing_md,
+                                 start.y + theme.spacing_sm +
+                                     ImGui::GetTextLineHeight() + 2.0f),
+                           u32(theme.text_muted), item->description);
++#endif
+         }
+         if (editing_this && enabled) {
+             const float field_w = touch_friendly
+@@ -314,7 +322,12 @@ extern "C" void recomp_runtime_ui_render_imgui(RecompRuntimeUi *ui) {
+     const float margin = touch_friendly
+         ? std::max(20.0f, short_axis * 0.025f)
+         : 24.0f;
++#ifdef JF2_DESKTOP
++    theme.row_height=std::max(theme.row_height,42.0f);
++    const float max_width = touch_friendly ? display.x : 1040.0f;
++#else
+     const float max_width = touch_friendly ? display.x : 780.0f;
++#endif
+     const float max_height = touch_friendly ? display.y : 680.0f;
+     const float width = display.x - margin * 2.0f < max_width
+                             ? display.x - margin * 2.0f
+diff --git a/src/common/recomp_runtime_ui.c b/src/common/recomp_runtime_ui.c
+index c4e998e..f555b9e 100644
+--- a/src/common/recomp_runtime_ui.c
++++ b/src/common/recomp_runtime_ui.c
+@@ -112,13 +112,22 @@ int recomp_runtime_ui_current_value(RecompRuntimeUi *ui,
+ }
+ 
+ static void accepted_change(RecompRuntimeUi *ui, const char *status) {
++#ifdef JF2_DESKTOP
++    if (!ui->status_frames) {
++#endif
+     snprintf(ui->status, sizeof(ui->status), "%s", status ? status : "Applied");
+     ui->status_frames = 90;
++#ifdef JF2_DESKTOP
++    }
++#endif
+     if (ui->config.callbacks.save)
+         ui->config.callbacks.save(ui->config.callbacks.context);
+ }
+ 
+ static void accepted_action(RecompRuntimeUi *ui) {
++#ifdef JF2_DESKTOP
++    if (ui->status_frames) return;
++#endif
+     snprintf(ui->status, sizeof(ui->status), "%s", "Done");
+     ui->status_frames = 90;
+ }
+@@ -130,6 +139,9 @@ void recomp_runtime_ui_adjust_current(RecompRuntimeUi *ui, int direction,
+     if (!item || !recomp_runtime_ui_item_enabled(ui, item)) return;
+     if (item->type == RECOMP_RUNTIME_UI_ACTION) {
+         if (!activate || repeat || !ui->config.callbacks.run_action) return;
++#ifdef JF2_DESKTOP
++        ui->status_frames=0;
++#endif
+         if (ui->config.callbacks.run_action(ui->config.callbacks.context, item))
+             accepted_action(ui);
+         return;
+@@ -169,6 +181,9 @@ void recomp_runtime_ui_adjust_current(RecompRuntimeUi *ui, int direction,
+         if (next < item->minimum) next = item->minimum;
+         if (next > item->maximum) next = item->maximum;
+     }
++#ifdef JF2_DESKTOP
++    if(next != value) ui->status_frames=0;
++#endif
+     if (next != value && ui->config.callbacks.set_value(
+             ui->config.callbacks.context, item, next))
+         accepted_change(ui, "Saved");
+@@ -369,10 +384,19 @@ static uint32_t blend_pixel(uint32_t dst, uint32_t src, unsigned alpha) {
+     unsigned dr = (dst >> 16) & 255, dg = (dst >> 8) & 255, db = dst & 255;
+     unsigned sr = (src >> 16) & 255, sg = (src >> 8) & 255, sb = src & 255;
+     unsigned inv = 255 - alpha;
++#ifdef JF2_DESKTOP
++    const unsigned da=dst>>24, out_a=alpha+(da*inv+127)/255;
++    if(!out_a) return 0;
++    return (out_a<<24) |
++        (((sr*alpha*255+dr*da*inv)/(out_a*255))<<16) |
++        (((sg*alpha*255+dg*da*inv)/(out_a*255))<<8) |
++        ((sb*alpha*255+db*da*inv)/(out_a*255));
++#else
+     return 0xff000000u |
+            (((sr * alpha + dr * inv) / 255) << 16) |
+            (((sg * alpha + dg * inv) / 255) << 8) |
+            ((sb * alpha + db * inv) / 255);
++#endif
+ }
+ 
+ static void rect(void *pixels, int width, int height, int pitch, int x, int y,
+@@ -593,7 +617,11 @@ void recomp_runtime_ui_render_argb8888(RecompRuntimeUi *ui, void *pixels,
+         }
+     }
+ 
++#ifdef JF2_DESKTOP
++    const char *help = "BACKSPACE: ALL SETTINGS  F2: MODS";
++#else
+     const char *help = "UP/DOWN SELECT  LEFT/RIGHT CHANGE  ENTER ACCEPT";
++#endif
+     if (ui->in_section) {
+         const RecompRuntimeUiItem *item = recomp_runtime_ui_section_item(
+             ui, ui->section_index, ui->row_index);
+@@ -614,3 +642,19 @@ void recomp_runtime_ui_render_argb8888(RecompRuntimeUi *ui, void *pixels,
+     if (recomp_runtime_ui_toast_visible(ui))
+         render_toast_argb(ui, pixels, width, height, pitch, scale);
+ }
++
++#ifdef JF2_DESKTOP
++/* PAL title bridge: preserve the game's logo/background, add an ordinary sixth
++ * mouse/controller-selectable entry while original actions use guest dispatch. */
++void recomp_runtime_ui_render_title_entries(void *pixels,int width,int height,int pitch,int selection) {
++    if(!pixels || width!=640 || height!=480 || pitch<width*4) return;
++    static const char *entries[]={"GAME START","TIME ATTACK","LOAD","SAVE","OPTIONS","MODS"};
++    rect(pixels,width,height,pitch,90,282,460,156,0x171b57,255);
++    for(int row=0;row<6;++row) {
++        int y=294+row*24,tw=text_width(entries[row],2);
++        if(row==selection) rect(pixels,width,height,pitch,96,y,448,23,0x292c71,255);
++        draw_text(pixels,width,height,pitch,(640-tw)/2,y+5,2,row==selection?0xff922e:0xd5dbef,entries[row],544);
++        if(row==selection) draw_text(pixels,width,height,pitch,130,y+5,2,0xff922e,">",160);
++    }
++}
++#endif
+diff --git a/src/common/recomp_runtime_ui_internal.h b/src/common/recomp_runtime_ui_internal.h
+index a182dc1..4164188 100644
+--- a/src/common/recomp_runtime_ui_internal.h
++++ b/src/common/recomp_runtime_ui_internal.h
+@@ -37,6 +37,9 @@ struct RecompRuntimeUi {
+     char toast_body[320];
+ };
+ 
++#ifdef JF2_DESKTOP
++void recomp_runtime_ui_render_title_entries(void *pixels,int width,int height,int pitch,int selection);
++#endif
+ int recomp_runtime_ui_item_enabled(const RecompRuntimeUi *ui,
+                                    const RecompRuntimeUiItem *item);
+ size_t recomp_runtime_ui_section_item_count(const RecompRuntimeUi *ui,

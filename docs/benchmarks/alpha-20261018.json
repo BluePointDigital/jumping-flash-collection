@@ -1,0 +1,78 @@
+{
+  "schema": 1,
+  "platform": "Windows desktop",
+  "internal_lines_setting": 720,
+  "aspect": "4:3",
+  "actual_fullscreen_output": [
+    2880,
+    1620
+  ],
+  "approximate_sample_seconds": 20,
+  "games": {
+    "jf1": {
+      "executable_sha256": "f75b2ab3e2f7a0d8ca4640839932bebda1632e5978618d4f2d72d8307122c0eb",
+      "metrics": {
+        "guest_frames_per_second": 60.160494442434896,
+        "internal_swap_calls_per_second": 60.160494442434896,
+        "internal_generated_swap_calls_per_second": 0.0,
+        "swap_calls_delta": 1207,
+        "generated_swap_calls_delta": 0,
+        "producer_sample_drops_delta": 0,
+        "audio_underrun_sample_frames_delta": 0,
+        "audio_overflow_drops_delta": 0,
+        "physical_present_fps": null,
+        "world_update_hz": null,
+        "limitations": "short triage window; completed internal swap calls are not physical presents or release qualification"
+      },
+      "static_execution": "zero lifetime interpreter/oracle/compiler attempts on this bounded route"
+    },
+    "jf2": {
+      "executable_sha256": "e1300cd1fd93c57db4c99334f0c57fae44099d8118b327da46c97066bd373474",
+      "metrics": {
+        "guest_frames_per_second": 50.042366545468,
+        "internal_swap_calls_per_second": 33.59417833829226,
+        "internal_generated_swap_calls_per_second": 0.0,
+        "swap_calls_delta": 674,
+        "generated_swap_calls_delta": 0,
+        "producer_sample_drops_delta": 0,
+        "audio_underrun_sample_frames_delta": 0,
+        "audio_overflow_drops_delta": 0,
+        "physical_present_fps": null,
+        "world_update_hz": null,
+        "limitations": "short triage window; completed internal swap calls are not physical presents or release qualification"
+      },
+      "static_execution": "zero lifetime interpreter/oracle/compiler attempts on this bounded route"
+    },
+    "robbit": {
+      "executable_sha256": "cd5411b95f0a8f770500b90ccd751b15340ae4471b7f416a8a6c33daf6aef594",
+      "metrics": {
+        "guest_frames_per_second": 60.16721409381092,
+        "internal_swap_calls_per_second": 60.11744799447774,
+        "internal_generated_swap_calls_per_second": 0.0,
+        "swap_calls_delta": 1208,
+        "generated_swap_calls_delta": 0,
+        "producer_sample_drops_delta": 0,
+        "audio_underrun_sample_frames_delta": 0,
+        "audio_overflow_drops_delta": 0,
+        "physical_present_fps": null,
+        "world_update_hz": null,
+        "limitations": "short triage window; completed internal swap calls are not physical presents or release qualification"
+      },
+      "static_execution": "zero lifetime interpreter/oracle/compiler attempts on this bounded route"
+    }
+  },
+  "scope": "Summarized alpha short-test evidence; no physical FPS, full-campaign or Deck benchmark claim.",
+  "owner_Deck_report": {
+    "model": "LCD 64 GB",
+    "game": "JF2",
+    "playable_reported": true,
+    "graphical_glitches": true,
+    "slowdowns": true,
+    "measured_fps": null,
+    "proton_version": "Proton Experimental (exact build not supplied)",
+    "source": "Direct owner report in project conversation, October 18, 2026",
+    "menu_voiceover": "very choppy; generally smooths out after a little gameplay",
+    "windows_comparison": "Windows feels better overall to the owner",
+    "cause": "Unconfirmed; no controlled comparison between Proton versions"
+  }
+}

@@ -1,0 +1,1500 @@
+{
+  "schema": 1,
+  "game": "jf2",
+  "serial": "SCES-00111",
+  "source_disc_sha256": "f09ee5cefcdcb5dc8015c41faf5409a20b12180d556721b124ac3c8478ca2d8b",
+  "provenance_sha256": "5f1ba0ee2c096efed1173436458099532e2f173370c6f8d78bacb6e2be36c588",
+  "recovery_tool_sha256": "5a95b1ca2900265c99803202c342e9ac5d3a8e7d0f4bbcca98d94b36ab385ff2",
+  "profiles": [
+    {
+      "image": "JF2_B1/MAIN.PEX",
+      "source_body_sha256": "584691b39d0388d69a4faa1a97cfce2d1790990aac40dc7bf4f0138b3d0351b7",
+      "sites": {
+        "update": "0x800cc614",
+        "camera": "0x800d93d8",
+        "pitch": "0x800cdc38",
+        "movement": "0x800cd63c",
+        "restore": "0x800cdc7c"
+      },
+      "fields": {
+        "actor": "0x801268cc",
+        "pad": "0x800f5ae0",
+        "movement_mode": "0x800f5ad8",
+        "base_speed": "0x800f4bcc",
+        "look_mode": "0x800f5adc",
+        "camera_pointer": "0x800ac5c0"
+      },
+      "camera_return": "0x800ccc64",
+      "guards": {
+        "update": {
+          "address": "0x800cc614",
+          "words": 443,
+          "sha256": "ca0f74d6e26d2e7bdbf6e2d60084c81a736d68cd20a9454185e52a30dd9ccea2",
+          "fnv64": "302e4cc3fc67ab0c",
+          "first": "27bdffc0",
+          "last": "00000000"
+        },
+        "camera": {
+          "address": "0x800d93d8",
+          "words": 7,
+          "sha256": "81a4388c869b030deed05a366140f3d32b9cdce1d8b4a6ee3376ebd28bd7539d",
+          "fnv64": "e0be38f7b3061421",
+          "first": "3c02800b",
+          "last": "a4460004"
+        },
+        "pitch": {
+          "address": "0x800cdc38",
+          "words": 17,
+          "sha256": "cfc80695457c7baf434a837b997d5791cc9536ae4da90e851c0c470b970b2fe8",
+          "fnv64": "930c0bcbd6d2286a",
+          "first": "8c82008c",
+          "last": "00000000"
+        },
+        "movement": {
+          "address": "0x800cd63c",
+          "words": 247,
+          "sha256": "959caa0bca209bfe5af5fd99e121261ddeaf3e943bcc1ce8d56945bd3738ba93",
+          "fnv64": "e91b57ff5a8c008f",
+          "first": "27bdffd8",
+          "last": "00000000"
+        },
+        "restore": {
+          "address": "0x800cdc7c",
+          "words": 157,
+          "sha256": "da2175c1771ae4913e025c6a1e08b2784fc928bad601f8ca5654430f879c8f0f",
+          "fnv64": "1fc7b1e8cac8d4c2",
+          "first": "27bdffd8",
+          "last": "00000000"
+        }
+      }
+    },
+    {
+      "image": "JF2_B2/MAIN.PEX",
+      "source_body_sha256": "d12bc8174fb485d2843b939cd4bfa7cd8c604d82e6b419fa4da21b57c0ec030a",
+      "sites": {
+        "update": "0x800cc768",
+        "camera": "0x800d952c",
+        "pitch": "0x800cdd8c",
+        "movement": "0x800cd790",
+        "restore": "0x800cddd0"
+      },
+      "fields": {
+        "actor": "0x80126a34",
+        "pad": "0x800f5c48",
+        "movement_mode": "0x800f5c40",
+        "base_speed": "0x800f4d34",
+        "look_mode": "0x800f5c44",
+        "camera_pointer": "0x800ac5c0"
+      },
+      "camera_return": "0x800ccdb8",
+      "guards": {
+        "update": {
+          "address": "0x800cc768",
+          "words": 443,
+          "sha256": "3a6e08262433311e68b7bf9443b506764b734d157b62a6ec481fd599625b5fc0",
+          "fnv64": "590db1e39c441447",
+          "first": "27bdffc0",
+          "last": "00000000"
+        },
+        "camera": {
+          "address": "0x800d952c",
+          "words": 7,
+          "sha256": "81a4388c869b030deed05a366140f3d32b9cdce1d8b4a6ee3376ebd28bd7539d",
+          "fnv64": "e0be38f7b3061421",
+          "first": "3c02800b",
+          "last": "a4460004"
+        },
+        "pitch": {
+          "address": "0x800cdd8c",
+          "words": 17,
+          "sha256": "cfc80695457c7baf434a837b997d5791cc9536ae4da90e851c0c470b970b2fe8",
+          "fnv64": "930c0bcbd6d2286a",
+          "first": "8c82008c",
+          "last": "00000000"
+        },
+        "movement": {
+          "address": "0x800cd790",
+          "words": 247,
+          "sha256": "38426bcf3ee07d0d729c37e28d82c0bb379192c244dd3b1ce95dbc4e41243949",
+          "fnv64": "20187ea6dedcde2a",
+          "first": "27bdffd8",
+          "last": "00000000"
+        },
+        "restore": {
+          "address": "0x800cddd0",
+          "words": 157,
+          "sha256": "4e5dec44248ecaea82f1b28bba3feaba216ab3809c564dfc8f37df610d1d3522",
+          "fnv64": "856ff72aead9bb10",
+          "first": "27bdffd8",
+          "last": "00000000"
+        }
+      }
+    },
+    {
+      "image": "JF2_B3/MAIN.PEX",
+      "source_body_sha256": "33f9f34a358efb509fe9b011861ada07dd5eb2bec71466d4bf5b91cae1f33080",
+      "sites": {
+        "update": "0x800c83e4",
+        "camera": "0x800d51a8",
+        "pitch": "0x800c9a08",
+        "movement": "0x800c940c",
+        "restore": "0x800c9a4c"
+      },
+      "fields": {
+        "actor": "0x80121108",
+        "pad": "0x800f065c",
+        "movement_mode": "0x800f0654",
+        "base_speed": "0x800ef748",
+        "look_mode": "0x800f0658",
+        "camera_pointer": "0x800ac300"
+      },
+      "camera_return": "0x800c8a34",
+      "guards": {
+        "update": {
+          "address": "0x800c83e4",
+          "words": 443,
+          "sha256": "5692e904f839963d8d5dbee0a1d6d04f5b53579d3355248c137253182e36a7e3",
+          "fnv64": "de2e1e978c6f8387",
+          "first": "27bdffc0",
+          "last": "00000000"
+        },
+        "camera": {
+          "address": "0x800d51a8",
+          "words": 7,
+          "sha256": "e18faf407c08d5b21be9a75307608f410bbd71b9ea768ca8ac75f1cfa5b60c48",
+          "fnv64": "1f68c027acd019eb",
+          "first": "3c02800b",
+          "last": "a4460004"
+        },
+        "pitch": {
+          "address": "0x800c9a08",
+          "words": 17,
+          "sha256": "cfc80695457c7baf434a837b997d5791cc9536ae4da90e851c0c470b970b2fe8",
+          "fnv64": "930c0bcbd6d2286a",
+          "first": "8c82008c",
+          "last": "00000000"
+        },
+        "movement": {
+          "address": "0x800c940c",
+          "words": 247,
+          "sha256": "f7377a6ea0494c0c631686363b0fe574cfe7b50c17c47df46bee43bb4b8c3ebf",
+          "fnv64": "a5d3fa47e36a4884",
+          "first": "27bdffd8",
+          "last": "00000000"
+        },
+        "restore": {
+          "address": "0x800c9a4c",
+          "words": 157,
+          "sha256": "5cdd0368c49851f26ac943af800cc2ef8b9e55f5034aecfebe48ef53662a4281",
+          "fnv64": "990900710cf5f1fc",
+          "first": "27bdffd8",
+          "last": "00000000"
+        }
+      }
+    },
+    {
+      "image": "JF2_B4/MAIN.PEX",
+      "source_body_sha256": "ce45e139c8daf3647cda584a7ce058d7cf11b4f4bb826b6de5a2843498b0e1f7",
+      "sites": {
+        "update": "0x800c83e4",
+        "camera": "0x800d51a8",
+        "pitch": "0x800c9a08",
+        "movement": "0x800c940c",
+        "restore": "0x800c9a4c"
+      },
+      "fields": {
+        "actor": "0x80121108",
+        "pad": "0x800f065c",
+        "movement_mode": "0x800f0654",
+        "base_speed": "0x800ef748",
+        "look_mode": "0x800f0658",
+        "camera_pointer": "0x800ac300"
+      },
+      "camera_return": "0x800c8a34",
+      "guards": {
+        "update": {
+          "address": "0x800c83e4",
+          "words": 443,
+          "sha256": "5692e904f839963d8d5dbee0a1d6d04f5b53579d3355248c137253182e36a7e3",
+          "fnv64": "de2e1e978c6f8387",
+          "first": "27bdffc0",
+          "last": "00000000"
+        },
+        "camera": {
+          "address": "0x800d51a8",
+          "words": 7,
+          "sha256": "e18faf407c08d5b21be9a75307608f410bbd71b9ea768ca8ac75f1cfa5b60c48",
+          "fnv64": "1f68c027acd019eb",
+          "first": "3c02800b",
+          "last": "a4460004"
+        },
+        "pitch": {
+          "address": "0x800c9a08",
+          "words": 17,
+          "sha256": "cfc80695457c7baf434a837b997d5791cc9536ae4da90e851c0c470b970b2fe8",
+          "fnv64": "930c0bcbd6d2286a",
+          "first": "8c82008c",
+          "last": "00000000"
+        },
+        "movement": {
+          "address": "0x800c940c",
+          "words": 247,
+          "sha256": "f7377a6ea0494c0c631686363b0fe574cfe7b50c17c47df46bee43bb4b8c3ebf",
+          "fnv64": "a5d3fa47e36a4884",
+          "first": "27bdffd8",
+          "last": "00000000"
+        },
+        "restore": {
+          "address": "0x800c9a4c",
+          "words": 157,
+          "sha256": "5cdd0368c49851f26ac943af800cc2ef8b9e55f5034aecfebe48ef53662a4281",
+          "fnv64": "990900710cf5f1fc",
+          "first": "27bdffd8",
+          "last": "00000000"
+        }
+      }
+    },
+    {
+      "image": "JF2_B5/MAIN.PEX",
+      "source_body_sha256": "0c80f4eb1eb307b84e98289c509816aef364c96e42d7344335a378d4df41f4be",
+      "sites": {
+        "update": "0x800cc768",
+        "camera": "0x800d952c",
+        "pitch": "0x800cdd8c",
+        "movement": "0x800cd790",
+        "restore": "0x800cddd0"
+      },
+      "fields": {
+        "actor": "0x80126a34",
+        "pad": "0x800f5c48",
+        "movement_mode": "0x800f5c40",
+        "base_speed": "0x800f4d34",
+        "look_mode": "0x800f5c44",
+        "camera_pointer": "0x800ac5c0"
+      },
+      "camera_return": "0x800ccdb8",
+      "guards": {
+        "update": {
+          "address": "0x800cc768",
+          "words": 443,
+          "sha256": "3a6e08262433311e68b7bf9443b506764b734d157b62a6ec481fd599625b5fc0",
+          "fnv64": "590db1e39c441447",
+          "first": "27bdffc0",
+          "last": "00000000"
+        },
+        "camera": {
+          "address": "0x800d952c",
+          "words": 7,
+          "sha256": "81a4388c869b030deed05a366140f3d32b9cdce1d8b4a6ee3376ebd28bd7539d",
+          "fnv64": "e0be38f7b3061421",
+          "first": "3c02800b",
+          "last": "a4460004"
+        },
+        "pitch": {
+          "address": "0x800cdd8c",
+          "words": 17,
+          "sha256": "cfc80695457c7baf434a837b997d5791cc9536ae4da90e851c0c470b970b2fe8",
+          "fnv64": "930c0bcbd6d2286a",
+          "first": "8c82008c",
+          "last": "00000000"
+        },
+        "movement": {
+          "address": "0x800cd790",
+          "words": 247,
+          "sha256": "38426bcf3ee07d0d729c37e28d82c0bb379192c244dd3b1ce95dbc4e41243949",
+          "fnv64": "20187ea6dedcde2a",
+          "first": "27bdffd8",
+          "last": "00000000"
+        },
+        "restore": {
+          "address": "0x800cddd0",
+          "words": 157,
+          "sha256": "4e5dec44248ecaea82f1b28bba3feaba216ab3809c564dfc8f37df610d1d3522",
+          "fnv64": "856ff72aead9bb10",
+          "first": "27bdffd8",
+          "last": "00000000"
+        }
+      }
+    },
+    {
+      "image": "JF2_B6/MAIN.PEX",
+      "source_body_sha256": "ffd379bcb8a1255d8539cab70990cd004d98214a01e2b602d4a1029861cd75e5",
+      "sites": {
+        "update": "0x800cc768",
+        "camera": "0x800d952c",
+        "pitch": "0x800cdd8c",
+        "movement": "0x800cd790",
+        "restore": "0x800cddd0"
+      },
+      "fields": {
+        "actor": "0x80126a34",
+        "pad": "0x800f5c48",
+        "movement_mode": "0x800f5c40",
+        "base_speed": "0x800f4d34",
+        "look_mode": "0x800f5c44",
+        "camera_pointer": "0x800ac5c0"
+      },
+      "camera_return": "0x800ccdb8",
+      "guards": {
+        "update": {
+          "address": "0x800cc768",
+          "words": 443,
+          "sha256": "3a6e08262433311e68b7bf9443b506764b734d157b62a6ec481fd599625b5fc0",
+          "fnv64": "590db1e39c441447",
+          "first": "27bdffc0",
+          "last": "00000000"
+        },
+        "camera": {
+          "address": "0x800d952c",
+          "words": 7,
+          "sha256": "81a4388c869b030deed05a366140f3d32b9cdce1d8b4a6ee3376ebd28bd7539d",
+          "fnv64": "e0be38f7b3061421",
+          "first": "3c02800b",
+          "last": "a4460004"
+        },
+        "pitch": {
+          "address": "0x800cdd8c",
+          "words": 17,
+          "sha256": "cfc80695457c7baf434a837b997d5791cc9536ae4da90e851c0c470b970b2fe8",
+          "fnv64": "930c0bcbd6d2286a",
+          "first": "8c82008c",
+          "last": "00000000"
+        },
+        "movement": {
+          "address": "0x800cd790",
+          "words": 247,
+          "sha256": "38426bcf3ee07d0d729c37e28d82c0bb379192c244dd3b1ce95dbc4e41243949",
+          "fnv64": "20187ea6dedcde2a",
+          "first": "27bdffd8",
+          "last": "00000000"
+        },
+        "restore": {
+          "address": "0x800cddd0",
+          "words": 157,
+          "sha256": "4e5dec44248ecaea82f1b28bba3feaba216ab3809c564dfc8f37df610d1d3522",
+          "fnv64": "856ff72aead9bb10",
+          "first": "27bdffd8",
+          "last": "00000000"
+        }
+      }
+    },
+    {
+      "image": "JF2_B7/MAIN.PEX",
+      "source_body_sha256": "2bffcc7211fd1214d7bbb621aea6c6cb78b99b561f338db0852a3d8323649c41",
+      "sites": {
+        "update": "0x800c83e4",
+        "camera": "0x800d51a8",
+        "pitch": "0x800c9a08",
+        "movement": "0x800c940c",
+        "restore": "0x800c9a4c"
+      },
+      "fields": {
+        "actor": "0x801210f4",
+        "pad": "0x800f0648",
+        "movement_mode": "0x800f0640",
+        "base_speed": "0x800ef734",
+        "look_mode": "0x800f0644",
+        "camera_pointer": "0x800ac300"
+      },
+      "camera_return": "0x800c8a34",
+      "guards": {
+        "update": {
+          "address": "0x800c83e4",
+          "words": 443,
+          "sha256": "497585221607e4ef2b8d1c84e9b6f529fe7f99e897736a8a4a04872961573c4e",
+          "fnv64": "8a3835d2bcec092c",
+          "first": "27bdffc0",
+          "last": "00000000"
+        },
+        "camera": {
+          "address": "0x800d51a8",
+          "words": 7,
+          "sha256": "e18faf407c08d5b21be9a75307608f410bbd71b9ea768ca8ac75f1cfa5b60c48",
+          "fnv64": "1f68c027acd019eb",
+          "first": "3c02800b",
+          "last": "a4460004"
+        },
+        "pitch": {
+          "address": "0x800c9a08",
+          "words": 17,
+          "sha256": "cfc80695457c7baf434a837b997d5791cc9536ae4da90e851c0c470b970b2fe8",
+          "fnv64": "930c0bcbd6d2286a",
+          "first": "8c82008c",
+          "last": "00000000"
+        },
+        "movement": {
+          "address": "0x800c940c",
+          "words": 247,
+          "sha256": "3a4593ccbe8c55bf1854bed22e0085d7ced491c0d1babb56dec7e766fe5a9d80",
+          "fnv64": "1e7c94f8c645a238",
+          "first": "27bdffd8",
+          "last": "00000000"
+        },
+        "restore": {
+          "address": "0x800c9a4c",
+          "words": 157,
+          "sha256": "9179fa62c2df4a79a3a1515f41b4861086603afea05b1a8a9ca45408353f369a",
+          "fnv64": "e69221a886552c0c",
+          "first": "27bdffd8",
+          "last": "00000000"
+        }
+      }
+    },
+    {
+      "image": "JF2_B8/MAIN.PEX",
+      "source_body_sha256": "4c2a4b423b0a9953e85f5a5b88285aa5064ed2a2aea21b288cc34349699527e2",
+      "sites": {
+        "update": "0x800c83e4",
+        "camera": "0x800d51a8",
+        "pitch": "0x800c9a08",
+        "movement": "0x800c940c",
+        "restore": "0x800c9a4c"
+      },
+      "fields": {
+        "actor": "0x801210f4",
+        "pad": "0x800f0648",
+        "movement_mode": "0x800f0640",
+        "base_speed": "0x800ef734",
+        "look_mode": "0x800f0644",
+        "camera_pointer": "0x800ac300"
+      },
+      "camera_return": "0x800c8a34",
+      "guards": {
+        "update": {
+          "address": "0x800c83e4",
+          "words": 443,
+          "sha256": "497585221607e4ef2b8d1c84e9b6f529fe7f99e897736a8a4a04872961573c4e",
+          "fnv64": "8a3835d2bcec092c",
+          "first": "27bdffc0",
+          "last": "00000000"
+        },
+        "camera": {
+          "address": "0x800d51a8",
+          "words": 7,
+          "sha256": "e18faf407c08d5b21be9a75307608f410bbd71b9ea768ca8ac75f1cfa5b60c48",
+          "fnv64": "1f68c027acd019eb",
+          "first": "3c02800b",
+          "last": "a4460004"
+        },
+        "pitch": {
+          "address": "0x800c9a08",
+          "words": 17,
+          "sha256": "cfc80695457c7baf434a837b997d5791cc9536ae4da90e851c0c470b970b2fe8",
+          "fnv64": "930c0bcbd6d2286a",
+          "first": "8c82008c",
+          "last": "00000000"
+        },
+        "movement": {
+          "address": "0x800c940c",
+          "words": 247,
+          "sha256": "3a4593ccbe8c55bf1854bed22e0085d7ced491c0d1babb56dec7e766fe5a9d80",
+          "fnv64": "1e7c94f8c645a238",
+          "first": "27bdffd8",
+          "last": "00000000"
+        },
+        "restore": {
+          "address": "0x800c9a4c",
+          "words": 157,
+          "sha256": "9179fa62c2df4a79a3a1515f41b4861086603afea05b1a8a9ca45408353f369a",
+          "fnv64": "e69221a886552c0c",
+          "first": "27bdffd8",
+          "last": "00000000"
+        }
+      }
+    },
+    {
+      "image": "JF2_B9/MAIN.PEX",
+      "source_body_sha256": "2b2b226bb4edacc566c0358999d2e4c142ac17571ac2352d6d220d57b0a0727e",
+      "sites": {
+        "update": "0x800c83e4",
+        "camera": "0x800d51a8",
+        "pitch": "0x800c9a08",
+        "movement": "0x800c940c",
+        "restore": "0x800c9a4c"
+      },
+      "fields": {
+        "actor": "0x801210f4",
+        "pad": "0x800f0648",
+        "movement_mode": "0x800f0640",
+        "base_speed": "0x800ef734",
+        "look_mode": "0x800f0644",
+        "camera_pointer": "0x800ac300"
+      },
+      "camera_return": "0x800c8a34",
+      "guards": {
+        "update": {
+          "address": "0x800c83e4",
+          "words": 443,
+          "sha256": "497585221607e4ef2b8d1c84e9b6f529fe7f99e897736a8a4a04872961573c4e",
+          "fnv64": "8a3835d2bcec092c",
+          "first": "27bdffc0",
+          "last": "00000000"
+        },
+        "camera": {
+          "address": "0x800d51a8",
+          "words": 7,
+          "sha256": "e18faf407c08d5b21be9a75307608f410bbd71b9ea768ca8ac75f1cfa5b60c48",
+          "fnv64": "1f68c027acd019eb",
+          "first": "3c02800b",
+          "last": "a4460004"
+        },
+        "pitch": {
+          "address": "0x800c9a08",
+          "words": 17,
+          "sha256": "cfc80695457c7baf434a837b997d5791cc9536ae4da90e851c0c470b970b2fe8",
+          "fnv64": "930c0bcbd6d2286a",
+          "first": "8c82008c",
+          "last": "00000000"
+        },
+        "movement": {
+          "address": "0x800c940c",
+          "words": 247,
+          "sha256": "3a4593ccbe8c55bf1854bed22e0085d7ced491c0d1babb56dec7e766fe5a9d80",
+          "fnv64": "1e7c94f8c645a238",
+          "first": "27bdffd8",
+          "last": "00000000"
+        },
+        "restore": {
+          "address": "0x800c9a4c",
+          "words": 157,
+          "sha256": "9179fa62c2df4a79a3a1515f41b4861086603afea05b1a8a9ca45408353f369a",
+          "fnv64": "e69221a886552c0c",
+          "first": "27bdffd8",
+          "last": "00000000"
+        }
+      }
+    },
+    {
+      "image": "JF2_BA/MAIN.PEX",
+      "source_body_sha256": "5922bba114e39707452f3aff423b184d4130a949852b3bf9c100a43a00b8bcbc",
+      "sites": {
+        "update": "0x800c83e4",
+        "camera": "0x800d51a8",
+        "pitch": "0x800c9a08",
+        "movement": "0x800c940c",
+        "restore": "0x800c9a4c"
+      },
+      "fields": {
+        "actor": "0x801210f4",
+        "pad": "0x800f0648",
+        "movement_mode": "0x800f0640",
+        "base_speed": "0x800ef734",
+        "look_mode": "0x800f0644",
+        "camera_pointer": "0x800ac300"
+      },
+      "camera_return": "0x800c8a34",
+      "guards": {
+        "update": {
+          "address": "0x800c83e4",
+          "words": 443,
+          "sha256": "497585221607e4ef2b8d1c84e9b6f529fe7f99e897736a8a4a04872961573c4e",
+          "fnv64": "8a3835d2bcec092c",
+          "first": "27bdffc0",
+          "last": "00000000"
+        },
+        "camera": {
+          "address": "0x800d51a8",
+          "words": 7,
+          "sha256": "e18faf407c08d5b21be9a75307608f410bbd71b9ea768ca8ac75f1cfa5b60c48",
+          "fnv64": "1f68c027acd019eb",
+          "first": "3c02800b",
+          "last": "a4460004"
+        },
+        "pitch": {
+          "address": "0x800c9a08",
+          "words": 17,
+          "sha256": "cfc80695457c7baf434a837b997d5791cc9536ae4da90e851c0c470b970b2fe8",
+          "fnv64": "930c0bcbd6d2286a",
+          "first": "8c82008c",
+          "last": "00000000"
+        },
+        "movement": {
+          "address": "0x800c940c",
+          "words": 247,
+          "sha256": "3a4593ccbe8c55bf1854bed22e0085d7ced491c0d1babb56dec7e766fe5a9d80",
+          "fnv64": "1e7c94f8c645a238",
+          "first": "27bdffd8",
+          "last": "00000000"
+        },
+        "restore": {
+          "address": "0x800c9a4c",
+          "words": 157,
+          "sha256": "9179fa62c2df4a79a3a1515f41b4861086603afea05b1a8a9ca45408353f369a",
+          "fnv64": "e69221a886552c0c",
+          "first": "27bdffd8",
+          "last": "00000000"
+        }
+      }
+    },
+    {
+      "image": "JF2_BB/MAIN.PEX",
+      "source_body_sha256": "7eeda9326aed096a5ed274e55156af90b2bbae7d829e3efe130dcec0dc254852",
+      "sites": {
+        "update": "0x800c83e4",
+        "camera": "0x800d51a8",
+        "pitch": "0x800c9a08",
+        "movement": "0x800c940c",
+        "restore": "0x800c9a4c"
+      },
+      "fields": {
+        "actor": "0x801210f4",
+        "pad": "0x800f0648",
+        "movement_mode": "0x800f0640",
+        "base_speed": "0x800ef734",
+        "look_mode": "0x800f0644",
+        "camera_pointer": "0x800ac300"
+      },
+      "camera_return": "0x800c8a34",
+      "guards": {
+        "update": {
+          "address": "0x800c83e4",
+          "words": 443,
+          "sha256": "497585221607e4ef2b8d1c84e9b6f529fe7f99e897736a8a4a04872961573c4e",
+          "fnv64": "8a3835d2bcec092c",
+          "first": "27bdffc0",
+          "last": "00000000"
+        },
+        "camera": {
+          "address": "0x800d51a8",
+          "words": 7,
+          "sha256": "e18faf407c08d5b21be9a75307608f410bbd71b9ea768ca8ac75f1cfa5b60c48",
+          "fnv64": "1f68c027acd019eb",
+          "first": "3c02800b",
+          "last": "a4460004"
+        },
+        "pitch": {
+          "address": "0x800c9a08",
+          "words": 17,
+          "sha256": "cfc80695457c7baf434a837b997d5791cc9536ae4da90e851c0c470b970b2fe8",
+          "fnv64": "930c0bcbd6d2286a",
+          "first": "8c82008c",
+          "last": "00000000"
+        },
+        "movement": {
+          "address": "0x800c940c",
+          "words": 247,
+          "sha256": "3a4593ccbe8c55bf1854bed22e0085d7ced491c0d1babb56dec7e766fe5a9d80",
+          "fnv64": "1e7c94f8c645a238",
+          "first": "27bdffd8",
+          "last": "00000000"
+        },
+        "restore": {
+          "address": "0x800c9a4c",
+          "words": 157,
+          "sha256": "9179fa62c2df4a79a3a1515f41b4861086603afea05b1a8a9ca45408353f369a",
+          "fnv64": "e69221a886552c0c",
+          "first": "27bdffd8",
+          "last": "00000000"
+        }
+      }
+    },
+    {
+      "image": "JF2_BC/MAIN.PEX",
+      "source_body_sha256": "3201daf7ea713c5bb010096c7dd2dbef32ca91ed490425dafcacbf4a30a03e57",
+      "sites": {
+        "update": "0x800c83e4",
+        "camera": "0x800d51a8",
+        "pitch": "0x800c9a08",
+        "movement": "0x800c940c",
+        "restore": "0x800c9a4c"
+      },
+      "fields": {
+        "actor": "0x801210f4",
+        "pad": "0x800f0648",
+        "movement_mode": "0x800f0640",
+        "base_speed": "0x800ef734",
+        "look_mode": "0x800f0644",
+        "camera_pointer": "0x800ac300"
+      },
+      "camera_return": "0x800c8a34",
+      "guards": {
+        "update": {
+          "address": "0x800c83e4",
+          "words": 443,
+          "sha256": "497585221607e4ef2b8d1c84e9b6f529fe7f99e897736a8a4a04872961573c4e",
+          "fnv64": "8a3835d2bcec092c",
+          "first": "27bdffc0",
+          "last": "00000000"
+        },
+        "camera": {
+          "address": "0x800d51a8",
+          "words": 7,
+          "sha256": "e18faf407c08d5b21be9a75307608f410bbd71b9ea768ca8ac75f1cfa5b60c48",
+          "fnv64": "1f68c027acd019eb",
+          "first": "3c02800b",
+          "last": "a4460004"
+        },
+        "pitch": {
+          "address": "0x800c9a08",
+          "words": 17,
+          "sha256": "cfc80695457c7baf434a837b997d5791cc9536ae4da90e851c0c470b970b2fe8",
+          "fnv64": "930c0bcbd6d2286a",
+          "first": "8c82008c",
+          "last": "00000000"
+        },
+        "movement": {
+          "address": "0x800c940c",
+          "words": 247,
+          "sha256": "3a4593ccbe8c55bf1854bed22e0085d7ced491c0d1babb56dec7e766fe5a9d80",
+          "fnv64": "1e7c94f8c645a238",
+          "first": "27bdffd8",
+          "last": "00000000"
+        },
+        "restore": {
+          "address": "0x800c9a4c",
+          "words": 157,
+          "sha256": "9179fa62c2df4a79a3a1515f41b4861086603afea05b1a8a9ca45408353f369a",
+          "fnv64": "e69221a886552c0c",
+          "first": "27bdffd8",
+          "last": "00000000"
+        }
+      }
+    },
+    {
+      "image": "JF2_E1/MAIN.PEX",
+      "source_body_sha256": "cb965c684d7e3058d1528381fd1384bd9a45b8fde099e598b01ae911599b09fb",
+      "sites": {
+        "update": "0x800e1620",
+        "camera": "0x800e8014",
+        "pitch": "0x800e2c44",
+        "movement": "0x800e2648",
+        "restore": "0x800e2c88"
+      },
+      "fields": {
+        "actor": "0x80137078",
+        "pad": "0x801054c0",
+        "movement_mode": "0x801054b8",
+        "base_speed": "0x80104708",
+        "look_mode": "0x801054bc",
+        "camera_pointer": "0x800ac8e4"
+      },
+      "camera_return": "0x800e1c70",
+      "guards": {
+        "update": {
+          "address": "0x800e1620",
+          "words": 443,
+          "sha256": "821053a06a90fb86eb3579f84c068645e7282a9833a83ea4cdc6d732fcc39244",
+          "fnv64": "6f97e0d6511c2642",
+          "first": "27bdffc0",
+          "last": "00000000"
+        },
+        "camera": {
+          "address": "0x800e8014",
+          "words": 7,
+          "sha256": "44657c587078d28ee6c5c44dde01503f7714cbcb62685753fa3374de83732068",
+          "fnv64": "6015fa9b5d79732e",
+          "first": "3c02800b",
+          "last": "a4460004"
+        },
+        "pitch": {
+          "address": "0x800e2c44",
+          "words": 17,
+          "sha256": "cfc80695457c7baf434a837b997d5791cc9536ae4da90e851c0c470b970b2fe8",
+          "fnv64": "930c0bcbd6d2286a",
+          "first": "8c82008c",
+          "last": "00000000"
+        },
+        "movement": {
+          "address": "0x800e2648",
+          "words": 247,
+          "sha256": "82be77801ca174f6bce7e9700be990a9bc2ce891c1ff401615a4567312198a2a",
+          "fnv64": "9da4095510fd256d",
+          "first": "27bdffd8",
+          "last": "00000000"
+        },
+        "restore": {
+          "address": "0x800e2c88",
+          "words": 157,
+          "sha256": "eb090ebfe81e8eb1041c2937ab39b464f73c3d4963593a47d33dccfd429746dc",
+          "fnv64": "bb8382ca679f6c99",
+          "first": "27bdffd8",
+          "last": "00000000"
+        }
+      }
+    },
+    {
+      "image": "JF2_E2/MAIN.PEX",
+      "source_body_sha256": "e7a40e3c704ec2f09150f93db6768654d29afe87d547fe8fce9613e756534478",
+      "sites": {
+        "update": "0x800e3b50",
+        "camera": "0x800ea544",
+        "pitch": "0x800e5174",
+        "movement": "0x800e4b78",
+        "restore": "0x800e51b8"
+      },
+      "fields": {
+        "actor": "0x801392ac",
+        "pad": "0x80107698",
+        "movement_mode": "0x80107690",
+        "base_speed": "0x801068ec",
+        "look_mode": "0x80107694",
+        "camera_pointer": "0x800ac7e4"
+      },
+      "camera_return": "0x800e41a0",
+      "guards": {
+        "update": {
+          "address": "0x800e3b50",
+          "words": 443,
+          "sha256": "88a44c1851425be79997bb621920eabe332586394f6abd1cb73ab4fe4fbd3f9f",
+          "fnv64": "983560ab26551e41",
+          "first": "27bdffc0",
+          "last": "00000000"
+        },
+        "camera": {
+          "address": "0x800ea544",
+          "words": 7,
+          "sha256": "39c1c9a52c23bea8ccf2d01b41d5cf464fa463987bfc1a0bdaf32b9a23040517",
+          "fnv64": "669a274f3b5d2e83",
+          "first": "3c02800b",
+          "last": "a4460004"
+        },
+        "pitch": {
+          "address": "0x800e5174",
+          "words": 17,
+          "sha256": "cfc80695457c7baf434a837b997d5791cc9536ae4da90e851c0c470b970b2fe8",
+          "fnv64": "930c0bcbd6d2286a",
+          "first": "8c82008c",
+          "last": "00000000"
+        },
+        "movement": {
+          "address": "0x800e4b78",
+          "words": 247,
+          "sha256": "d5e94120d44829899ea2872bcb7c81e273792f2faa32836a4a6b4b50c1a02d26",
+          "fnv64": "491225f69dd4e5a6",
+          "first": "27bdffd8",
+          "last": "00000000"
+        },
+        "restore": {
+          "address": "0x800e51b8",
+          "words": 157,
+          "sha256": "d2b25eec5d7065e6f5d424ab7730d08db37bbc0970c57a3bf9bfdf37f11c8430",
+          "fnv64": "44d7e9b24841d777",
+          "first": "27bdffd8",
+          "last": "00000000"
+        }
+      }
+    },
+    {
+      "image": "JF2_E3/MAIN.PEX",
+      "source_body_sha256": "bfe68e7196d91997fdc7d6497cb927626d4c3966f003ea38c5068f3af4ac2c61",
+      "sites": {
+        "update": "0x800e91c8",
+        "camera": "0x800efbbc",
+        "pitch": "0x800ea7ec",
+        "movement": "0x800ea1f0",
+        "restore": "0x800ea830"
+      },
+      "fields": {
+        "actor": "0x8013ebb4",
+        "pad": "0x8010d980",
+        "movement_mode": "0x8010d978",
+        "base_speed": "0x8010cb98",
+        "look_mode": "0x8010d97c",
+        "camera_pointer": "0x800acb7c"
+      },
+      "camera_return": "0x800e9818",
+      "guards": {
+        "update": {
+          "address": "0x800e91c8",
+          "words": 443,
+          "sha256": "35deff5ac3de491a075f40766f04b7d70b9b3421797b7e48a8ac864ff6f9b7be",
+          "fnv64": "087e1dc159eb7a37",
+          "first": "27bdffc0",
+          "last": "00000000"
+        },
+        "camera": {
+          "address": "0x800efbbc",
+          "words": 7,
+          "sha256": "921b8f10a8e01e2aadc85c40b5288e6e4118a2d2d9cab199a55f8e197b08f593",
+          "fnv64": "56f547cdddddddaf",
+          "first": "3c02800b",
+          "last": "a4460004"
+        },
+        "pitch": {
+          "address": "0x800ea7ec",
+          "words": 17,
+          "sha256": "cfc80695457c7baf434a837b997d5791cc9536ae4da90e851c0c470b970b2fe8",
+          "fnv64": "930c0bcbd6d2286a",
+          "first": "8c82008c",
+          "last": "00000000"
+        },
+        "movement": {
+          "address": "0x800ea1f0",
+          "words": 247,
+          "sha256": "ee0789a94452ab7c02e6d1e3c495800dd3e1f534883b70ba50711842fa79e089",
+          "fnv64": "dadddf9a25c5b538",
+          "first": "27bdffd8",
+          "last": "00000000"
+        },
+        "restore": {
+          "address": "0x800ea830",
+          "words": 157,
+          "sha256": "6acde0600b0fcc96333b7060b990d74611b04f1ab92fc8fd59e7e0ed5a480483",
+          "fnv64": "3efa0d313692c248",
+          "first": "27bdffd8",
+          "last": "00000000"
+        }
+      }
+    },
+    {
+      "image": "JF2_E4/MAIN.PEX",
+      "source_body_sha256": "c5e0bbf4a4dbafa1a5385cb28964692320cbc9f65abbbdc9e587aa59f8b766cc",
+      "sites": {
+        "update": "0x800e9040",
+        "camera": "0x800efa34",
+        "pitch": "0x800ea664",
+        "movement": "0x800ea068",
+        "restore": "0x800ea6a8"
+      },
+      "fields": {
+        "actor": "0x80140338",
+        "pad": "0x8010d49c",
+        "movement_mode": "0x8010d494",
+        "base_speed": "0x8010c6ec",
+        "look_mode": "0x8010d498",
+        "camera_pointer": "0x800acac0"
+      },
+      "camera_return": "0x800e9690",
+      "guards": {
+        "update": {
+          "address": "0x800e9040",
+          "words": 443,
+          "sha256": "a39a5a511ea968f9ca16a5992c22f38a9b1a4748c0d4e0822592e9744bbff3fe",
+          "fnv64": "c5e3980626ecbce3",
+          "first": "27bdffc0",
+          "last": "00000000"
+        },
+        "camera": {
+          "address": "0x800efa34",
+          "words": 7,
+          "sha256": "4d62438878bc8e54f01ee88fe81365d8ed7eb8a2b5495f1b199b68f536329d08",
+          "fnv64": "6ded5e99b7a77578",
+          "first": "3c02800b",
+          "last": "a4460004"
+        },
+        "pitch": {
+          "address": "0x800ea664",
+          "words": 17,
+          "sha256": "cfc80695457c7baf434a837b997d5791cc9536ae4da90e851c0c470b970b2fe8",
+          "fnv64": "930c0bcbd6d2286a",
+          "first": "8c82008c",
+          "last": "00000000"
+        },
+        "movement": {
+          "address": "0x800ea068",
+          "words": 247,
+          "sha256": "40052a4a11e4a7af26f218f46bd0fb89512ce52400a0cd9b6935c8c3bac6aa02",
+          "fnv64": "3f48937b9bcca435",
+          "first": "27bdffd8",
+          "last": "00000000"
+        },
+        "restore": {
+          "address": "0x800ea6a8",
+          "words": 157,
+          "sha256": "9f1897e8933070ddc36ae7bd34276e51a53385e3599bd2b5c9a6682f2d47be84",
+          "fnv64": "1e4af9d640a335cd",
+          "first": "27bdffd8",
+          "last": "00000000"
+        }
+      }
+    },
+    {
+      "image": "JF2_E5/MAIN.PEX",
+      "source_body_sha256": "ea621c0cece87987215091bd6d86e4baf0e21635fc8c4b075c348e651325ef4c",
+      "sites": {
+        "update": "0x800f01d4",
+        "camera": "0x800f6bc8",
+        "pitch": "0x800f17f8",
+        "movement": "0x800f11fc",
+        "restore": "0x800f183c"
+      },
+      "fields": {
+        "actor": "0x80148290",
+        "pad": "0x8011615c",
+        "movement_mode": "0x80116154",
+        "base_speed": "0x8011539c",
+        "look_mode": "0x80116158",
+        "camera_pointer": "0x800ad060"
+      },
+      "camera_return": "0x800f0824",
+      "guards": {
+        "update": {
+          "address": "0x800f01d4",
+          "words": 443,
+          "sha256": "666baeaf1b7a9b6fa662420c52d67baf7d1fec73b76f68e8caa015a8ad0cf909",
+          "fnv64": "1ac9416ad667b38d",
+          "first": "27bdffc0",
+          "last": "00000000"
+        },
+        "camera": {
+          "address": "0x800f6bc8",
+          "words": 7,
+          "sha256": "8e2eb49465bf7987bb4e752586f735698178e62829b2b58430158da7590c6e9f",
+          "fnv64": "7f1f4226e4ef4852",
+          "first": "3c02800b",
+          "last": "a4460004"
+        },
+        "pitch": {
+          "address": "0x800f17f8",
+          "words": 17,
+          "sha256": "cfc80695457c7baf434a837b997d5791cc9536ae4da90e851c0c470b970b2fe8",
+          "fnv64": "930c0bcbd6d2286a",
+          "first": "8c82008c",
+          "last": "00000000"
+        },
+        "movement": {
+          "address": "0x800f11fc",
+          "words": 247,
+          "sha256": "207e338ae1db2d558fa8c5c389ffed663d18aba677a5e47381fccca62be3adf3",
+          "fnv64": "688eb192d91ce145",
+          "first": "27bdffd8",
+          "last": "00000000"
+        },
+        "restore": {
+          "address": "0x800f183c",
+          "words": 157,
+          "sha256": "608be6c6dd02a58fc5a4478883540e262097bf0a4227b4d29997349b27927ae6",
+          "fnv64": "fa7d034bb76cc9ae",
+          "first": "27bdffd8",
+          "last": "00000000"
+        }
+      }
+    },
+    {
+      "image": "JF2_E6/MAIN.PEX",
+      "source_body_sha256": "e9512c7e173581901ddd7e4ce38edbf44ccd3c2093998d3f81bacf1e4f0abc4f",
+      "sites": {
+        "update": "0x800edc08",
+        "camera": "0x800f45fc",
+        "pitch": "0x800ef22c",
+        "movement": "0x800eec30",
+        "restore": "0x800ef270"
+      },
+      "fields": {
+        "actor": "0x801463bc",
+        "pad": "0x801122b8",
+        "movement_mode": "0x801122b0",
+        "base_speed": "0x801114cc",
+        "look_mode": "0x801122b4",
+        "camera_pointer": "0x800ad440"
+      },
+      "camera_return": "0x800ee258",
+      "guards": {
+        "update": {
+          "address": "0x800edc08",
+          "words": 443,
+          "sha256": "809983fa67a6f1c62789d27b11eed05c5de032418b2fc5804ead6dfdc0b1758f",
+          "fnv64": "22e9101166ac0b43",
+          "first": "27bdffc0",
+          "last": "00000000"
+        },
+        "camera": {
+          "address": "0x800f45fc",
+          "words": 7,
+          "sha256": "dd8a15a6d5bc951975537665b98db5646759ebd71ef187d2dfa7a5579816592d",
+          "fnv64": "ef58eddca2b41c8e",
+          "first": "3c02800b",
+          "last": "a4460004"
+        },
+        "pitch": {
+          "address": "0x800ef22c",
+          "words": 17,
+          "sha256": "cfc80695457c7baf434a837b997d5791cc9536ae4da90e851c0c470b970b2fe8",
+          "fnv64": "930c0bcbd6d2286a",
+          "first": "8c82008c",
+          "last": "00000000"
+        },
+        "movement": {
+          "address": "0x800eec30",
+          "words": 247,
+          "sha256": "09c09dda64f79d006c6c11cf331ba7e58504e12b076ef81fdf8238f0dca9f7e0",
+          "fnv64": "95d0b389d3fe4512",
+          "first": "27bdffd8",
+          "last": "00000000"
+        },
+        "restore": {
+          "address": "0x800ef270",
+          "words": 157,
+          "sha256": "104ad9340c3b36beca5680dd5842e075a2738b510f2db215950bfd4cf129fc2e",
+          "fnv64": "953f204bfbef7cd4",
+          "first": "27bdffd8",
+          "last": "00000000"
+        }
+      }
+    },
+    {
+      "image": "JF2_W1/MAIN.PEX",
+      "source_body_sha256": "330e71bcc93d24cc0ca9777df8c8defa5c57ffffe87906008eeb11eb258094b6",
+      "sites": {
+        "update": "0x800e1528",
+        "camera": "0x800e7f1c",
+        "pitch": "0x800e2b4c",
+        "movement": "0x800e2550",
+        "restore": "0x800e2b90"
+      },
+      "fields": {
+        "actor": "0x80136d88",
+        "pad": "0x801051d0",
+        "movement_mode": "0x801051c8",
+        "base_speed": "0x80104418",
+        "look_mode": "0x801051cc",
+        "camera_pointer": "0x800ac8e4"
+      },
+      "camera_return": "0x800e1b78",
+      "guards": {
+        "update": {
+          "address": "0x800e1528",
+          "words": 443,
+          "sha256": "1f4d5f2cb5c3b972d6b21545189910744be62a05c7397a72022fda5f5306a48d",
+          "fnv64": "81af8c48e2480671",
+          "first": "27bdffc0",
+          "last": "00000000"
+        },
+        "camera": {
+          "address": "0x800e7f1c",
+          "words": 7,
+          "sha256": "44657c587078d28ee6c5c44dde01503f7714cbcb62685753fa3374de83732068",
+          "fnv64": "6015fa9b5d79732e",
+          "first": "3c02800b",
+          "last": "a4460004"
+        },
+        "pitch": {
+          "address": "0x800e2b4c",
+          "words": 17,
+          "sha256": "cfc80695457c7baf434a837b997d5791cc9536ae4da90e851c0c470b970b2fe8",
+          "fnv64": "930c0bcbd6d2286a",
+          "first": "8c82008c",
+          "last": "00000000"
+        },
+        "movement": {
+          "address": "0x800e2550",
+          "words": 247,
+          "sha256": "715ce936ea32fe0b1c691c31df34448c0680c43df8fba9089b07e5d5ace78b5d",
+          "fnv64": "f77ddcdc335254cd",
+          "first": "27bdffd8",
+          "last": "00000000"
+        },
+        "restore": {
+          "address": "0x800e2b90",
+          "words": 157,
+          "sha256": "0b26a1dc4184762328d6f3a00af02bcb682de6d6c1162ca5bfa073fa1ce20659",
+          "fnv64": "15c8f9792c213a91",
+          "first": "27bdffd8",
+          "last": "00000000"
+        }
+      }
+    },
+    {
+      "image": "JF2_W2/MAIN.PEX",
+      "source_body_sha256": "346ab06aaab15993a068996a80b573f35e5ed4d0b65ca2083e4eeb4987377cb7",
+      "sites": {
+        "update": "0x800e3748",
+        "camera": "0x800ea13c",
+        "pitch": "0x800e4d6c",
+        "movement": "0x800e4770",
+        "restore": "0x800e4db0"
+      },
+      "fields": {
+        "actor": "0x80138dec",
+        "pad": "0x801071d8",
+        "movement_mode": "0x801071d0",
+        "base_speed": "0x8010642c",
+        "look_mode": "0x801071d4",
+        "camera_pointer": "0x800ac7cc"
+      },
+      "camera_return": "0x800e3d98",
+      "guards": {
+        "update": {
+          "address": "0x800e3748",
+          "words": 443,
+          "sha256": "6fba757093237eaf096942508acd0c5a6739fc55238eda9bb468c27fc54c914e",
+          "fnv64": "5b701194d798a85b",
+          "first": "27bdffc0",
+          "last": "00000000"
+        },
+        "camera": {
+          "address": "0x800ea13c",
+          "words": 7,
+          "sha256": "c8225347d67c61b980325c01408a2bb590a4101da7555d78476bbd1e3adcf8a1",
+          "fnv64": "db48269e75f4673b",
+          "first": "3c02800b",
+          "last": "a4460004"
+        },
+        "pitch": {
+          "address": "0x800e4d6c",
+          "words": 17,
+          "sha256": "cfc80695457c7baf434a837b997d5791cc9536ae4da90e851c0c470b970b2fe8",
+          "fnv64": "930c0bcbd6d2286a",
+          "first": "8c82008c",
+          "last": "00000000"
+        },
+        "movement": {
+          "address": "0x800e4770",
+          "words": 247,
+          "sha256": "c37529fb02e2b6ddfc1f4ad7dd2ca8b9f7e695c2e270b3f89f25cc23581a7079",
+          "fnv64": "f6b009a7148f2980",
+          "first": "27bdffd8",
+          "last": "00000000"
+        },
+        "restore": {
+          "address": "0x800e4db0",
+          "words": 157,
+          "sha256": "386f941bf9bb0d99674051418b2ceb668da0906f57ba3920fd1d7417b1f7bc98",
+          "fnv64": "378285d2a5b1cebb",
+          "first": "27bdffd8",
+          "last": "00000000"
+        }
+      }
+    },
+    {
+      "image": "JF2_W3/MAIN.PEX",
+      "source_body_sha256": "e6e26918ab6d05fe6a207b059331fdfff4a0962f53a98c31597c6cafe8a956b7",
+      "sites": {
+        "update": "0x800e802c",
+        "camera": "0x800eea20",
+        "pitch": "0x800e9650",
+        "movement": "0x800e9054",
+        "restore": "0x800e9694"
+      },
+      "fields": {
+        "actor": "0x8013d970",
+        "pad": "0x8010c73c",
+        "movement_mode": "0x8010c734",
+        "base_speed": "0x8010b954",
+        "look_mode": "0x8010c738",
+        "camera_pointer": "0x800acac0"
+      },
+      "camera_return": "0x800e867c",
+      "guards": {
+        "update": {
+          "address": "0x800e802c",
+          "words": 443,
+          "sha256": "1f2e09187587e789a334d969003c8242c88dc6aa0b21346884272df35c5bae06",
+          "fnv64": "fe3104280bdf31b5",
+          "first": "27bdffc0",
+          "last": "00000000"
+        },
+        "camera": {
+          "address": "0x800eea20",
+          "words": 7,
+          "sha256": "4d62438878bc8e54f01ee88fe81365d8ed7eb8a2b5495f1b199b68f536329d08",
+          "fnv64": "6ded5e99b7a77578",
+          "first": "3c02800b",
+          "last": "a4460004"
+        },
+        "pitch": {
+          "address": "0x800e9650",
+          "words": 17,
+          "sha256": "cfc80695457c7baf434a837b997d5791cc9536ae4da90e851c0c470b970b2fe8",
+          "fnv64": "930c0bcbd6d2286a",
+          "first": "8c82008c",
+          "last": "00000000"
+        },
+        "movement": {
+          "address": "0x800e9054",
+          "words": 247,
+          "sha256": "459203b7f129edbe290245de45c145afbd75d882dac6f0b34b9dc0417b52b6fc",
+          "fnv64": "1e64452157602b8c",
+          "first": "27bdffd8",
+          "last": "00000000"
+        },
+        "restore": {
+          "address": "0x800e9694",
+          "words": 157,
+          "sha256": "96ba898acf1d7890295eb0d316bbb6f866ee7eb7c0b132ffe5942c3a73866e72",
+          "fnv64": "ace1ce91282a500f",
+          "first": "27bdffd8",
+          "last": "00000000"
+        }
+      }
+    },
+    {
+      "image": "JF2_W4/MAIN.PEX",
+      "source_body_sha256": "42eab72df08f5826a4ec625e5ecbaa40cd616c5210058e212b682c87b3d96168",
+      "sites": {
+        "update": "0x800e8d04",
+        "camera": "0x800ef6f8",
+        "pitch": "0x800ea328",
+        "movement": "0x800e9d2c",
+        "restore": "0x800ea36c"
+      },
+      "fields": {
+        "actor": "0x8013fdd4",
+        "pad": "0x8010cf38",
+        "movement_mode": "0x8010cf30",
+        "base_speed": "0x8010c188",
+        "look_mode": "0x8010cf34",
+        "camera_pointer": "0x800acabc"
+      },
+      "camera_return": "0x800e9354",
+      "guards": {
+        "update": {
+          "address": "0x800e8d04",
+          "words": 443,
+          "sha256": "a1d05c4e183cff2f2c5003d9cfd2814e5540433e044ad598c69c185f116eda14",
+          "fnv64": "37a5f4fa45518eeb",
+          "first": "27bdffc0",
+          "last": "00000000"
+        },
+        "camera": {
+          "address": "0x800ef6f8",
+          "words": 7,
+          "sha256": "469d06a946425ecd68722e61f4dc44ae606e257602c977ce722607458385a88a",
+          "fnv64": "845ed7be04fb8e44",
+          "first": "3c02800b",
+          "last": "a4460004"
+        },
+        "pitch": {
+          "address": "0x800ea328",
+          "words": 17,
+          "sha256": "cfc80695457c7baf434a837b997d5791cc9536ae4da90e851c0c470b970b2fe8",
+          "fnv64": "930c0bcbd6d2286a",
+          "first": "8c82008c",
+          "last": "00000000"
+        },
+        "movement": {
+          "address": "0x800e9d2c",
+          "words": 247,
+          "sha256": "d819c7ff632706f1840a1306592b83f596ca7c35f71b34504e183ea3ff117640",
+          "fnv64": "ce26667c12fc9081",
+          "first": "27bdffd8",
+          "last": "00000000"
+        },
+        "restore": {
+          "address": "0x800ea36c",
+          "words": 157,
+          "sha256": "b7410bd1de432ff8769022e102fcbbffa8199f773016243cdcb3830bbcf8ba3c",
+          "fnv64": "170c5dfab57ddcf8",
+          "first": "27bdffd8",
+          "last": "00000000"
+        }
+      }
+    },
+    {
+      "image": "JF2_W5/MAIN.PEX",
+      "source_body_sha256": "bdb1302e04d7fa00655685232d350d01ed2a9ca250f6791d72054769cffd65ea",
+      "sites": {
+        "update": "0x800ef8c0",
+        "camera": "0x800f62b4",
+        "pitch": "0x800f0ee4",
+        "movement": "0x800f08e8",
+        "restore": "0x800f0f28"
+      },
+      "fields": {
+        "actor": "0x80147814",
+        "pad": "0x801156f0",
+        "movement_mode": "0x801156e8",
+        "base_speed": "0x80114930",
+        "look_mode": "0x801156ec",
+        "camera_pointer": "0x800ad04c"
+      },
+      "camera_return": "0x800eff10",
+      "guards": {
+        "update": {
+          "address": "0x800ef8c0",
+          "words": 443,
+          "sha256": "30a3b643048d74a0bc9c05c54fa9c894a6f12792c9de6e5579cbc3c924445802",
+          "fnv64": "b1fac422a7683ecc",
+          "first": "27bdffc0",
+          "last": "00000000"
+        },
+        "camera": {
+          "address": "0x800f62b4",
+          "words": 7,
+          "sha256": "aa328b498536e8c731abd249fe4a8f662595eaf5b827637a22defbb3e9abfcbb",
+          "fnv64": "1f1462f27e7df73e",
+          "first": "3c02800b",
+          "last": "a4460004"
+        },
+        "pitch": {
+          "address": "0x800f0ee4",
+          "words": 17,
+          "sha256": "cfc80695457c7baf434a837b997d5791cc9536ae4da90e851c0c470b970b2fe8",
+          "fnv64": "930c0bcbd6d2286a",
+          "first": "8c82008c",
+          "last": "00000000"
+        },
+        "movement": {
+          "address": "0x800f08e8",
+          "words": 247,
+          "sha256": "7c85255392ced465d143787f7d790d17c79e6c2a82158e34200e9a1c64a105fb",
+          "fnv64": "459ec3b9f10f0f80",
+          "first": "27bdffd8",
+          "last": "00000000"
+        },
+        "restore": {
+          "address": "0x800f0f28",
+          "words": 157,
+          "sha256": "b852226ba708e1a4e6b472bad69c51be711e993e9a0200b5c17ba50102248dee",
+          "fnv64": "9181a0bc22489fdc",
+          "first": "27bdffd8",
+          "last": "00000000"
+        }
+      }
+    },
+    {
+      "image": "JF2_W6/MAIN.PEX",
+      "source_body_sha256": "3412f5a5e313b690054901da6a9b96a0e298aadb1b7aedbff963e7dd5b51d666",
+      "sites": {
+        "update": "0x800f09f4",
+        "camera": "0x800f73e8",
+        "pitch": "0x800f2018",
+        "movement": "0x800f1a1c",
+        "restore": "0x800f205c"
+      },
+      "fields": {
+        "actor": "0x80149f70",
+        "pad": "0x80115e6c",
+        "movement_mode": "0x80115e64",
+        "base_speed": "0x80115080",
+        "look_mode": "0x80115e68",
+        "camera_pointer": "0x800ae174"
+      },
+      "camera_return": "0x800f1044",
+      "guards": {
+        "update": {
+          "address": "0x800f09f4",
+          "words": 443,
+          "sha256": "5389934177c84e9b27eb9ca6bad8b5f97702298fc231cc31cf582f3b4a0c24e0",
+          "fnv64": "758eff914a2cef57",
+          "first": "27bdffc0",
+          "last": "00000000"
+        },
+        "camera": {
+          "address": "0x800f73e8",
+          "words": 7,
+          "sha256": "688b31db8a398d45c50e0610b1945dff0c412c4be352b01a9e453273e91830c9",
+          "fnv64": "4322858093cbaf29",
+          "first": "3c02800b",
+          "last": "a4460004"
+        },
+        "pitch": {
+          "address": "0x800f2018",
+          "words": 17,
+          "sha256": "cfc80695457c7baf434a837b997d5791cc9536ae4da90e851c0c470b970b2fe8",
+          "fnv64": "930c0bcbd6d2286a",
+          "first": "8c82008c",
+          "last": "00000000"
+        },
+        "movement": {
+          "address": "0x800f1a1c",
+          "words": 247,
+          "sha256": "a3699bc7af2ecf62cc8b2115bd703b5b4653f503b0835a8ff8fa176ac37b1cf1",
+          "fnv64": "b13c2c85a4eb5d57",
+          "first": "27bdffd8",
+          "last": "00000000"
+        },
+        "restore": {
+          "address": "0x800f205c",
+          "words": 157,
+          "sha256": "7e8930fa914d19990055ac216e411b57c32303b41fbf71ffcf849bef490a0e95",
+          "fnv64": "b64442ea5c86fc23",
+          "first": "27bdffd8",
+          "last": "00000000"
+        }
+      }
+    }
+  ],
+  "runtime_installed": false,
+  "runtime_qualification_complete": false
+}

@@ -1,0 +1,60 @@
+# Autofilled by tools/new_project_layout/probe_disc.py from your legal dump.
+# Review before shipping. Runtime quirks / overlay seeds still need hand work.
+
+[game]
+name = "Robbit Mon Dieu"
+id = "SCPS-10103"
+players = 1
+exe = "disc/SCPS_101.03"
+disc = "disc/english/Robbit mon Dieu (English).cue"
+load_address = "0x80014800"
+entry_pc = "0x8001C494"
+text_size = "0x0003B800"
+stack_base = "0x801FFFF0"
+
+# Digests are for data Track 01 (first BINARY FILE / TRACK 01).
+[prepare_disc]
+out_dir = "disc"
+bin_name = "Robbit mon Dieu (English).bin"
+cue_name = "Robbit mon Dieu (English).cue"
+boot_exe = "SCPS_101.03"
+known_sizes = [700021056]
+known_md5 = [
+  "1d7ee978e76fcffac335c77b1fe5d05c",
+]
+known_sha1 = [
+  "1a3580bc4afbd4f0785d0fd81fdecd7d7dfa2640",
+]
+known_crc32 = [
+  "dfa1758d",
+]
+
+[recompiler]
+seeds = "seeds/ghidra_funcs.txt"
+out_dir = "generated"
+strict = true
+
+[runtime]
+window_title = "Robbit Mon Dieu Recompiled"
+memcard_dir = "saves"
+overlay_cache = true
+bios_hle = true
+bios_hle_keep_intro = false
+
+[video]
+renderer = "opengl"
+aspect_ratio = "4:3"
+window_width = 1280
+internal_resolution = 960
+dynamic_resolution = false
+render_thread = true
+
+[controller]
+default_mode = "digital"
+
+# Online mount gate: digests + track count + optional TOC fingerprint
+# (see docs/NETPLAY.md).
+[netplay]
+require_cue = true
+required_tracks = 1
+required_disc_fp = "278193337b84b4b27723f899fb5a1b700c593f2b1f7e620f3e4a46cb54fca229"

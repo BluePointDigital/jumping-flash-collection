@@ -1,0 +1,63 @@
+schema = 1
+title = "Jumping Flash! Collector's Edition"
+release = "development-preview"
+
+[artwork]
+background = "assets/artwork/sky-v1.png"
+mascot = "assets/artwork/robbit-hero-v1.png"
+
+[[games]]
+id = "jf1"
+artwork = "assets/artwork/jf1-cast-v2.png"
+name = "Jumping Flash!"
+subtitle = "The adventure begins"
+serial = "SCUS-94103"
+region = "USA / NTSC"
+introduction = "Leap above floating worlds as Robbit, rescue the Jet Pods, and stop Baron Aloha. The original first-person platform adventure."
+executable = "runtime/jf1/JumpingFlash1_Recompiled.exe"
+config = "runtime/jf1/game.toml"
+bios = "data/games/jf1/bios/SCPH1001.BIN"
+disc = "data/games/jf1/disc/game.cue"
+bios_sha256 = "71af94d1e47a68c11e8fdb9f8368040601514a42a5a399cda48c7d3bff1e99d3"
+disc_sha256 = "24e8f7ff830ac9565d16bc41f8e42a885b21295beb06b47b4187dbd26a9eea55"
+widescreen_qualified = false
+smooth_60_qualified = false
+modern_gamepad_qualified = false
+
+[[games]]
+id = "jf2"
+artwork = "assets/artwork/jf2-cast-v2.png"
+name = "Jumping Flash! 2"
+subtitle = "Big trouble in Little Muu"
+serial = "SCES-00111"
+region = "Europe / PAL"
+introduction = "Robbit returns to save Little Muu. Explore new worlds, collect the MuuMuus, and take on Captain Kabuki in the expanded sequel."
+executable = "runtime/jf2/JumpingFlash2_Recompiled.exe"
+config = "runtime/jf2/game.toml"
+bios = "data/games/jf2/bios/EUR-PSX-SCPH5552.bin"
+disc = "data/games/jf2/disc/game.cue"
+bios_sha256 = "1faaa18fa820a0225e488d9f086296b8e6c46df739666093987ff7d8fd352c09"
+disc_sha256 = "f09ee5cefcdcb5dc8015c41faf5409a20b12180d556721b124ac3c8478ca2d8b"
+widescreen_qualified = false
+smooth_60_qualified = false
+modern_gamepad_qualified = false
+
+[[games]]
+id = "robbit"
+artwork = "assets/artwork/robbit-cast-v2.png"
+name = "Robbit Mon Dieu"
+subtitle = "A new day in Hanauma"
+serial = "SCPS-10103"
+region = "Japan / NTSC · English fan translation"
+introduction = "Join the Space City Hall team and help the residents of Hanauma through a series of unusual requests. Japanese voices with washingtonxan's English fan translation."
+executable = "runtime/robbit/Robbit_Mon_Dieu_Recompiled.exe"
+config = "runtime/robbit/game.toml"
+bios = "data/games/robbit/bios/SCPH5500.BIN"
+disc = "data/games/robbit/disc/game.cue"
+bios_sha256 = "9c0421858e217805f4abe18698afea8d5aa36ff0727eb8484944e00eb5e7eadb"
+disc_sha256 = "90981ce0353dfb8b335629504e3f2bb58acd82ddb1bc19db934cc7abdfbad282"
+original_disc_sha1 = "355a7db069bd51b205cf9c4226a017dbd933c148"
+translation_patch_sha256 = "f8f52e95a99caf649155892ff13d091716fc7a7fb9f6ac919481087e80827d7f"
+widescreen_qualified = false
+smooth_60_qualified = false
+modern_gamepad_qualified = false

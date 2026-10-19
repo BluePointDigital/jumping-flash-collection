@@ -1,0 +1,41 @@
+name: Bug or performance report
+description: Report a reproducible issue with a specific build and scene.
+body:
+  - type: markdown
+    attributes:
+      value: "Do not upload discs, BIOS, memory cards, generated game code, RAM dumps or private logs. Screenshots are welcome."
+  - type: input
+    id: version
+    attributes:
+      label: Build or commit
+    validations:
+      required: true
+  - type: dropdown
+    id: game
+    attributes:
+      label: Game
+      options:
+        - Jumping Flash! (USA)
+        - Jumping Flash! 2 (PAL)
+        - Robbit Mon Dieu (Japan / English patch)
+        - Collection launcher
+    validations:
+      required: true
+  - type: textarea
+    id: environment
+    attributes:
+      label: Hardware and settings
+      description: OS, CPU/GPU/driver, resolution, controller; Deck model, Proton, SteamOS and power/refresh limits if applicable.
+    validations:
+      required: true
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Scene, steps, expected and actual result
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Screenshots and measurements
+      description: Say whether figures are physical frame times, guest counters or internal swaps. Note cold versus warmed behavior.

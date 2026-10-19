@@ -1,0 +1,8 @@
+{
+  "framework": "67a21b739598d8e6f372ddd5e252c8622971869c",
+  "recomp_ui": "7e884a227accea91ddb378671bd49aaeeea13371",
+  "scaffold": "9a8035a1f08afb163955b6cb7147efb8a751464d",
+  "toolchain_release": "v1.0.14",
+  "bios_sha256": "1faaa18fa820a0225e488d9f086296b8e6c46df739666093987ff7d8fd352c09",
+  "disc_sha256": "f09ee5cefcdcb5dc8015c41faf5409a20b12180d556721b124ac3c8478ca2d8b"
+}

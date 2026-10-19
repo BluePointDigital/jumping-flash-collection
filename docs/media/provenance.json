@@ -1,0 +1,43 @@
+{
+  "schema": 1,
+  "screenshots": [
+    {
+      "path": "docs/media/jf1-gameplay.png",
+      "game": "jf1",
+      "kind": "guest-frame screenshot",
+      "sha256": "6b36d4d3dc6225e64061ddf7c217ce3e57b614e21016b85e10397c95f83907a6",
+      "scope": "Windows alpha test; not a Deck capture or host-resolution proof"
+    },
+    {
+      "path": "docs/media/jf2-gameplay.png",
+      "game": "jf2",
+      "kind": "guest-frame screenshot",
+      "sha256": "a41314303858e4ab14e3f4e36bdfefe9fdf3b6e8bc734588aa5c804ce5e19184",
+      "scope": "Windows alpha test; not a Deck capture or host-resolution proof"
+    },
+    {
+      "path": "docs/media/robbit-gameplay.png",
+      "game": "robbit",
+      "kind": "guest-frame screenshot",
+      "sha256": "11ea9da53fa5f5d2473f9b8f082db723c47a491f8331cdf6118df2d27c7f6b1b",
+      "scope": "Windows alpha test; not a Deck capture or host-resolution proof"
+    },
+    {
+      "path": "docs/media/robbit-english-menu.png",
+      "game": "robbit",
+      "kind": "guest-frame screenshot",
+      "sha256": "49cd388ede058149eb393a207137316ff96e348979b071a9ebee07a5a7a15af1",
+      "description": "English request/map menu at Robbit School B",
+      "scope": "Windows alpha clear/save-route test; washingtonxan English translation; not a Deck capture or host-resolution proof"
+    },
+    {
+      "path": "docs/media/robbit-english-dialogue.png",
+      "game": "robbit",
+      "kind": "guest-frame screenshot",
+      "sha256": "bda37bbac4342c02a4aa49b0b0886f98396e45dcb648b40d05b3fab304f4b58b",
+      "description": "English request text and Boss dialogue",
+      "scope": "Windows alpha clear/save-route test; washingtonxan English translation; not a Deck capture or host-resolution proof"
+    }
+  ],
+  "artwork": "AI-generated fan illustrations from the collection; prompts/provenance under collection/assets/artwork. Character rights remain with their owners."
+}
