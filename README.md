@@ -21,6 +21,12 @@ A fan-made native recompilation collection bringing **Jumping Flash!**, **Jumpin
 
 ## The collection
 
+<p align="center">
+  <img src="docs/media/collection-launcher.jpg" width="900" alt="The collection opening game-selection screen with illustrated Jumping Flash, Jumping Flash 2 and gold Robbit Mon Dieu selections">
+</p>
+
+*The collection's opening game-selection screen, captured on Windows.*
+
 | Jumping Flash! | Jumping Flash! 2 | Robbit Mon Dieu |
 |:---:|:---:|:---:|
 | <img src="docs/media/jf1-gameplay.png" width="270" alt="Jumping Flash first-world gameplay captured during Windows alpha testing"> | <img src="docs/media/jf2-gameplay.png" width="270" alt="Jumping Flash 2 first-world gameplay captured during Windows alpha testing"> | <img src="docs/media/robbit-gameplay.png" width="270" alt="Gold Robbit at the School B course during Windows alpha testing"> |

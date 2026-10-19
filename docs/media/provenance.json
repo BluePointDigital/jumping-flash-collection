@@ -2,6 +2,14 @@
   "schema": 1,
   "screenshots": [
     {
+      "path": "docs/media/collection-launcher.jpg",
+      "game": "collection",
+      "kind": "launcher screenshot",
+      "sha256": "14cf8188420c3c1f320d24f300b44c6aa99d08c029db5d38caed8236eddc281b",
+      "description": "Opening game-selection screen of the Windows alpha launcher",
+      "scope": "Actual Windows capture of an isolated launcher copy with the alpha executable, catalog and fan artwork; no gameplay or Deck performance claim"
+    },
+    {
       "path": "docs/media/jf1-gameplay.png",
       "game": "jf1",
       "kind": "guest-frame screenshot",

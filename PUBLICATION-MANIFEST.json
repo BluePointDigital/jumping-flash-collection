@@ -6,8 +6,8 @@
   "files": [
     {
       "path": ".gitattributes",
-      "bytes": 32,
-      "sha256": "23302dd90b8bb74b44d365fafef8df20f809b61cb347023951ecf60a88a29651"
+      "bytes": 45,
+      "sha256": "93699a1108fd9da226b06f84ee12e317f4ea4d2f18a8fd05260443fd1bf2faef"
     },
     {
       "path": ".github/ISSUE_TEMPLATE/bug_report.yml",
@@ -915,6 +915,11 @@
       "sha256": "d7fa97aedeeb79eb52621f6b33948ecf07a6c179caa42179a2f45050e97ebddb"
     },
     {
+      "path": "docs/media/collection-launcher.jpg",
+      "bytes": 398478,
+      "sha256": "14cf8188420c3c1f320d24f300b44c6aa99d08c029db5d38caed8236eddc281b"
+    },
+    {
       "path": "docs/media/jf1-gameplay.png",
       "bytes": 163590,
       "sha256": "6b36d4d3dc6225e64061ddf7c217ce3e57b614e21016b85e10397c95f83907a6"
@@ -926,8 +931,8 @@
     },
     {
       "path": "docs/media/provenance.json",
-      "bytes": 1889,
-      "sha256": "4370b08095cd44b13175e4f303918e97e87963a9f44d76f9df5a8f1997bb9f72"
+      "bytes": 2346,
+      "sha256": "fe171c20a770df345d8a8bdffc33b36d510d0ec275c72120c9a1ff321f0467bb"
     },
     {
       "path": "docs/media/robbit-english-dialogue.png",
@@ -1061,8 +1066,8 @@
     },
     {
       "path": "README.md",
-      "bytes": 9918,
-      "sha256": "725bd8a44b48499697f12eddfa588f0439a72f8f1f3e81002964348ea289720a"
+      "bytes": 10211,
+      "sha256": "217d46ecb31ad73fb3f7d1bc2008342a1a98b20049c2b7c218b693d262c7b524"
     },
     {
       "path": "RELEASE_NOTES.md",
