@@ -14,6 +14,8 @@ All three routes observed zero process-lifetime interpreter, oracle, and runtime
 
 ## Reading the counters
 
+The newer private JF2 compatibility alpha has a separate approximately 10-second sample: 50.1091 guest counters/sec and 33.0423 completed internal swaps/sec, zero generated swaps and zero added audio underrun/overflow frames. Its settings and route differ from the earlier table, so this is **not a before/after speedup comparison**. No physical-display or Deck capture was performed. [Update details](COMPATIBILITY-ALPHA.md) · [machine-readable sample](benchmarks/jf2-compatibility-20261018.json).
+
 - Guest cadence is console timing, not unique world updates or monitor refresh.
 - Swap counts are completed internal calls, not verified physical display frames.
 - JF2 intentionally skips some unchanged images. Focused intervals observed unchanged-image skips without stale presents, queue stalls, or added underruns. That does not prove smooth interpolation or remove every hitch.

@@ -6,6 +6,16 @@ This first alpha brings the three Jumping Flash adventures together in one Windo
 
 ## Included in the private alpha
 
+### Latest source refresh: JF2 compatibility update
+
+The public snapshot now includes the maintained JF2 main patch, desktop adapter and shared pause-menu visibility changes used by the newer private compatibility alpha. It restores the original JF2 title/options flow, disconnects extra mod menus/plugins, and forces the affected graphics enhancements off while preserving modern controls and shared preferences. Gameplay developer messages remain off; the shared pause/Return menu remains visible.
+
+A bounded Windows New Game/first-stage route passed with virtual-controller movement, pause/resume, clean Return, unchanged copied cards and zero lifetime fallback/compiler attempts. A roughly 10-second warmed sample recorded 50.11 guest counters/sec and 33.04 internal swaps/sec with no added audio underruns. These are not physical FPS or a demonstrated speedup. Normal Load/Save, physical controllers and Deck were not retested. Missing surfaces/flicker are not proven fixed. [Full update and evidence](docs/COMPATIBILITY-ALPHA.md).
+
+The three-game checks and owner Deck feedback below describe the earlier alpha. This source refresh does not supply a playable public package or complete the local generation pipeline.
+
+### Earlier private alpha
+
 - A unified collection launcher for Jumping Flash!, Jumping Flash! 2, and Robbit Mon Dieu.
 - Title-specific illustrated selections and PS1-inspired menus/fonts.
 - Modern keyboard/mouse and gamepad control hooks, with configurable input settings.

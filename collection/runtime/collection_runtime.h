@@ -7,6 +7,9 @@ static void collection_pause_pulse(bool opening) {
     collection_pad_frames=6;collection_pad_word=opening?0xfff7:0xdfff;
 }
 static void collection_menu_show() {
+#if defined(JF2_DESKTOP)
+    host_osd_set_text_visible(1); // Pause actions must remain visible with gameplay messages off.
+#endif
     const char* line=collection_menu_choice==0?
         "BACK TO GAME | W/S, Enter/A":
         "RETURN TO COLLECTION | Enter/A";
@@ -77,5 +80,8 @@ static void collection_host_pause_loop() {
         rewind_pause_present();starvation_watchdog_heartbeat();SDL_Delay(8);
     }
     collection_pad_frames=0;
+#if defined(JF2_DESKTOP)
+    host_osd_set_text_visible(0);
+#endif
     freeze_heartbeat_set_paused(0);savestate_input_guard_arm();
 }

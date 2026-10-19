@@ -1,0 +1,134 @@
+--- a/runtime/src/main.cpp
++++ b/runtime/src/main.cpp
+@@ -4449,6 +4449,10 @@
+  * resolution level and Smooth motion's generated / real presents per second. */
+ static uint64_t g_frame_report_wait_ticks = 0;   /* offline pacer waits */
+ // COLLECTION_PERF_SETTINGS_V1
++extern "C" int gte_geometry_correction_enabled(void);
++extern "C" int gpu_texture_correction_enabled(void);
++extern "C" int pgxp_cpu_mode(void);
++extern "C" int pgxp_culling(void);
+ extern "C" int collection_settings_json(char *out,int capacity){
+     int w=0,h=0;if(sdl_window)SDL_GetWindowSizeInPixels(sdl_window,&w,&h);
+     GlDynresStats ds{};gl_renderer_dynres_stats(&ds);
+@@ -4458,10 +4462,19 @@
+         "\"active_scale\":%d,\"scale_ceiling\":%d,"
+         "\"compiler_workers\":%d,\"render_thread_requested\":%d,\"render_thread_running\":%d,"
+         "\"frame_generation\":%d,\"temporal_interpolation\":%d,\"swap_interval\":%d,"
+-        "\"guest_period_ms\":%.6f,\"renderer\":\"%s\"}",
++        "\"guest_period_ms\":%.6f,\"renderer\":\"%s\","
++        "\"jf2_compatibility\":true,\"custom_menu\":false,\"window_focused\":%s,"
++        "\"aspect_num\":%d,\"aspect_den\":%d,\"fov_scale\":%.3f,"
++        "\"texture_filter\":%d,\"post_aa\":%d,\"geometry_correction\":%d,"
++        "\"perspective_texturing\":%d,\"pgxp_cpu\":%d,\"pgxp_culling\":%d,"
++        "\"pgxp_depth\":%d,\"pgxp_color\":%d,\"pgxp_seam\":%d}",
+         collection_deck?"true":"false",effective_internal_resolution(),g_video_scale,g_video_ref_lines,w,h,ds.level,ds.ceiling,
+         collection_deck?1:2,g_render_thread,rt_running(),g_frame_generation,g_frame_interpolation,
+-        present_effective_swap_interval(),g_guest_frame_period_ms,g_gl_active?"opengl":g_vk_active?"vulkan":"software");
++        present_effective_swap_interval(),g_guest_frame_period_ms,g_gl_active?"opengl":g_vk_active?"vulkan":"software",
++        sdl_window&&(SDL_GetWindowFlags(sdl_window)&SDL_WINDOW_INPUT_FOCUS)?"true":"false",
++        g_video_aspect_num,g_video_aspect_den,g_fov_scale,gr_texture_filter(),gl_renderer_post_aa(),
++        gte_geometry_correction_enabled(),gpu_texture_correction_enabled(),pgxp_cpu_mode(),pgxp_culling(),
++        gl_renderer_get_pgxp_depth(),gl_renderer_get_pgxp_color_perspective(),gl_renderer_get_pgxp_seam());
+ }
+ static void frame_report_tick(uint64_t frames) {
+     static int interval_ms = -1;
+@@ -8194,7 +8207,7 @@
+     jf1_release_inputs();
+ #endif
+ #if defined(JF2_DESKTOP)
+-    jf2_look.clear();
++    jf2_release_inputs();
+ #elif defined(ROBBIT_DESKTOP)
+     robbit_look.clear();robbit_move_x=robbit_move_forward=0;robbit_move_until=0;
+ #endif
+@@ -9659,6 +9672,9 @@
+ extern "C" int  gl_renderer_get_wide_fast(void);
+ // COLLECTION_PERF_LIVE_TOGGLES_V1
+ static int debug_toggles_on(void) {
++#if defined(JF2_DESKTOP)
++    return 0; // Removed enhancements cannot be re-enabled by old debug hotkeys.
++#endif
+     static int enabled=-1;
+     if(enabled<0)enabled=collection_diagnostic_enabled("PSX_DEBUG_TOGGLES");
+     return enabled;
+@@ -17300,9 +17316,13 @@
+      * --no-launcher, or the persisted [launcher] skip_launcher setting — unless
+      * --launcher forces it back on (mirrors snesrecomp's SkipLauncher / --launcher).
+      * This removes the dismiss-the-launcher round-trip for scripted/debug runs. */
++#if defined(JF2_DESKTOP)
++    const bool want_launcher = false; // The collection owns setup and shared preferences.
++#else
+     const bool want_launcher =
+         force_launcher ||
+         (!std::getenv("PSX_NO_LAUNCHER") && !force_no_launcher && !skip_launcher_setting);
++#endif
+     if (want_launcher) {
+         launcher_boot_timing_mark("host:before_sdl_init");
+     /* Per-monitor DPI awareness, BEFORE any SDL_Init.
+@@ -18381,7 +18401,9 @@
+          * sandboxed own view only; the shared game keeps the stock cull. */
+         gpu_ws_set_local_view_only(
+             netplay && PSXRecompV4::mod_runtime_netplay_view_active() ? 1 : 0);
++#if !defined(JF2_DESKTOP)
+         mod_runtime_activate_plugins();
++#endif
+         apply_netplay_local_viewport_aspect(netplay);
+         for (int i = 0; i < PSX_MAX_PLAYERS; ++i) {
+             if (g_mod_controller_mode_override[i] >= 0)
+@@ -18591,6 +18613,16 @@
+         else if (!std::strcmp(e, "fxaa_hq")) g_video_post_aa = GL_POST_AA_FXAA_HQ;
+         else std::fprintf(stdout, "psxrecomp: PSX_AA_MODE=%s not understood (off, fxaa, fxaa_hq)\n", e);
+     }
++#if defined(JF2_DESKTOP)
++    // Compatibility wins over old display preferences and mod/environment overrides.
++    g_video_ss_milli = 1000;
++    g_video_post_aa = GL_POST_AA_OFF;
++    g_mod_texfilter = -1;
++    g_video_texfilter = 0;
++    g_video_geometry_correction = g_video_perspective_texturing = 0;
++    g_video_pgxp_cpu_mode = 0;
++    g_fov_scale = 1.0;
++#endif
+     if (g_video_ss_milli != 1000)
+         std::fprintf(stdout, "psxrecomp: supersample %.3gx on the internal-resolution target\n",
+                      g_video_ss_milli / 1000.0);
+@@ -18681,7 +18713,17 @@
+      * netplay plan may carry the PGXP mod, so the arming holds it off. */
+     pgxp_cfg.netplay = net_cfg.enabled ? 1 : 0;
+     PSXPgxpSessionInputs pgxp_in{};
+-    const PSXPgxpSessionArm pgxp_arm = psx_pgxp_session_arm(&pgxp_cfg, &pgxp_in);
++    PSXPgxpSessionArm pgxp_arm{};
++#if defined(JF2_DESKTOP)
++    // Do not briefly arm a saved/enabled PGXP mod before switching it off.
++    psx_pgxp_session_reset();
++    gte_geometry_correction_set(0);
++    gpu_texture_correction_set(0);
++    pgxp_set_cpu_mode(0);
++    pgxp_set_culling(0);
++#else
++    pgxp_arm = psx_pgxp_session_arm(&pgxp_cfg, &pgxp_in);
++#endif
+     if (pgxp_in.env_geometry >= 0) g_video_geometry_correction = pgxp_in.env_geometry;
+     if (pgxp_in.env_texture >= 0) g_video_perspective_texturing = pgxp_in.env_texture;
+     if (pgxp_in.env_cpu_mode >= 0) g_video_pgxp_cpu_mode = pgxp_in.env_cpu_mode;
+@@ -18689,6 +18731,9 @@
+     if (const char* e = std::getenv("PSX_PGXP_DEPTH")) g_video_pgxp_depth_buffer = (*e && *e != '0');
+     if (const char* e = std::getenv("PSX_PGXP_COLOR")) g_video_pgxp_color_correction = (*e && *e != '0');
+     if (const char* e = std::getenv("PSX_PGXP_SEAM")) g_video_pgxp_seam = std::atoi(e);
++#if defined(JF2_DESKTOP)
++    g_video_pgxp_depth_buffer = g_video_pgxp_color_correction = g_video_pgxp_seam = 0;
++#endif
+     gl_renderer_set_pgxp_depth(g_video_pgxp_depth_buffer);
+     gl_renderer_set_pgxp_color_perspective(g_video_pgxp_color_correction);
+     gl_renderer_set_pgxp_seam(g_video_pgxp_seam);
+@@ -18713,7 +18758,8 @@
+ #if defined(JF2_DESKTOP)
+     // The desktop menu owns the main-thread GL context; threaded presentation is unsupported here.
+     if(!collection_mode)g_render_thread=g_frame_generation=0;
+-    g_present_thread=0; // JF2 ImGui remains on the emulation thread during a context hold.
++    g_present_thread=0; // Keep the qualified JF2 presentation path for this compatibility build.
++    g_frame_generation = g_frame_interpolation = 0;
+ #endif
+     /* PSX_FRAME_GEN_METHOD=redraw|reprojection overrides [video]
+      * frame_generation_method for one run. */

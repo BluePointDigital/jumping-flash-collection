@@ -37,6 +37,8 @@ When moving the folder, update both Target and Start In. Close games and back up
 
 ## What to expect
 
+The owner feedback below is from the earlier private alpha. The newer [JF2 compatibility update](COMPATIBILITY-ALPHA.md) has bounded Windows checks only and has not been retested on Deck. Do not treat its menu/graphics changes as a demonstrated Proton improvement.
+
 On an **original Steam Deck LCD 64 GB**, the owner reports JF2 running and playable. **Stable Proton feels slightly better than Experimental**, but performance remains imperfect. Stable is now the owner's default and the starting configuration documented here.
 
 The earlier Experimental test had graphical glitches, slowdowns, and very choppy menu voiceover that generally smoothed out after a little gameplay. The Stable follow-up does not establish that those individual issues are fixed. Windows feels better overall to the owner.

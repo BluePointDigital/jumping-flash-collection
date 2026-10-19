@@ -58,6 +58,8 @@ Explore Hanauma and read its requests, menus, and character dialogue in English 
 
 ## Where it stands
 
+**Latest source update:** JF2's compatibility changes restore its original title/options flow, disconnect its extra mod menus, and force the affected graphics enhancements off while retaining modern controls and the shared pause/return menu. Short Windows checks passed; the reported graphics defects are not proven fixed. [Changes and exact test scope →](docs/COMPATIBILITY-ALPHA.md)
+
 | Area | Current evidence |
 |---|---|
 | Windows alpha | All three games passed short packaged Load/gameplay/movement/native-exit checks |
@@ -68,7 +70,7 @@ Explore Hanauma and read its requests, menus, and character dialogue in English 
 | Complete campaigns and endings | Not yet qualified |
 | Native Linux / Android | Future work; not released or qualified |
 
-The latest owner report on an original LCD 64 GB Steam Deck is that **Stable Proton performs slightly better than Experimental**, though still imperfectly. Stable is now the owner's default and the starting point in the [Deck setup guide](docs/STEAM-DECK.md). Earlier Experimental testing had graphical glitches, slowdowns, and very choppy menu voiceover that generally smoothed out after a little gameplay. Those individual issues are not confirmed fixed on Stable. Windows feels better overall to the owner.
+The latest owner report on an original LCD 64 GB Steam Deck is that **Stable Proton performs slightly better than Experimental**, though still imperfectly. Stable is now the owner's default and the starting point in the [Deck setup guide](docs/STEAM-DECK.md). Earlier Experimental testing had graphical glitches, slowdowns, and very choppy menu voiceover that generally smoothed out after a little gameplay. Those individual issues are not confirmed fixed on Stable. Windows feels better overall to the owner. These Deck observations refer to the earlier alpha; the newer JF2 compatibility build has not been retested on Deck.
 
 This is **early hardware feedback**, not a verified compatibility rating or a matched benchmark. Exact Stable/Experimental versions, rendering/power settings, measured FPS, sleep/resume, and full controller coverage remain unreported or unqualified.
 
@@ -111,6 +113,12 @@ You will need your own supported game images and matching BIOS files for local g
 ## What is being recompiled?
 
 The original PlayStation machine code is translated into C and compiled with a PSXRecomp-based runtime. This is not a reconstruction of the entire game into clean, named gameplay source. Graphics, audio, timing, memory, and console services still need runtime support. Modding interfaces and clearer game-specific APIs remain opportunities for future work.
+
+## Help finish the public build
+
+Contributors are welcome. The highest priority is a repeatable pipeline that builds the games locally from a user's supported discs and BIOS, replacing the private generated/replay inputs. The repository alone cannot currently produce the playable collection from those inputs.
+
+Read the [build gaps](docs/BUILDING.md) and [contribution guide](CONTRIBUTING.md), open an issue to coordinate a specific task, then fork the repository and submit a scoped pull request with a relevant check. Keep original inputs and generated game/BIOS code out of contributions. Performance, graphics, controls and packaging work are also welcome. Watch the repository for future updates.
 
 ## Credits and licensing
 

@@ -76,17 +76,18 @@ static const char* jf2_aa[] = {"Off", "FXAA", "FXAA high quality"};
 static const char* jf2_menu_styles[] = {"Desktop", "PS1 in-game"};
 static char jf2_boost_label[80];
 static const char* jf2_bind_keys[] = {"bind0","bind1","bind2","bind3","bind4","bind5","bind6","bind7","bind8","bind9","bind10","bind11","bind12","bind13","bind14","bind15"};
-static bool jf2_desktop_open() { return jf2_ui && recomp_runtime_ui_is_open(jf2_ui); }
+static bool jf2_desktop_open() {
+#ifdef COLLECTION_RUNTIME
+    return collection_menu_open;
+#else
+    return false;
+#endif
+}
 static bool jf2_camera_supported();
 static void jf2_release_inputs();
-static bool jf2_title_active() {
-    return jf2_cpu && jf2_title_actor && s_frame_count-jf2_title_frame<8 &&
-        psx_read_word(0x800f3a44)==0x27bdffc0 && psx_read_word(0x800f3e34)==0x2c620005 &&
-        psx_read_word(jf2_title_actor+0x14)==0x800f3a44 &&
-        psx_read_half(jf2_title_actor+0x18)==6 && psx_read_byte(jf2_title_actor+0x4c)==0;
-}
+static bool jf2_title_active() { return false; }
 static void jf2_open_mods() {
-    jf2_release_inputs();recomp_runtime_ui_open(jf2_ui);recomp_runtime_ui_enter_section(jf2_ui,2);
+    // JF2-specific graphical mods are disabled in compatibility mode.
 }
 static bool jf2_pixel_menu() { return !g_gl_active || jf2_settings.jf2_native_menu; }
 static int& jf2_boost_key() { return jf2_settings.jf2_control_style?jf2_settings.jf2_boost_modern_key:jf2_settings.jf2_boost_classic_key; }
@@ -220,32 +221,7 @@ static bool jf2_camera_supported() {
 #endif
 extern "C" void jf2_desktop_camera(CPUState* cpu,uint32_t address) {
     const uint32_t pc=address&0x1fffffff, actor=0x80136d88;
-    if(pc==0xf3a44 && cpu->gpr[31]==0x800ece4c && cpu->gpr[5]>=0x80000000 && cpu->gpr[5]<0x80200000) {
-        const uint32_t title=cpu->gpr[5];
-        if(psx_read_word(0x800f3a44)!=0x27bdffc0 || psx_read_word(0x800f3e34)!=0x2c620005 ||
-            psx_read_word(title+0x14)!=0x800f3a44 || cpu->gpr[4]!=title+0x18 ||
-            psx_read_half(title+0x18)!=6 || psx_read_byte(title+0x4c)!=0) {jf2_title_actor=0;return;}
-        if(jf2_title_actor!=title || s_frame_count-jf2_title_frame>=8) {
-            jf2_title_row=std::clamp((int)psx_read_half(title+0x44),0,4);
-            jf2_title_gate={};jf2_title_accept=false;jf2_release_inputs();
-        }
-        jf2_title_actor=title;jf2_title_frame=s_frame_count;
-        const bool ready=jf2_title_gate.update(psx_read_word(0x80187be4));
-        const uint32_t pressed=ready ? psx_read_word(0x80187be8)&psx_read_word(0x80187bf8) : 0;
-        if(pressed&0x1000) jf2_title_row=std::max(0,jf2_title_row-1);
-        if(pressed&0x4000) jf2_title_row=std::min(5,jf2_title_row+1);
-        const bool accept=jf2_title_accept || (pressed&0x8e0);
-        jf2_title_accept=false;
-        // Keep all guest table indices in range. Mods is a host sixth entry;
-        // the five original actions still execute the original guest code.
-        psx_write_half(title+0x44,std::min(4,jf2_title_row));
-        uint32_t held=psx_read_word(0x80187be4)&~0x58e0u;
-        uint32_t edge=psx_read_word(0x80187be8)&~0x58e0u;
-        if(accept && jf2_title_row<5) {held|=0x800;edge|=0x800;}
-        psx_write_word(0x80187be4,held);psx_write_word(0x80187be8,edge);
-        if(accept && jf2_title_row==5) jf2_open_mods();
-        return;
-    }
+    /* Title-screen input and rendering remain entirely native. */
 #ifdef COLLECTION_RUNTIME
     jf2_gameplay_camera(cpu,address);
 #else
@@ -324,10 +300,6 @@ static uint16_t jf2_desktop_device_pad(uint16_t raw,int player) {
     if(player!=1) return raw;
     if(jf2_desktop_open()) return 0xFFFF;
     if(jf2_pad_release) { if(raw!=0xFFFF) return 0xFFFF; jf2_pad_release=false; }
-    // Mouse title selections must also reach the native pad/inactivity path,
-    // which runs before the title actor and can otherwise launch its demo.
-    if(jf2_title_click_until>s_frame_count && jf2_title_active()) raw&=~0x0008u;
-    else jf2_title_click_until=0;
     return raw;
 }
 static void jf2_screenshot() {
@@ -337,12 +309,15 @@ static void jf2_screenshot() {
     jf2_shot_sequence=present_shot_seq();
 }
 static void jf2_quick_load() {
-    if(SDL_GetTicks()>jf2_load_confirm_until) {
-        if(!jf2_settings.jf2_messages) {jf2_release_inputs();recomp_runtime_ui_open(jf2_ui);recomp_runtime_ui_enter_section(jf2_ui,0);recomp_runtime_ui_set_status(jf2_ui,"F9: load slot 7. Escape: cancel.");}
-        jf2_load_confirm_until=SDL_GetTicks()+3000;host_osd_push("Press F9 again to restore quick slot 7",3000);
+    const uint64_t now=SDL_GetTicks();
+    if(now>jf2_load_confirm_until) {
+        jf2_load_confirm_until=now+3000;
+        host_osd_push("Press F9 again to restore quick slot 7",3000);
         return;
     }
-    jf2_load_confirm_until=0;recomp_runtime_ui_close(jf2_ui);jf2_release_inputs();savestate_request_load(7);
+    jf2_load_confirm_until=0;
+    jf2_release_inputs();
+    savestate_request_load(7);
 }
 extern "C" void jf2_desktop_integer_rect(int ww,int wh,int*x,int*y,int*w,int*h) {
     if(!jf2_settings.jf2_integer_scaling) return;
@@ -570,6 +545,9 @@ static void jf2_menu_create() {
 }
 static void jf2_desktop_init(const std::filesystem::path& dir) {
     jf2_dir=dir; jf2_settings=PSXRecompV4::load_user_settings(dir/"settings.toml");
+    jf2_settings.jf2_boost=false;
+    jf2_settings.jf2_post_aa=0;
+    jf2_settings.jf2_messages=false;
     std::error_code logs_error;std::filesystem::create_directories(dir/"logs",logs_error);std::filesystem::create_directories(dir/"screenshots",logs_error);
     if(!jf2_settings.has_window_width) { jf2_settings.has_window_width=true;jf2_settings.window_width=1280; }
     if(!jf2_settings.has_internal_resolution) {jf2_settings.has_internal_resolution=true;jf2_settings.internal_resolution=1;}
@@ -582,7 +560,7 @@ static void jf2_desktop_init(const std::filesystem::path& dir) {
     if(!std::filesystem::exists(dir/"keybinds-classic.ini")) {
         std::error_code ec;std::filesystem::copy_file(dir/"keybinds.ini",dir/"keybinds-classic.ini",std::filesystem::copy_options::none,ec);
     }
-    jf2_desktop_reload_bindings();jf2_menu_create();jf2_initialized=true;
+    jf2_desktop_reload_bindings();jf2_initialized=true;
     (jf2_settings.jf2_fps!=fps_telemetry_enabled()?fps_telemetry_toggle():void());
 }
 void jf2_launcher_controls() {
@@ -590,36 +568,20 @@ void jf2_launcher_controls() {
     ImGui::SeparatorText("CONTROL STYLE");
     int style=jf2_settings.jf2_control_style;
     if(ImGui::Combo("Classic / Modern",&style,jf2_styles,2)) jf2_select_style(style);
-    ImGui::TextWrapped(style?"Modern: WASD, Space to jump, mouse to look and fire. Escape opens desktop settings.":"Classic: arrow keys and original PlayStation buttons. Original jump camera; mouse capture disabled.");
+    ImGui::TextWrapped(style?"Modern: WASD, Space to jump, mouse to look and fire. Use the shared pause menu for settings.":"Classic: arrow keys and original PlayStation buttons. Original jump camera; mouse capture disabled.");
     if(style) {
         if(ImGui::SliderInt("Mouse sensitivity %",&jf2_settings.jf2_mouse_sensitivity,10,300)) jf2_save();
         if(ImGui::Checkbox("Invert mouse Y",&jf2_settings.jf2_invert_y)) jf2_save();
         if(ImGui::Checkbox("Original jump camera assistance",&jf2_settings.jf2_jump_camera)) jf2_save();
         if(ImGui::Checkbox("Left/right arrows strafe",&jf2_settings.jf2_arrow_strafe)) jf2_save();
     }
-    ImGui::SeparatorText("MOVEMENT BOOSTER");
-    if(ImGui::Checkbox("Enable ground boost (World 1)",&jf2_settings.jf2_boost)) jf2_save();
-    if(jf2_settings.jf2_boost) {
-        if(ImGui::SliderInt("Boost speed %",&jf2_settings.jf2_boost_percent,125,200)) jf2_save();
-        std::string label=std::string("Boost key: ")+SDL_GetScancodeName((SDL_Scancode)jf2_boost_key());
-        if(ImGui::Button(jf2_launcher_boost_capture?"Press an unused key; Escape cancels":label.c_str())) jf2_launcher_boost_capture=true;
-        ImGui::TextWrapped("Optional ground speed boost. Air control, gravity and jump height stay original.");
-    }
 }
 bool jf2_launcher_event(const SDL_Event& e) {
-    if(!jf2_launcher_boost_capture) return false;
-    if(e.type==SDL_EVENT_KEY_DOWN && !e.key.repeat) {
-        if(e.key.scancode==SDL_SCANCODE_ESCAPE) jf2_launcher_boost_capture=false;
-        else if(jf2_bind_boost(e.key.scancode)) {jf2_launcher_boost_capture=false;jf2_release_inputs();jf2_save();}
-    }
-    return e.type==SDL_EVENT_KEY_DOWN || e.type==SDL_EVENT_KEY_UP || e.type==SDL_EVENT_MOUSE_BUTTON_DOWN || e.type==SDL_EVENT_MOUSE_BUTTON_UP;
+    (void)e;
+    return false;
 }
 void jf2_launcher_display() {
-    ImGui::SeparatorText("IN-GAME MODS");
-    if(ImGui::Combo("Edge smoothing",&jf2_settings.jf2_post_aa,jf2_aa,3)) jf2_save();
-    if(ImGui::Checkbox("PS1-style in-game mod menu",&jf2_settings.jf2_native_menu)) jf2_save();
-    if(ImGui::Checkbox("Show top-left desktop messages",&jf2_settings.jf2_messages)) {host_osd_set_text_visible(jf2_settings.jf2_messages);jf2_save();}
-    ImGui::TextWrapped("Escape opens the paused in-game menu. Edge smoothing requires OpenGL; menu text stays sharp.");
+    // JF2-specific graphical mods are disabled in compatibility mode.
 }
 int jf2_launcher_navigation() {
     static int page=0;const char* pages[]={"Play","Display","Controls","Audio","Exit"};
@@ -649,141 +611,45 @@ static void jf2_pointer(int x,int y,int width,int height,int direction) {
 }
 static bool jf2_desktop_event(const SDL_Event& e) {
     if(!jf2_initialized) return false;
-    if(jf2_imgui) {ImGui::SetCurrentContext(jf2_imgui);ImGui_ImplSDL3_ProcessEvent(&e);}
     if(e.type==SDL_EVENT_KEY_DOWN) { ++jf2_key_events;jf2_last_key=e.key.scancode; }
     if(e.type==SDL_EVENT_KEY_UP && e.key.scancode<SDL_NUM_SCANCODES) jf2_held[e.key.scancode]=0;
     if(e.type==SDL_EVENT_WINDOW_FOCUS_LOST || e.type==SDL_EVENT_WINDOW_MINIMIZED || e.type==SDL_EVENT_WINDOW_HIDDEN) {
         jf2_release_inputs();
-        if(!jf2_desktop_open() && jf2_camera_supported()) {
-            recomp_runtime_ui_open(jf2_ui);recomp_runtime_ui_enter_section(jf2_ui,0);
-            recomp_runtime_ui_set_status(jf2_ui,"Paused on focus loss. Resume to continue.");
-        }
+        return false;
     }
-    if(jf2_rebind>=0) {
-        if(e.type==SDL_EVENT_KEY_DOWN && !e.key.repeat) {
-            if(e.key.scancode==SDL_SCANCODE_F1 || e.key.scancode==SDL_SCANCODE_F2 || e.key.scancode==SDL_SCANCODE_F5 || e.key.scancode==SDL_SCANCODE_F9 || e.key.scancode==SDL_SCANCODE_F12) {
-                recomp_runtime_ui_set_status(jf2_ui,"F1/F2/F5/F9/F12 reserved. Esc cancels.");return true;
-            }
-            if(e.key.scancode!=SDL_SCANCODE_ESCAPE) {
-                if(jf2_rebind==16) {
-                    if(!jf2_bind_boost(e.key.scancode)) {recomp_runtime_ui_set_status(jf2_ui,"Unused keyboard key; Esc cancels.");return true;}
-                } else {
-                    if(jf2_settings.jf2_boost && e.key.scancode==jf2_boost_key()) {recomp_runtime_ui_set_status(jf2_ui,"Boost key in use. Rebind boost first.");return true;}
-                    psx_keybinds_set_button(1,jf2_rebind,e.key.scancode);
-                }
-            }
-            jf2_rebind=-1;jf2_release_inputs();jf2_save();return true;
-        }
-        if(e.type==SDL_EVENT_MOUSE_BUTTON_DOWN) {
-            if(jf2_rebind==16) {recomp_runtime_ui_set_status(jf2_ui,"Boost needs a key. Esc cancels.");return true;}
-            psx_keybinds_set_button(1,jf2_rebind,PSXKB_MOUSE_SC(e.button.button));jf2_rebind=-1;jf2_release_inputs();jf2_save();return true;
-        }
-        return e.type==SDL_EVENT_KEY_UP || e.type==SDL_EVENT_MOUSE_BUTTON_UP;
+    if(jf2_desktop_open()) return false; // Shared collection pause menu owns pause input.
+    if(e.type==SDL_EVENT_KEY_DOWN && !e.key.repeat) {
+        if(e.key.scancode==SDL_SCANCODE_F5) { savestate_request_save(7); return true; }
+        if(e.key.scancode==SDL_SCANCODE_F9) { jf2_quick_load(); return true; }
+        if(e.key.scancode==SDL_SCANCODE_F12) { jf2_screenshot(); return true; }
+        if(e.key.scancode==SDL_SCANCODE_ESCAPE && jf2_captured) { jf2_release_mouse(); return true; }
     }
-    if(e.type==SDL_EVENT_KEY_DOWN && e.key.scancode==SDL_SCANCODE_ESCAPE && !e.key.repeat) {
-        jf2_release_inputs();
-        if(!jf2_desktop_open()) {recomp_runtime_ui_open(jf2_ui);recomp_runtime_ui_enter_section(jf2_ui,0);}
-        else if(jf2_title_active() || (jf2_ui->in_section && jf2_ui->section_index==0)) {recomp_runtime_ui_close(jf2_ui);jf2_save();}
-        else recomp_runtime_ui_enter_section(jf2_ui,0);
-        return true;
-    }
-    if(e.type==SDL_EVENT_KEY_DOWN && e.key.scancode==SDL_SCANCODE_F2 && !e.key.repeat) {jf2_open_mods();return true;}
-    if(!jf2_desktop_open() && e.type==SDL_EVENT_KEY_DOWN && !e.key.repeat) {
-        if(e.key.scancode==SDL_SCANCODE_F5) {savestate_request_save(7);return true;}
-        if(e.key.scancode==SDL_SCANCODE_F9) {jf2_quick_load();return true;}
-        if(e.key.scancode==SDL_SCANCODE_F12) {jf2_screenshot();return true;}
-        if(e.key.scancode==SDL_SCANCODE_F1) {jf2_release_inputs();recomp_runtime_ui_open(jf2_ui);recomp_runtime_ui_enter_section(jf2_ui,1);return true;}
-    }
-    if(jf2_desktop_open()) {
-        if(e.type==SDL_EVENT_KEY_DOWN && e.key.scancode==SDL_SCANCODE_F9 && jf2_load_confirm_until>=SDL_GetTicks()) {jf2_quick_load();return true;}
-        if(jf2_pixel_menu() && e.type==SDL_EVENT_MOUSE_WHEEL) {
-            int steps=std::clamp((int)std::lround(std::abs(e.wheel.y)),1,12);
-            for(int i=0;i<steps;++i) recomp_runtime_ui_handle_input(jf2_ui,e.wheel.y>0?RECOMP_RUNTIME_UI_INPUT_UP:RECOMP_RUNTIME_UI_INPUT_DOWN,1,0);
-        }
-        if(jf2_pixel_menu() && e.type==SDL_EVENT_MOUSE_BUTTON_DOWN) {
-            int w,h;SDL_GetWindowSize(sdl_window,&w,&h);double scale=std::min(w/640.0,h/480.0);
-            jf2_pointer((int)((e.button.x-(w-640*scale)/2)/scale),(int)((e.button.y-(h-480*scale)/2)/scale),640,480,e.button.button==SDL_BUTTON_RIGHT?-1:1);
-        }
-        if(e.type==SDL_EVENT_KEY_DOWN) {
-            int key=e.key.scancode;
-            if(key==SDL_SCANCODE_BACKSPACE) recomp_runtime_ui_handle_input(jf2_ui,RECOMP_RUNTIME_UI_INPUT_BACK,1,0);
-            if(jf2_pixel_menu()) {
-                if(key==SDL_SCANCODE_UP) recomp_runtime_ui_handle_input(jf2_ui,RECOMP_RUNTIME_UI_INPUT_UP,1,e.key.repeat);
-                if(key==SDL_SCANCODE_DOWN) recomp_runtime_ui_handle_input(jf2_ui,RECOMP_RUNTIME_UI_INPUT_DOWN,1,e.key.repeat);
-                if(key==SDL_SCANCODE_LEFT) recomp_runtime_ui_handle_input(jf2_ui,RECOMP_RUNTIME_UI_INPUT_LEFT,1,e.key.repeat);
-                if(key==SDL_SCANCODE_RIGHT) recomp_runtime_ui_handle_input(jf2_ui,RECOMP_RUNTIME_UI_INPUT_RIGHT,1,e.key.repeat);
-                if(key==SDL_SCANCODE_RETURN) recomp_runtime_ui_handle_input(jf2_ui,RECOMP_RUNTIME_UI_INPUT_ACCEPT,1,0);
-            }
-        }
-        if(e.type==SDL_EVENT_GAMEPAD_BUTTON_DOWN) {
-            int input=-1;
-            switch(e.gbutton.button) {
-                case SDL_GAMEPAD_BUTTON_DPAD_UP:input=RECOMP_RUNTIME_UI_INPUT_UP;break;
-                case SDL_GAMEPAD_BUTTON_DPAD_DOWN:input=RECOMP_RUNTIME_UI_INPUT_DOWN;break;
-                case SDL_GAMEPAD_BUTTON_DPAD_LEFT:input=RECOMP_RUNTIME_UI_INPUT_LEFT;break;
-                case SDL_GAMEPAD_BUTTON_DPAD_RIGHT:input=RECOMP_RUNTIME_UI_INPUT_RIGHT;break;
-                case SDL_GAMEPAD_BUTTON_SOUTH:input=RECOMP_RUNTIME_UI_INPUT_ACCEPT;break;
-                case SDL_GAMEPAD_BUTTON_EAST:input=RECOMP_RUNTIME_UI_INPUT_BACK;break;
-                default:break;
-            }
-            if(input>=0) recomp_runtime_ui_handle_input(jf2_ui,(RecompRuntimeUiInput)input,1,0);
-        }
-        return e.type==SDL_EVENT_KEY_DOWN || e.type==SDL_EVENT_KEY_UP || e.type==SDL_EVENT_MOUSE_BUTTON_DOWN || e.type==SDL_EVENT_MOUSE_BUTTON_UP || e.type==SDL_EVENT_MOUSE_MOTION || e.type==SDL_EVENT_MOUSE_WHEEL || e.type==SDL_EVENT_GAMEPAD_BUTTON_DOWN || e.type==SDL_EVENT_GAMEPAD_BUTTON_UP;
-    }
-    if(jf2_title_active() && (e.type==SDL_EVENT_MOUSE_BUTTON_DOWN || e.type==SDL_EVENT_MOUSE_MOTION)) {
-        int w,h;SDL_GetWindowSize(sdl_window,&w,&h);const double fit=std::min(w/640.0,h/480.0);
-        const double mx=e.type==SDL_EVENT_MOUSE_MOTION?e.motion.x:e.button.x;
-        const double my=e.type==SDL_EVENT_MOUSE_MOTION?e.motion.y:e.button.y;
-        const int x=(int)((mx-(w-640*fit)/2)/fit),y=(int)((my-(h-480*fit)/2)/fit);
-        const int row=jf2::title_hit(x,y);
-        if(row>=0) {
-            jf2_title_row=row;
-            if(e.type==SDL_EVENT_MOUSE_BUTTON_DOWN && e.button.button==SDL_BUTTON_LEFT) {
-                if(row==5) jf2_open_mods();
-                else {jf2_title_accept=true;jf2_title_click_until=s_frame_count+8;}
-            }
-        }
-        return true;
-    }
-    // SDL may deliver a down/up pair in one drain while a load or render is slow.
-    // Hold quick taps across the game's slower pad polling, without a debug override.
+    // Keep short SDL taps visible to the slower guest pad poller.
     if(e.type==SDL_EVENT_KEY_DOWN && !e.key.repeat && e.key.scancode<SDL_NUM_SCANCODES)
         jf2_pressed_until[e.key.scancode]=s_frame_count+4;
     if(e.type==SDL_EVENT_MOUSE_BUTTON_DOWN && e.button.button<=5)
         jf2_mouse_until[e.button.button]=s_frame_count+4;
-    bool gameplay=jf2_camera_supported() && s_frame_count-jf2_camera_frame<8;
+    const bool gameplay=jf2_camera_supported() && s_frame_count-jf2_camera_frame<8;
     if(jf2_captured && (!gameplay || savestate_input_guard_active())) jf2_release_mouse();
     if(jf2_settings.jf2_control_style && !jf2_captured && e.type==SDL_EVENT_MOUSE_BUTTON_DOWN && e.button.button==SDL_BUTTON_LEFT) {
-        if(gameplay && jf2_host_input_ready() && !g_headless && (SDL_GetWindowFlags(sdl_window)&SDL_WINDOW_INPUT_FOCUS)) {
+        if(gameplay && jf2_host_input_ready() && !g_headless && sdl_window &&
+            (SDL_GetWindowFlags(sdl_window)&SDL_WINDOW_INPUT_FOCUS)) {
             jf2_captured=SDL_SetWindowRelativeMouseMode(sdl_window,true);jf2_look.clear();
             jf2_mouse_until[1]=0;jf2_mouse_held|=SDL_BUTTON_LMASK;psx_keybinds_suppress_control(1,PSXKB_MOUSE_SC(1));
         } else host_osd_push("Mouse look is available in supported World 1 gameplay",2500);
         return true;
     }
-    if(jf2_captured && e.type==SDL_EVENT_MOUSE_MOTION) {++jf2_mouse_events;jf2_last_dx=e.motion.xrel;jf2_last_dy=e.motion.yrel;jf2_look.move(e.motion.xrel,e.motion.yrel);return true;}
+    if(jf2_captured && e.type==SDL_EVENT_MOUSE_MOTION) {
+        ++jf2_mouse_events;jf2_last_dx=e.motion.xrel;jf2_last_dy=e.motion.yrel;
+        jf2_look.move(e.motion.xrel,e.motion.yrel);return true;
+    }
     return false;
 }
 extern "C" int jf2_desktop_image(const uint32_t** pixels,int* width,int* height) {
-    if(!jf2_desktop_open() && !jf2_title_active()) return 0;
-    if(jf2_desktop_open() && !jf2_pixel_menu()) return 0;
-    static std::vector<uint32_t> frame(640*480);
-    jf2_ui->config.subtitle=jf2_ui->in_section?jf2_ui->sections[jf2_ui->section_index]:"PAUSE / MODS";
-    std::fill(frame.begin(),frame.end(),0);
-    if(jf2_desktop_open()) recomp_runtime_ui_render_argb8888(jf2_ui,frame.data(),640,480,640*4);
-    else recomp_runtime_ui_render_title_entries(frame.data(),640,480,640*4,jf2_title_row);
-    *pixels=frame.data();*width=640;*height=480;return 1;
+    (void)pixels;(void)width;(void)height;
+    return 0;
 }
-extern "C" void jf2_desktop_gl_draw(SDL_Window* window) {
-    if(!jf2_initialized || !jf2_desktop_open() || jf2_pixel_menu()) return;
-    if(!jf2_imgui) {
-        jf2_imgui=ImGui::CreateContext();ImGui::GetIO().IniFilename=nullptr;
-        ImGui_ImplSDL3_InitForOpenGL(window,SDL_GL_GetCurrentContext());ImGui_ImplOpenGL3_Init("#version 330");
-        ImGui::StyleColorsDark();ImGui::GetStyle().ScaleAllSizes(1.5f);
-    }
-    ImGui::SetCurrentContext(jf2_imgui);ImGui_ImplOpenGL3_NewFrame();ImGui_ImplSDL3_NewFrame();ImGui::NewFrame();
-    ImGui::GetIO().FontGlobalScale=1.7f;
-    recomp_runtime_ui_render_imgui(jf2_ui);ImGui::Render();ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
-}
+extern "C" void jf2_desktop_gl_draw(SDL_Window* window) { (void)window; }
 static void jf2_update_labels() {
     std::snprintf(jf2_boost_label,sizeof(jf2_boost_label),"Boost key [%s]",SDL_GetScancodeName((SDL_Scancode)jf2_boost_key()));
     for(int i=0;i<16;++i) {
@@ -797,39 +663,28 @@ static void jf2_update_labels() {
 }
 static void jf2_desktop_tick() {
     if(!jf2_initialized || g_headless) return;
-    if(g_gl_active && !jf2_visuals_applied) {g_video_post_aa=jf2_settings.jf2_post_aa;gl_renderer_set_post_aa(g_video_post_aa);jf2_visuals_applied=true;}
-    jf2_update_labels();
-    bool restoring=savestate_input_guard_active();
-    if(restoring && !jf2_restoring) {jf2_release_inputs();jf2_update_frame=UINT64_MAX;jf2_move_command=false;jf2_title_actor=0;jf2_title_accept=false;}
+    const bool restoring=savestate_input_guard_active();
+    if(restoring && !jf2_restoring) {
+        jf2_release_inputs();jf2_update_frame=UINT64_MAX;jf2_move_command=false;
+        jf2_title_actor=0;jf2_title_accept=false;
+    }
     jf2_restoring=restoring;
-    if(jf2_shot_sequence>=0 && present_shot_seq()!=jf2_shot_sequence) {host_osd_push(present_shot_ok()?"Screenshot saved in screenshots":"Screenshot could not be saved",2500);jf2_shot_sequence=-1;}
-    if(jf2_captured && (!jf2_camera_supported() || s_frame_count-jf2_camera_frame>8 || savestate_input_guard_active())) {
-        jf2_release_inputs();host_osd_push("Mouse released during transition. Click gameplay to recapture.",2500);
+    if(jf2_shot_sequence>=0 && present_shot_seq()!=jf2_shot_sequence) {
+        host_osd_push(present_shot_ok()?"Screenshot saved in screenshots":"Screenshot could not be saved",2500);
+        jf2_shot_sequence=-1;
+    }
+    if(jf2_captured && (!jf2_camera_supported() || s_frame_count-jf2_camera_frame>8 || restoring)) {
+        jf2_release_inputs();
+        host_osd_push("Mouse released during transition. Click gameplay to recapture.",2500);
     }
     GpuDisplayInfo di;gpu_get_display_info(&di);
     if(SDL_GetTicks()>jf2_compile_probe) {
         jf2_compile_probe=SDL_GetTicks()+500;char status[2048]{};autocompile_status_json(status,sizeof(status));
         jf2_compiling=std::strstr(status,"\"state\":\"running\"") || std::strstr(status,"\"state\": \"running\"");
     }
-    bool stalled=jf2_cpu && jf2_cpu->cop0[14]==0 && (jf2_cpu->cop0[13]&0x7c)==0x20;
+    const bool stalled=jf2_cpu && jf2_cpu->cop0[14]==0 && (jf2_cpu->cop0[13]&0x7c)==0x20;
     if(di.disabled || stalled || jf2_compiling) {
-        uint64_t now=SDL_GetTicks();if(!jf2_blank_since) jf2_blank_since=now;
-        host_osd_set_status(jf2_compiling?"Compiling game code... Escape: settings":now-jf2_blank_since>15000?"Still waiting for the game. Escape: restart / logs":"Loading game / compiling code... Escape: settings");
+        const uint64_t now=SDL_GetTicks();if(!jf2_blank_since) jf2_blank_since=now;
+        host_osd_set_status(jf2_compiling?"Compiling game code... Use the shared pause menu":now-jf2_blank_since>15000?"Still waiting for the game. Use the shared pause menu":"Loading game / compiling code...");
     } else if(jf2_blank_since) {jf2_blank_since=0;host_osd_set_status(nullptr);}
-    bool was_open=jf2_desktop_open();
-    while(jf2_desktop_open()) {
-        if(!drain_host_events()) break;
-        if(jf2_load_confirm_until && SDL_GetTicks()>jf2_load_confirm_until) {
-            jf2_load_confirm_until=0;recomp_runtime_ui_set_status(jf2_ui,"Restore timed out. Escape resumes.");
-        }
-        if(jf2_guide_until && SDL_GetTicks()>jf2_guide_until) {recomp_runtime_ui_set_toast(jf2_ui,nullptr,nullptr);jf2_guide_until=0;}
-        jf2_update_labels();
-        if(g_gl_active) {if(!gl_renderer_present_hold_last()) gl_renderer_present_blank();}
-        else if(sdl_renderer) {SDL_SetRenderDrawColor(sdl_renderer,0,0,0,255);SDL_RenderClear(sdl_renderer);host_osd_draw_sdl(sdl_renderer);SDL_RenderPresent(sdl_renderer);}
-#ifndef PSX_NO_DEBUG_TOOLS
-        debug_server_poll();
-#endif
-        SDL_Delay(16);
-    }
-    if(was_open) {jf2_release_inputs();g_audio_bridge_resync=1;jf2_save();}
 }

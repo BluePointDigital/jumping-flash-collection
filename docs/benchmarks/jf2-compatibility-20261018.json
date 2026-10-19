@@ -1,0 +1,106 @@
+{
+  "schema": 1,
+  "kind": "JF2 compatibility alpha, bounded Windows test",
+  "source_review_sha256": "25189d9e595e4b6aac129205306c1d24d62f618621126aad59a714a7c0e93619",
+  "executable_sha256": "b21e0369438d5f078fd1df546cffefc6b5d3a28a9bc22e5b667a5e29a72a6ac3",
+  "executable_in_public_package": false,
+  "platform": "Windows",
+  "proton_or_deck_tested": false,
+  "sample_seconds_approximate": 10,
+  "settings": {
+    "deck_profile": true,
+    "internal_resolution": 720,
+    "render_scale": 3,
+    "reference_lines": 240,
+    "output_width": 2880,
+    "output_height": 1620,
+    "active_scale": 3,
+    "scale_ceiling": 0,
+    "compiler_workers": 1,
+    "render_thread_requested": 1,
+    "render_thread_running": 1,
+    "frame_generation": 0,
+    "temporal_interpolation": 0,
+    "swap_interval": 0,
+    "guest_period_ms": 20.0,
+    "renderer": "opengl",
+    "jf2_compatibility": true,
+    "custom_menu": false,
+    "window_focused": true,
+    "aspect_num": 4,
+    "aspect_den": 3,
+    "fov_scale": 1.0,
+    "texture_filter": 0,
+    "post_aa": 0,
+    "geometry_correction": 0,
+    "perspective_texturing": 0,
+    "pgxp_cpu": 0,
+    "pgxp_culling": 0,
+    "pgxp_depth": 0,
+    "pgxp_color": 0,
+    "pgxp_seam": 0
+  },
+  "checks": {
+    "hostile_preferences_and_environment_overrides_remain_off": true,
+    "original_title_and_new_game_first_stage": true,
+    "normal_load_or_save_retested": false,
+    "shared_pause_composed_image_visually_reviewed": true,
+    "pause_resume_pass": true,
+    "native_return_exit_code": 0,
+    "right_stick_yaw_changed": true,
+    "left_stick_strafe_updates": 27,
+    "cards_unchanged": true
+  },
+  "static_execution": {
+    "schema": 1,
+    "enabled": true,
+    "mode": "strict",
+    "scope": "process_lifetime",
+    "semantics": "interpreter instruction attempts, including delay slots; compiler requests before spawn",
+    "dirty_instruction_attempts": 0,
+    "oracle_instruction_attempts": 0,
+    "compiler_requests": 0,
+    "no_fallback_observed": true,
+    "qualification_complete": false,
+    "shellwin_forced_build": false,
+    "first_interpreter": null
+  },
+  "metrics": {
+    "guest_frames_per_second": 50.10914864070517,
+    "internal_swap_calls_per_second": 33.04227029179172,
+    "internal_generated_swap_calls_per_second": 0.0,
+    "swap_calls_delta": 333,
+    "generated_swap_calls_delta": 0,
+    "producer_sample_drops_delta": 0,
+    "audio_underrun_sample_frames_delta": 0,
+    "audio_overflow_drops_delta": 0,
+    "physical_present_fps": null,
+    "world_update_hz": null,
+    "limitations": "short triage window; completed internal swap calls are not physical presents or release qualification"
+  },
+  "scope": "JF2-only compatibility simplification; launcher, JF1 and Robbit binaries/assets inherited unchanged. Old alpha preserved.",
+  "limitations": [
+    "owner-reported moving clipping/flicker not yet reproduced or proven fixed",
+    "physical controller and Steam Deck unqualified",
+    "full campaigns and normal save/reload not repeated",
+    "internal swaps are not unique image or physical display FPS",
+    "60 FPS rendering goal remains open"
+  ],
+  "source_files": [
+    {
+      "path": "tools/recomp/jf2-compatibility-main.patch",
+      "source_sha256": "377d0cea9e10ef3f03f54f44d473b07b97fbe2669be90e8371aab3142f4ab92c",
+      "bytes": 7192
+    },
+    {
+      "path": "tools/recomp/jf2_desktop.h",
+      "source_sha256": "3626f2f917e6ed083b3c39b488cc07c78f828c80c9f113cea7801652bfaf7020",
+      "bytes": 43751
+    },
+    {
+      "path": "collection/runtime/collection_runtime.h",
+      "source_sha256": "61a137dbaf8d1e0adbf25db9b620b5c4bbbdac1cd1eb3707bacc84e119520bf1",
+      "bytes": 4146
+    }
+  ]
+}

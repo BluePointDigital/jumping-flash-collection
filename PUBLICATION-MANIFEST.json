@@ -101,8 +101,8 @@
     },
     {
       "path": "collection/runtime/collection_runtime.h",
-      "bytes": 3949,
-      "sha256": "dbdeba1bf94e86c9316eec01ee4ffe266f0f250ab1c46df572508b4df2e2861f"
+      "bytes": 4146,
+      "sha256": "61a137dbaf8d1e0adbf25db9b620b5c4bbbdac1cd1eb3707bacc84e119520bf1"
     },
     {
       "path": "collection/runtime/collection_static.c",
@@ -886,8 +886,8 @@
     },
     {
       "path": "CONTRIBUTING.md",
-      "bytes": 1154,
-      "sha256": "45d8e733157381839271431da45644107fee4497102ab997458cf3aea13d376e"
+      "bytes": 2988,
+      "sha256": "d0ffa4206e043d2db174e3c062de4ad47a39c123eb15ed4ca9e2598bf1631d0a"
     },
     {
       "path": "docs/benchmarks/alpha-20261018.json",
@@ -895,9 +895,19 @@
       "sha256": "5187dbcf62ea45a37d9ad728405c72473b5a7d1f440bfb267640882ad7b273e8"
     },
     {
+      "path": "docs/benchmarks/jf2-compatibility-20261018.json",
+      "bytes": 3668,
+      "sha256": "9cb51bfa663374dfca5c345bc84a881349de4292ce842fc51300a167f746d6f7"
+    },
+    {
       "path": "docs/BUILDING.md",
-      "bytes": 3108,
-      "sha256": "dad18e3e7e6cb3c6f8549525aae590e21d41bc0969e4b74919fce11622cf407d"
+      "bytes": 3546,
+      "sha256": "97abfb0227576fb84bf40c140fed20c7f268b3fdca1cc31bd07a3475a7bf4b2f"
+    },
+    {
+      "path": "docs/COMPATIBILITY-ALPHA.md",
+      "bytes": 3535,
+      "sha256": "1b1e464c0055fad46cce17746d2d63454b292b6fee818e1ff4cb099227aa0212"
     },
     {
       "path": "docs/DISTRIBUTION.md",
@@ -911,8 +921,8 @@
     },
     {
       "path": "docs/KNOWN-ISSUES.md",
-      "bytes": 1666,
-      "sha256": "e723ed8a54b1e79d9dd16f94a4ea83f1b586776fd11aaf4eda287c47a33bff71"
+      "bytes": 2040,
+      "sha256": "c274e1a9b1115c791fbe8bded1330f117e75ba76fca7057a01827eceaa185a2b"
     },
     {
       "path": "docs/media/collection-launcher.jpg",
@@ -956,8 +966,8 @@
     },
     {
       "path": "docs/PERFORMANCE.md",
-      "bytes": 3345,
-      "sha256": "24ead1443cdff1e334420a1ee63973ab8a8b8634104e0f1c3a754249ceb43b96"
+      "bytes": 3846,
+      "sha256": "9c2c4c0dcebc4eb98ffae48e6b831792405cbe3b0aa9fd2ee4ae8b57a7d17119"
     },
     {
       "path": "docs/SETUP.md",
@@ -966,8 +976,8 @@
     },
     {
       "path": "docs/STEAM-DECK.md",
-      "bytes": 6540,
-      "sha256": "9798971bd7d1a8bc4baf92072720ae68dafc0ba11ebf892ad6f3aeed3bd6e209"
+      "bytes": 6806,
+      "sha256": "fc2004150ca37b03bec266daedf6a3b3c1cfa15f0848ddcea0dcfb3afe9c484c"
     },
     {
       "path": "jumping-flash-1/tools/aot.py",
@@ -1071,13 +1081,13 @@
     },
     {
       "path": "README.md",
-      "bytes": 11043,
-      "sha256": "2695550aa40338e86f8d1fa79d36395c7acfa1f3f9920383a3d5a128631488dc"
+      "bytes": 12252,
+      "sha256": "45cfd71e1cad4cfe9d8f197973a252b48dd3e0240ac0b5acb2a263e53c33045e"
     },
     {
       "path": "RELEASE_NOTES.md",
-      "bytes": 4313,
-      "sha256": "1b62c86c3113fd25cad5268d4fe4539580793a21499f9ca460874606b8827df8"
+      "bytes": 5564,
+      "sha256": "3aeb2c4545912c35d275a8056abf60ba6a050ac43a19d28913d5ee8790bcb6a6"
     },
     {
       "path": "robbit-mon-dieu/tools/build.ps1",
@@ -1205,9 +1215,14 @@
       "sha256": "106483ba45c1905abd505bea4509e4a7200cd9eb0885b264d0dba39da1265bd5"
     },
     {
+      "path": "tools/recomp/jf2-compatibility-main.patch",
+      "bytes": 7058,
+      "sha256": "00f963c9f46cf8a77a18c2870378386140ca3b62d28a3e47588cb63615cfe327"
+    },
+    {
       "path": "tools/recomp/jf2_desktop.h",
-      "bytes": 55589,
-      "sha256": "2568ff42ce4f5d2abe4794c9b2d37aa8572e3935a34b7bb75fcd3fd292fac00d"
+      "bytes": 43751,
+      "sha256": "3626f2f917e6ed083b3c39b488cc07c78f828c80c9f113cea7801652bfaf7020"
     },
     {
       "path": "tools/recomp/jf2_desktop_core.h",

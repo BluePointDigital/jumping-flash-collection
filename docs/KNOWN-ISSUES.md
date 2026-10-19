@@ -1,5 +1,7 @@
 # Known issues and open qualification
 
+The newer [JF2 compatibility update](COMPATIBILITY-ALPHA.md) removes the extra mod menus and disables the affected graphics enhancements. Bounded Windows checks passed, but missing/see-through surfaces and moving ground-texture flicker are not proven fixed. Its normal Load/Save and Deck acceptance remain open; the owner Proton comparison below is from the earlier alpha.
+
 1. JF2 has owner-reported graphical glitches and slowdowns on an LCD 64 GB Steam Deck. Stable Proton feels slightly better than Experimental and is now the owner's default, but performance remains imperfect. Earlier Experimental menu voiceover was very choppy and generally smoothed out after a little gameplay; resolution on Stable is unconfirmed. Windows feels better overall. No matched benchmark or exact version numbers were supplied.
 2. Smooth 60 FPS across all titles is a target, not a release claim. JF2 presentation cadence and interpolation need further work.
 3. Intermittent JF2 audio starvation/hitches remain unresolved. A healthy short sample is not proof of a fix.

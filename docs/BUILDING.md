@@ -14,6 +14,8 @@ The front end alone does not contain gameplay. Missing runtime executables are r
 
 ## Full games: remaining public-build work
 
+The latest [JF2 compatibility delta](../tools/recomp/jf2-compatibility-main.patch) targets the matching alpha-derived `runtime/src/main.cpp`, not a pristine upstream checkout. The desktop/shared pause headers are included too. Reproducing that baseline and applying the delta must be connected to the public source-generation pipeline; copying the patch alone does not complete it. [Behavior and bounded checks](COMPATIBILITY-ALPHA.md).
+
 - Obtain supported discs and matching BIOS files privately; validate identities against the catalog.
 - Acquire the pinned framework/UI/toolchain and apply reviewed integration changes.
 - Replace private-workbench references and captured/replay-only inputs with generation from the user's original files.
